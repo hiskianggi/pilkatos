@@ -33,7 +33,7 @@
 			$this->col[] = ["label"=>"Kode / NIS","name"=>"username"];
 			$this->col[] = ["label"=>"Nama","name"=>"name"];
 			$this->col[] = ["label"=>"Kelas","name"=>"class_id","join"=>"class,name"];
-			if (CRUDBooster::myPrivilegeId() == 1) {
+			if (CRUDBooster::myId() == 1) {
 				$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
 			}
 			
@@ -44,11 +44,11 @@
 			$this->form[] = ['label'=>'Kode / NIS','name'=>'username','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
 			$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:3|max:32','width'=>'col-sm-10','help'=>'Minimum 5 characters. Please leave empty if you did not change the password.'];
-			if (CRUDBooster::myPrivilegeId() == 1) {
-				$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name'];
-				$this->form[] = ['label'=>'Kelas','name'=>'class_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'class,name','parent_select'=>'cms_users.id'];
+			if (CRUDBooster::myId() == 1) {
+				$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
+				$this->form[] = ['label'=>'Kelas','name'=>'class_id','type'=>'select','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'class,name','parent_select'=>'cms_users_id'];
 			}else{
-				$this->form[] = ['label'=>'Kelas','name'=>'class_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'class,name','datatable_where'=>'cms_users_id='.CRUDBooster::myPrivilegeId()];
+				$this->form[] = ['label'=>'Kelas','name'=>'class_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'class,name','datatable_where'=>'cms_users_id='.CRUDBooster::myId()];
 			}
 			
 			# END FORM DO NOT REMOVE THIS LINE
@@ -59,7 +59,7 @@
 			//$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
 			//$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:3|max:32','width'=>'col-sm-10','help'=>'Minimum 5 characters. Please leave empty if you did not change the password.'];
 			//$this->form[] = ['label'=>'Kelas','name'=>'class_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'class,name'];
-			//if (CRUDBooster::myPrivilegeId() == 1) {
+			//if (CRUDBooster::myId() == 1) {
 			//$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name'];
 			//}
 			# OLD END FORM
@@ -249,8 +249,8 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	        if (CRUDBooster::myPrivilegeId() != 1) {
-	        	$query->where('users.id',CRUDBooster::myPrivilegeId())->where('users.type',0);
+	        if (CRUDBooster::myId() != 1) {
+	        	$query->where('users.cms_users_id',CRUDBooster::myId())->where('users.type',0);
 	    }else{
 	    	$query->where('users.type',0);
 	    }
@@ -275,7 +275,10 @@
 	    */
 	    public function hook_before_add(&$postdata) {        
 	        //Your code here
-
+	    	$postdata['type'] = 0;
+	    	if (CRUDBooster::myId() != 1) {
+	    		$postdata['cms_users_id'] = CRUDBooster::myId();
+	    	}
 	    }
 
 	    /* 
