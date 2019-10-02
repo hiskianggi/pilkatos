@@ -23,8 +23,8 @@
 			$this->button_detail = true;
 			$this->button_show = true;
 			$this->button_filter = true;
-			$this->button_import = false;
-			$this->button_export = false;
+			$this->button_import = true;
+			$this->button_export = true;
 			$this->table = "users";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
@@ -344,6 +344,24 @@
 
 
 	    //By the way, you can still create your own method in here... :) 
+	    public function getPrintcard(){
+	    	$data['data'] = DB::table('users')->where([
+	    		'type' => 0,
+	    		'cms_users_id' => CRUDBooster::myId()
+	    	])->get();
+	    	$data['logo'] = DB::table('cms_users')->where('id', CRUDBooster::myId())->first()->photo;
 
+	    	return view('backend.export.voter_card', $data);
+	    }
+
+	    public function postPrintcard(){
+	    	$data['data'] = DB::table('users')->where([
+	    		'type' => 0,
+	    		'cms_users_id' => g('cms_users_id')
+	    	])->get();
+	    	$data['logo'] = DB::table('cms_users')->where('id', g('cms_users_id'))->first()->photo;
+
+	    	return view('backend.export.voter_card', $data);
+	    }
 
 	}

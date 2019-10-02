@@ -259,7 +259,9 @@
 	    */
 	    public function hook_before_add(&$postdata) {        
 	        //Your code here
-
+	    	if (CRUDBooster::myId() != 1) {
+	    		$postdata['cms_users_id'] = CRUDBooster::myId();
+	    	}
 	    }
 
 	    /* 

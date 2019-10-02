@@ -1,60 +1,56 @@
 <?php namespace App\Http\Controllers;
 
-	use Session;
-	use Request;
-	use DB;
-	use CRUDBooster;
+use Session;
+use Request;
+use DB;
+use CRUDBooster;
 
-	class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CBController {
+class AdminFinanceController extends \crocodicstudio\crudbooster\controllers\CBController {
 
-	    public function cbInit() {
+	public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
-			$this->title_field = "username";
-			$this->limit = "20";
-			$this->orderby = "id,desc";
-			$this->global_privilege = false;
-			$this->button_table_action = true;
-			$this->button_bulk_action = true;
-			$this->button_action_style = "button_icon";
-			$this->button_add = true;
-			$this->button_edit = true;
-			$this->button_delete = true;
-			$this->button_detail = true;
-			$this->button_show = true;
-			$this->button_filter = true;
-			$this->button_import = true;
-			$this->button_export = true;
-			$this->table = "users";
+		$this->title_field = "id";
+		$this->limit = "20";
+		$this->orderby = "id,desc";
+		$this->global_privilege = false;
+		$this->button_table_action = true;
+		$this->button_bulk_action = true;
+		$this->button_action_style = "button_icon";
+		$this->button_add = true;
+		$this->button_edit = true;
+		$this->button_delete = true;
+		$this->button_detail = true;
+		$this->button_show = true;
+		$this->button_filter = true;
+		$this->button_import = false;
+		$this->button_export = false;
+		$this->table = "finance";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
-			$this->col = [];
-			$this->col[] = ["label"=>"Kode Guru","name"=>"username"];
-			$this->col[] = ["label"=>"Nama","name"=>"name"];
-			if (CRUDBooster::myId() == 1) {
-			$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
-		}
+		$this->col = [];
+		$this->col[] = ["label"=>"Pemasukan","name"=>"price","callback"=>function ($row)
+        {
+        	return 'Rp. '.number_format($row->price);
+        }];
+		$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
+		$this->col[] = ["label"=>"Tanggal Pemasukan","name"=>"created_at","callback"=>function ($row)
+        {
+        	return \Carbon\Carbon::parse($row->created_at)->format('d F Y H:i:s');
+        }];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
-			$this->form = [];
-			$this->form[] = ['label'=>'Kode Guru','name'=>'username','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-			$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:3|max:32','width'=>'col-sm-10','help'=>'Minimum 5 characters. Please leave empty if you did not change the password.'];
-			if (CRUDBooster::myId() == 1) {
-			$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
-		}
+		$this->form = [];
+		$this->form[] = ['label'=>'Pemasukan','name'=>'price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+		$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
-			//$this->form[] = ['label'=>'Username','name'=>'username','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Name','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-			//$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:3|max:32','width'=>'col-sm-10','help'=>'Minimum 5 characters. Please leave empty if you did not change the password.'];
-			//$this->form[] = ['label'=>'Type','name'=>'type','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Class Id','name'=>'class_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'class,name'];
-			//$this->form[] = ['label'=>'Cms Users Id','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name'];
+			//$this->form[] = ["label"=>"Price","name"=>"price","type"=>"number","required"=>TRUE,"validation"=>"required|integer|min:0"];
+			//$this->form[] = ["label"=>"Cms Users Id","name"=>"cms_users_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"cms_users,name"];
 			# OLD END FORM
 
 			/* 
@@ -98,7 +94,7 @@
 	        */
 	        $this->button_selected = array();
 
-	                
+
 	        /* 
 	        | ---------------------------------------------------------------------- 
 	        | Add alert message to this module at overheader
@@ -108,7 +104,7 @@
 	        | 
 	        */
 	        $this->alert        = array();
-	                
+
 
 	        
 	        /* 
@@ -229,7 +225,7 @@
 	    */
 	    public function actionButtonSelected($id_selected,$button_name) {
 	        //Your code here
-	            
+
 	    }
 
 
@@ -242,11 +238,7 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	       if (CRUDBooster::myId() != 1) {
-	        	$query->where('users.cms_users_id',CRUDBooster::myId())->where('users.type',1);
-	    }else{
-	    	$query->where('users.type',1);
-	    }
+
 	    }
 
 	    /*
@@ -266,14 +258,8 @@
 	    | @arr
 	    |
 	    */
-	    public function hook_before_add(&$postdata) {        
-	        //Your code here
-	    	$postdata['type'] = 1;
-	    	$postdata['class_id'] = NULL;
+	    public function hook_before_add(&$postdata) {
 
-	    	if (CRUDBooster::myId() != 1) {
-	    		$postdata['cms_users_id'] = CRUDBooster::myId();
-	    	}
 	    }
 
 	    /* 
@@ -297,7 +283,7 @@
 	    | 
 	    */
 	    public function hook_before_edit(&$postdata,$id) {        
-	        //Your code here
+
 
 	    }
 
@@ -340,24 +326,6 @@
 
 
 	    //By the way, you can still create your own method in here... :) 
-	    public function getPrintcard(){
-	    	$data['data'] = DB::table('users')->where([
-	    		'type' => 1,
-	    		'cms_users_id' => CRUDBooster::myId()
-	    	])->get();
-	    	$data['logo'] = DB::table('cms_users')->where('id', CRUDBooster::myId())->first()->photo;
 
-	    	return view('backend.export.voter_card', $data);
-	    }
-
-	    public function postPrintcard(){
-	    	$data['data'] = DB::table('users')->where([
-	    		'type' => 1,
-	    		'cms_users_id' => g('cms_users_id')
-	    	])->get();
-	    	$data['logo'] = DB::table('cms_users')->where('id', g('cms_users_id'))->first()->photo;
-
-	    	return view('backend.export.voter_card', $data);
-	    }
 
 	}
