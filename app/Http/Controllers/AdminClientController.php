@@ -1,49 +1,90 @@
 <?php namespace App\Http\Controllers;
 
-	use Session;
-	use Request;
-	use DB;
-	use CRUDBooster;
+use Session;
+use Request;
+use DB;
+use CRUDBooster;
 
-	class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBController {
+class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBController {
 
-	    public function cbInit() {
+	public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
-			$this->title_field = "name";
-			$this->limit = "20";
-			$this->orderby = "id,desc";
-			$this->global_privilege = false;
-			$this->button_table_action = true;
-			$this->button_bulk_action = true;
-			$this->button_action_style = "button_icon";
-			$this->button_add = true;
-			$this->button_edit = true;
-			$this->button_delete = true;
-			$this->button_detail = true;
-			$this->button_show = true;
-			$this->button_filter = true;
-			$this->button_import = false;
-			$this->button_export = false;
-			$this->table = "cms_users";
+		$this->title_field = "name";
+		$this->limit = "20";
+		$this->orderby = "id,desc";
+		$this->global_privilege = false;
+		$this->button_table_action = true;
+		$this->button_bulk_action = true;
+		$this->button_action_style = "button_icon";
+		$this->button_add = true;
+		$this->button_edit = true;
+		$this->button_delete = true;
+		$this->button_detail = true;
+		$this->button_show = true;
+		$this->button_filter = true;
+		$this->button_import = false;
+		$this->button_export = false;
+		$this->table = "cms_users";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
-			$this->col = [];
-			$this->col[] = ["label"=>"Nama Sekolah","name"=>"name"];
-			$this->col[] = ["label"=>"Logo","name"=>"photo","image"=>true];
-			$this->col[] = ["label"=>"Email","name"=>"email"];
-			$this->col[] = ["label"=>"Privileges","name"=>"id_cms_privileges","join"=>"cms_privileges,name"];
+		$this->col = [];
+		$this->col[] = ["label"=>"Nama Sekolah","name"=>"name"];
+		$this->col[] = ["label"=>"Logo","name"=>"photo","image"=>true];
+		$this->col[] = ["label"=>"Email","name"=>"email"];
+		$this->col[] = ["label"=>"Privileges","name"=>"id_cms_privileges","join"=>"cms_privileges,name"];
+		$this->col[] = ["label"=>"Path","name"=>"path","callback"=>function($row){
+	    	return '<a href="'.url($row->path.'/login').'" class="btn btn-warning btn-xs btn-document dropdown-toggle"><span class="fa fa-user"></span> Login</a>';
+	    }];
+		$this->col[] = ["label"=>"Status","name"=>"status","callback"=>function($row){
+			if ($row->status == 'Non Active') {
+				$btn = 'btn-danger';
+			}else{
+				$btn = 'btn-success';
+			}
+			$status = '
+			<div class="dropdown">
+			<button type="button" class="btn '.$btn.' btn-xs btn-document dropdown-toggle" data-toggle="dropdown">
+			'.ucwords($row->status).' <span class="fa fa-caret-down"></span>
+			</button>
+			<ul class="dropdown-menu">
+			<li><a href="javascript:void(0)" onclick="swal({
+				title: &quot;Ganti Status Sekarang ?&quot;,
+				text: &quot;&quot;,
+				type: &quot;warning&quot;,
+				showCancelButton: true,
+				confirmButtonColor: &quot;#3C8DBC&quot;,
+				confirmButtonText: &quot;Ya!&quot;,
+				cancelButtonText: &quot;Tidak&quot;,
+				closeOnConfirm: false },
+				function(){  location.href=&quot;'.CRUDBooster::mainPath('active/').$row->id.'&quot; });">Active</a></li>
+				<li><a href="javascript:void(0)" onclick="swal({
+					title: &quot;Ganti Status Sekarang ?&quot;,
+					text: &quot;&quot;,
+					type: &quot;warning&quot;,
+					showCancelButton: true,
+					confirmButtonColor: &quot;#3C8DBC&quot;,
+					confirmButtonText: &quot;Ya!&quot;,
+					cancelButtonText: &quot;Tidak&quot;,
+					closeOnConfirm: false },
+					function(){  location.href=&quot;'.CRUDBooster::mainPath('nonactive/').$row->id.'&quot; });">Non Active</a></li>
+					</ul>
+					</div>';
+
+					return $status;
+				}];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
-			$this->form = [];
-			$this->form[] = ['label'=>'Nama Sekolah','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-			$this->form[] = ['label'=>'Logo','name'=>'photo','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
-			$this->form[] = ['label'=>'Email','name'=>'email','type'=>'email','validation'=>'required|min:1|max:255|email|unique:cms_users','width'=>'col-sm-10','placeholder'=>'Please enter a valid email address'];
-			$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:3|max:32','width'=>'col-sm-10','help'=>'Minimum 5 characters. Please leave empty if you did not change the password.'];
-			$this->form[] = ['label'=>'Cms Privileges','name'=>'id_cms_privileges','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_privileges,name','datatable_where'=>'id != 1'];
-			$this->form[] = ['label'=>'Status','name'=>'status','type'=>'select','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'Active;Deactive'];
+				$this->form = [];
+				$this->form[] = ['label'=>'Nama Sekolah','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
+				$this->form[] = ['label'=>'Logo','name'=>'photo','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
+				$this->form[] = ['label'=>'Email','name'=>'email','type'=>'email','validation'=>'required|min:1|max:255|email|unique:cms_users','width'=>'col-sm-10','placeholder'=>'Please enter a valid email address'];
+				$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:3|max:32','width'=>'col-sm-10','help'=>'Minimum 5 characters. Please leave empty if you did not change the password.'];
+				$this->form[] = ['label'=>'Cms Privileges','name'=>'id_cms_privileges','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_privileges,name','datatable_where'=>'id != 1'];
+				$this->form[] = ['label'=>'Path Login','name'=>'path','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
+				$this->form[] = ['label'=>'Status','name'=>'status','type'=>'select','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'Active;Deactive'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -97,7 +138,7 @@
 	        */
 	        $this->button_selected = array();
 
-	                
+
 	        /* 
 	        | ---------------------------------------------------------------------- 
 	        | Add alert message to this module at overheader
@@ -107,7 +148,7 @@
 	        | 
 	        */
 	        $this->alert        = array();
-	                
+
 
 	        
 	        /* 
@@ -228,7 +269,7 @@
 	    */
 	    public function actionButtonSelected($id_selected,$button_name) {
 	        //Your code here
-	            
+
 	    }
 
 
@@ -241,7 +282,7 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	        $query->where('cms_users.id','!=',1);
+	    	$query->where('cms_users.id','!=',1);
 	    }
 
 	    /*
@@ -330,6 +371,16 @@
 
 
 	    //By the way, you can still create your own method in here... :) 
+	    public function getActive($id){
+	    	DB::table('cms_users')->where('id',$id)->update(['status'=>'Active']);
 
+	    	return redirect(CRUDBooster::mainPath());
+	    }
+
+	    public function getNonactive($id){
+	    	DB::table('cms_users')->where('id',$id)->update(['status'=>'Non Active']);
+
+	    	return redirect(CRUDBooster::mainPath());
+	    }
 
 	}

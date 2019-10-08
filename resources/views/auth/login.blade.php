@@ -9,20 +9,18 @@
 				<span class="fa fa-eercast"></span>
 			</div>
 			<div class="header-left-bottom">
-				<form method="POST" action="{{ route('login') }}">
+				<form method="POST" action="{{ url('login') }}">
 					{{ csrf_field() }}
 					<div class="icon1">
 						<span class="fa fa-user"></span>
-						<input id="username" type="text" name="username" value="{{ old('username') }}" required autofocus placeholder="Email Password" />
+						<input id="username" type="text" name="username" value="{{ old('username') }}" required autofocus placeholder="Username / NIS" />
 					</div>
 					<div class="icon1">
 						<span class="fa fa-lock"></span>
-						<input id="password" type="password" name="password" required/>
-					</div>
-					<div class="login-check">
-						<label class="checkbox"><input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}><i> </i> Keep me logged in</label>
+						<input id="password" type="password" name="password" placeholder="Password" required/>
 					</div>
 					<div class="bottom">
+						<input type="hidden" name="cms_users_id" value="{{ $cms_users_id }}" />
 						<button class="btn" type="submit">Log In</button>
 					</div>
 				</form>	
@@ -31,7 +29,7 @@
 		
 		<!-- copyright -->
 		<div class="copyright">
-			<p>© 2019 {{ config('app.name', 'Laravel') }}. All rights reserved.</p>
+			<p>© 2019 Pilkatos.Tech . All rights reserved.</p>
 		</div>
 		<!-- //copyright --> 
 	</div>

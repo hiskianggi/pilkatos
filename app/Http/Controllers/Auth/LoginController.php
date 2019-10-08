@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Request;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -37,8 +39,16 @@ class LoginController extends Controller
         $this->middleware('guest', ['except' => 'logout']);
     }
 
-    public function username()
-    {
-        return $this->username;
+    public function login(Request $request){
+        $uname = $request->username;
+        $password = $request->password;
+        $cms_users_id = $request->cms_users_id;
+        if (Auth::attempt(array('username' => $uname, 'password' => $password, 'cms_users_id' => $cms_users_id))){
+            return redirect('/');
+        }
+        else {        
+            return 'Salah';
+        }
     }
+
 }

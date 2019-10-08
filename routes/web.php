@@ -14,6 +14,9 @@ Route::group(['middleware'=>'auth'], function(){
 	Route::get('/', function () {
 		return view('welcome');
 	});
+	Route::get('home', 'HomeController@index');
 });
 
-Auth::routes();
+Route::get('/{path}/login', 'Auth\LoginController@showLoginForm');
+Route::post('login', 'Auth\LoginController@login');
+Route::get('logout', 'Auth\LoginController@logout');
