@@ -23,13 +23,14 @@ trait AuthenticatesUsers
             'status' => 'Active'
         ])
         ->first();
+        
         $bg_login = DB::table('login_background')
         ->where('cms_users_id',$check->id)
         ->first();
 
         $data['cms_users_id'] = $check->id;
         $data['bg_login'] = $bg_login->photo;
-        
+
         if ($check) {
             return view('auth.login', $data);
         }else{

@@ -31,7 +31,7 @@
 						@if($background->photo)
 						<p><a data-lightbox='roadtrip' href='{{ url($background->photo) }}'><img style='max-width:160px' title="Image For Background Login" src='{{ url($background->photo) }}'/></a></p>
 						@endif
-						<input type='file' title="Background Login" required class='form-control' name="photo" id="photo" value=''/>
+						<input type='file' title="Background Login" class='form-control' name="photo" id="photo" value=''/>
 						<p class='help-block'>File types support : JPG, JPEG, PNG, GIF, BMP. HD Resolution. Kosongkan Jika Anda Tidak Ingin Merubah Apapun.</p>
 					</div>
 				</div>
