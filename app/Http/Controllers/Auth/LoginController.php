@@ -39,16 +39,4 @@ class LoginController extends Controller
         $this->middleware('guest', ['except' => 'logout']);
     }
 
-    public function login(Request $request){
-        $uname = $request->username;
-        $password = $request->password;
-        $cms_users_id = $request->cms_users_id;
-        if (Auth::attempt(array('username' => $uname, 'password' => $password, 'cms_users_id' => $cms_users_id))){
-            return redirect('/');
-        }
-        else {        
-            return 'Salah';
-        }
-    }
-
 }

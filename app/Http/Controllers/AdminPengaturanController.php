@@ -8,9 +8,13 @@
 	class AdminPengaturanController extends \crocodicstudio\crudbooster\controllers\CBController {
 			public function getIndex(){
 				$data['page_title'] = 'Pengaturan';
-				$data['detail'] = DB::table('cms_users')->where('id',CRUDBooster::myId())->get();
-				$data['background'] = DB::table('login_background')->where('id',CRUDBooster::myId())->get();
+				$data['detail'] = DB::table('cms_users')->where('id',CRUDBooster::myId())->first();
+				$data['background'] = DB::table('login_background')->where('id',CRUDBooster::myId())->first();
 
 				return view('backend.settings',$data);
+			}
+
+			public function postData(Request $request){
+
 			}
 	}

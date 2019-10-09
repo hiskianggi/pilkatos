@@ -25,6 +25,5 @@ class HomeController extends Controller
     public function index()
     {
         dd(Auth::user()->cms_users_id);
-        return view('home');
     }
 }
