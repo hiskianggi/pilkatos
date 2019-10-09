@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2019 at 09:14 PM
+-- Generation Time: Oct 10, 2019 at 12:48 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -45,7 +45,8 @@ CREATE TABLE `candidate` (
 INSERT INTO `candidate` (`id`, `name`, `photo`, `class_id`, `cms_users_id`, `created_at`, `updated_at`) VALUES
 (1, 'Tegar Miftaqurrohim', 'uploads/2019-09/220px-logo-swiksara.png', 1, 2, '2019-09-24 02:06:49', NULL),
 (2, 'Aminuddin Shofi Ashari', 'uploads/2019-09/220px-logo-swiksara.png', 5, 2, '2019-09-24 02:07:14', NULL),
-(3, 'Kiki Viola', 'uploads/2019-09/220px-logo-swiksara.png', 6, 2, '2019-09-24 02:07:36', NULL);
+(3, 'Kiki Viola', 'uploads/2019-09/220px-logo-swiksara.png', 6, 2, '2019-09-24 02:07:36', NULL),
+(4, 'Hiskia Anggi Puji Pratama', 'uploads/2019-10/220px-logo-swiksara.png', 8, 3, '2019-10-10 05:44:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -176,7 +177,9 @@ CREATE TABLE `cms_email_templates` (
 --
 
 INSERT INTO `cms_email_templates` (`id`, `name`, `slug`, `subject`, `content`, `description`, `from_name`, `from_email`, `cc_email`, `created_at`, `updated_at`) VALUES
-(1, 'Email Template Forgot Password Backend', 'forgot_password_backend', 'Reset Password - Pilkatos.Tech', '<p>Hi ^_^ ,</p><p>We got a request to reset your Pilkatos.Tech Password, here a new password:</p><p>[password]</p><p>--</p><p>Regards,</p><p>Admin</p>', '[password]', 'Pilkatos.tech System', 'no-reply@pilkatos.tech', 'admin@pilkatos.tech', '2019-09-22 05:14:58', '2019-10-02 15:15:11');
+(1, 'Email Template Forgot Password Backend', 'forgot_password_backend', 'Reset Password - Pilkatos.Tech', '<p>Hi ^_^ ,</p><p>We got a request to reset your Pilkatos.Tech Password, here a new password:</p><p>[password]</p><p>--</p><p>Regards,</p><p>Admin</p>', '[password]', 'Pilkatos.tech System', 'no-reply@pilkatos.tech', 'admin@pilkatos.tech', '2019-09-22 05:14:58', '2019-10-02 15:15:11'),
+(2, 'Email Template Forgot Password Backend', 'forgot_password_backend', NULL, '<p>Hi,</p><p>Someone requested forgot password, here is your new password : </p><p>[password]</p><p><br></p><p>--</p><p>Regards,</p><p>Admin</p>', '[password]', 'System', 'system@crudbooster.com', NULL, '2019-10-10 02:59:27', NULL),
+(3, 'Email Template Forgot Password Backend', 'forgot_password_backend', NULL, '<p>Hi,</p><p>Someone requested forgot password, here is your new password : </p><p>[password]</p><p><br></p><p>--</p><p>Regards,</p><p>Admin</p>', '[password]', 'System', 'system@crudbooster.com', NULL, '2019-10-10 03:16:13', NULL);
 
 -- --------------------------------------------------------
 
@@ -322,7 +325,20 @@ INSERT INTO `cms_logs` (`id`, `ipaddress`, `useragent`, `url`, `description`, `i
 (120, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/login', 'get@hiskia.dev login dengan IP Address ::1', 1, '2019-10-10 01:52:01', NULL),
 (121, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/menu_management/edit-save/21', 'Memperbaharui data Pengaturan pada Menu Management', 1, '2019-10-10 01:52:28', NULL),
 (122, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/logout', 'get@hiskia.dev keluar', 1, '2019-10-10 01:55:47', NULL),
-(123, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/login', 'admin@smkwikrama1jepara.sch.id login dengan IP Address ::1', 2, '2019-10-10 01:56:30', NULL);
+(123, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/login', 'admin@smkwikrama1jepara.sch.id login dengan IP Address ::1', 2, '2019-10-10 01:56:30', NULL),
+(124, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/login', 'get@hiskia.dev login dengan IP Address ::1', 1, '2019-10-10 03:15:55', NULL),
+(125, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/login', 'get@hiskia.dev login dengan IP Address ::1', 1, '2019-10-10 03:30:33', NULL),
+(126, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/users/edit-save/1', 'Memperbaharui data Super Administrator pada Users', 1, '2019-10-10 04:20:45', NULL),
+(127, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/menu_management/delete/30', 'Menghapus data Dashboard pada Menu Management', 1, '2019-10-10 04:48:33', NULL),
+(128, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/menu_management/delete/31', 'Menghapus data Users pada Menu Management', 1, '2019-10-10 04:48:39', NULL),
+(129, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/menu_management/edit-save/30', 'Memperbaharui data Testimoni pada Menu Management', 1, '2019-10-10 04:59:16', NULL),
+(130, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/menu_management/edit-save/27', 'Memperbaharui data Data Pemilihan pada Menu Management', 1, '2019-10-10 04:59:41', NULL),
+(131, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/menu_management/delete/28', 'Menghapus data Pengaturan pada Menu Management', 1, '2019-10-10 04:59:58', NULL),
+(132, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/menu_management/add-save', 'Tambah data baru Testimoni pada Menu Management', 1, '2019-10-10 05:00:30', NULL),
+(133, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/testimonials/delete/1', 'Menghapus data Testing pada Testimoni', 1, '2019-10-10 05:27:33', NULL),
+(134, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/logout', 'get@hiskia.dev keluar', 1, '2019-10-10 05:41:25', NULL),
+(135, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/login', 'hiskianggi@gmail.com login dengan IP Address ::1', 3, '2019-10-10 05:41:33', NULL),
+(136, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'http://localhost/pilkatos/public/admin/candidates/add-save', 'Tambah data baru Hiskia Anggi Puji Pratama pada Kandidat', 3, '2019-10-10 05:44:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -372,8 +388,10 @@ INSERT INTO `cms_menus` (`id`, `name`, `type`, `path`, `color`, `icon`, `parent_
 (23, 'Golput', 'Route', 'AdminGolputControllerGetIndex', 'normal', 'fa fa-angellist', 0, 1, 0, 1, 7, '2019-09-24 07:31:18', '2019-10-09 06:36:15'),
 (25, 'Golput', 'Route', 'AdminGolputControllerGetIndex', 'normal', 'fa fa-angellist', 0, 1, 0, 2, 5, '2019-10-09 07:11:20', '2019-10-09 07:12:24'),
 (26, 'Data Pemilihan', 'Module', NULL, 'normal', 'fa fa-css3', 0, 0, 0, 1, 4, '2019-10-09 07:13:56', '2019-10-09 07:24:33'),
-(27, 'Data Pemilihan', 'Route', 'AdminElectionDataControllerGetIndex', 'normal', 'fa fa-glass', 0, 1, 0, 2, 7, '2019-10-10 01:55:09', NULL),
-(28, 'Pengaturan', 'Route', 'AdminPengaturanControllerGetIndex', 'normal', 'fa fa-glass', 0, 1, 0, 2, 8, '2019-10-10 01:55:09', NULL);
+(27, 'Data Pemilihan', 'Route', 'AdminElectionDataControllerGetIndex', 'normal', 'fa fa-home', 0, 0, 0, 2, 7, '2019-10-10 01:55:09', '2019-10-10 04:59:41'),
+(29, 'Testimoni', 'Route', 'AdminTestimonialsControllerGetIndex', NULL, 'fa fa-columns', 0, 1, 0, 1, 9, '2019-10-10 04:04:01', NULL),
+(30, 'Testimoni', 'Route', 'AdminTestimoniControllerGetIndex', 'normal', 'fa fa-home', 0, 0, 0, 1, 10, '2019-10-10 04:49:27', '2019-10-10 04:59:16'),
+(31, 'Testimoni', 'Module', 'testimoni', 'normal', 'fa fa-columns', 0, 1, 0, 2, 7, '2019-10-10 05:00:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -420,7 +438,9 @@ INSERT INTO `cms_moduls` (`id`, `name`, `icon`, `path`, `table_name`, `controlle
 (20, 'Pengaturan', 'fa fa-glass', 'pengaturan', 'cms_users', 'AdminPengaturanController', 0, 0, '2019-09-22 13:39:13', NULL),
 (21, 'Dashboard', 'fa fa-glass', 'dashboard', 'cms_users', 'AdminDashboardController', 0, 0, '2019-09-24 00:48:10', NULL),
 (22, 'Keuangan', 'fa fa-money', 'finance', 'finance', 'AdminFinanceController', 0, 0, '2019-09-24 02:36:21', NULL),
-(23, 'Golput', 'fa fa-glass', 'golput', 'users', 'AdminGolputController', 0, 0, '2019-09-24 07:31:18', NULL);
+(23, 'Golput', 'fa fa-glass', 'golput', 'users', 'AdminGolputController', 0, 0, '2019-09-24 07:31:18', NULL),
+(24, 'Testimoni', 'fa fa-columns', 'testimonials', 'testimonials', 'AdminTestimonialsController', 0, 0, '2019-10-10 04:04:01', NULL),
+(25, 'Testimoni', 'fa fa-glass', 'testimoni', 'testimonials', 'AdminTestimoniController', 0, 0, '2019-10-10 04:49:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -459,7 +479,7 @@ CREATE TABLE `cms_privileges` (
 
 INSERT INTO `cms_privileges` (`id`, `name`, `is_superadmin`, `theme_color`, `created_at`, `updated_at`) VALUES
 (1, 'Super Administrator', 1, 'skin-blue-light', '2019-09-22 05:14:58', NULL),
-(2, 'School', 0, 'skin-blue-light', NULL, NULL);
+(2, 'Sekolah', 0, 'skin-blue-light', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -519,7 +539,9 @@ INSERT INTO `cms_privileges_roles` (`id`, `is_visible`, `is_create`, `is_read`, 
 (32, 1, 1, 1, 1, 1, 1, 23, NULL, NULL),
 (33, 1, 1, 1, 1, 1, 1, 23, NULL, NULL),
 (34, 1, 1, 1, 1, 1, 2, 23, NULL, NULL),
-(35, 1, 1, 1, 1, 1, 2, 20, NULL, NULL);
+(35, 1, 1, 1, 1, 1, 2, 20, NULL, NULL),
+(36, 1, 1, 1, 1, 1, 1, 24, NULL, NULL),
+(37, 1, 1, 1, 1, 1, 1, 25, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -560,7 +582,7 @@ INSERT INTO `cms_settings` (`id`, `name`, `content`, `content_input_type`, `data
 (13, 'favicon', NULL, 'upload_image', NULL, NULL, '2019-09-22 05:14:58', NULL, 'Application Setting', 'Favicon'),
 (14, 'api_debug_mode', 'true', 'select', 'true,false', NULL, '2019-09-22 05:14:58', NULL, 'Application Setting', 'API Debug Mode'),
 (15, 'google_api_key', NULL, 'text', NULL, NULL, '2019-09-22 05:14:58', NULL, 'Application Setting', 'Google API Key'),
-(16, 'google_fcm_key', NULL, 'text', NULL, NULL, '2019-09-22 05:14:58', NULL, 'Application Setting', 'Google FCM Key');
+(16, 'google_fcm_key', 'AAAAJtzOZjY:APA91bGYqd9Wzcc22QYvcZiEBDq4hJ5bPj1ov7u6jHG3ht_d6PiqnWglywZ57RVNJ5ymINTvlJNSOLaq8k-inQBom4vfkcUarIrVknZUmXEzrgB78RYNdGlpF_HgXaB8OWS6vHd07XzM', 'text', NULL, NULL, '2019-09-22 05:14:58', NULL, 'Application Setting', 'Google FCM Key');
 
 -- --------------------------------------------------------
 
@@ -619,10 +641,10 @@ CREATE TABLE `cms_users` (
 --
 
 INSERT INTO `cms_users` (`id`, `name`, `photo`, `email`, `password`, `id_cms_privileges`, `created_at`, `updated_at`, `status`, `path`) VALUES
-(1, 'Super Admin Pilkatos', 'uploads/2019-10/user.jpg', 'get@hiskia.dev', '$2y$10$NwfBFil9rzML0w81IFis/eNUhCmJ5kBdI.l9ACkpwxGwhcyaSWJKG', 1, '2019-09-22 05:14:58', '2019-10-03 11:15:24', 'Active', NULL),
-(2, 'SMK Wikrama 1 Jepara', 'uploads/2019-09/220px-logo-swiksara.png', 'admin@smkwikrama1jepara.sch.id', '$2y$10$LTaPABWnbohJGK4Xrfd1HOxcD5KhCbix3MZdKF7BcsYde2FRDaWBC', 2, '2019-09-22 12:19:31', '2019-10-10 01:19:48', 'Active', 'wikrama'),
+(1, 'Super Administrator', 'uploads/2019-10/user.jpg', 'get@hiskia.dev', '$2y$10$NwfBFil9rzML0w81IFis/eNUhCmJ5kBdI.l9ACkpwxGwhcyaSWJKG', 1, '2019-09-22 05:14:58', '2019-10-10 04:20:45', 'Active', NULL),
+(2, 'SMK Wikrama 1 Jepara', 'uploads/2019-09/220px-logo-swiksara.png', 'admin@smkwikrama1jepara.sch.id', '$2y$10$LTaPABWnbohJGK4Xrfd1HOxcD5KhCbix3MZdKF7BcsYde2FRDaWBC', 2, '2019-09-22 12:19:31', '2019-10-10 01:19:48', 'Active', 'wikramatesting'),
 (3, 'SMP Negeri 1 Donorojo', 'uploads/2019-10/download.jpg', 'hiskianggi@gmail.com', '$2y$10$4VWWeh.pyVDcyyEnf1JvYu2oKnObhvz69yg25HuRLe.TrCvWdIZD2', 2, '2019-10-03 11:03:58', '2019-10-10 01:19:41', 'Active', 'essado'),
-(4, 'SMK 1 Ngawur', 'uploads/2019-10/27eeb996cfc149f2f4a26acfe75540da.png', 'ngawur@pilkatos.tech', '$2y$10$hvHUMLv.CHyurcbqDxYoiOkLNxuemkWz5iH/QfrNNP5BSWVhMWHMC', 2, '2019-10-10 01:43:15', NULL, 'Active', 'ngawur');
+(4, 'SMK 1 Ngawur', 'uploads/2019-10/27eeb996cfc149f2f4a26acfe75540da.png', 'ngawur@pilkatos.tech', '$2y$10$hvHUMLv.CHyurcbqDxYoiOkLNxuemkWz5iH/QfrNNP5BSWVhMWHMC', 2, '2019-10-10 01:43:15', NULL, 'Non Active', 'ngawur');
 
 -- --------------------------------------------------------
 
@@ -690,7 +712,7 @@ CREATE TABLE `login_background` (
 
 INSERT INTO `login_background` (`id`, `photo`, `cms_users_id`, `created_at`, `updated_at`) VALUES
 (1, NULL, 3, '2019-10-09 18:19:41', NULL),
-(2, NULL, 2, '2019-10-09 18:19:48', NULL),
+(2, '2/2019-10/27eeb996cfc149f2f4a26acfe75540da.png', 2, '2019-10-09 18:19:48', '2019-10-09 20:06:39'),
 (3, NULL, 4, '2019-10-09 18:43:15', NULL);
 
 -- --------------------------------------------------------
@@ -732,6 +754,28 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (20, '2016_11_15_132350_create_cms_email_templates', 1),
 (21, '2016_11_15_190410_create_cms_statistics', 1),
 (22, '2016_11_17_102740_create_cms_statistic_components', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `testimonials`
+--
+
+CREATE TABLE `testimonials` (
+  `id` int(11) NOT NULL,
+  `cms_users_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `testimonials`
+--
+
+INSERT INTO `testimonials` (`id`, `cms_users_id`, `name`, `content`, `created_at`, `updated_at`) VALUES
+(4, 3, 'Suharto, S.Pd', 'Awkwkwkwk', '2019-10-09 22:41:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -889,6 +933,12 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `testimonials`
+--
+ALTER TABLE `testimonials`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -932,25 +982,25 @@ ALTER TABLE `cms_email_queues`
 -- AUTO_INCREMENT for table `cms_email_templates`
 --
 ALTER TABLE `cms_email_templates`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `cms_logs`
 --
 ALTER TABLE `cms_logs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
 -- AUTO_INCREMENT for table `cms_menus`
 --
 ALTER TABLE `cms_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `cms_moduls`
 --
 ALTER TABLE `cms_moduls`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `cms_notifications`
@@ -968,7 +1018,7 @@ ALTER TABLE `cms_privileges`
 -- AUTO_INCREMENT for table `cms_privileges_roles`
 --
 ALTER TABLE `cms_privileges_roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `cms_settings`
@@ -1017,6 +1067,12 @@ ALTER TABLE `login_background`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `testimonials`
+--
+ALTER TABLE `testimonials`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
