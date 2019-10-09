@@ -1,61 +1,51 @@
 <?php namespace App\Http\Controllers;
 
-use Session;
-use Request;
-use DB;
-use CRUDBooster;
+	use Session;
+	use Request;
+	use DB;
+	use CRUDBooster;
 
-class AdminCandidatesController extends \crocodicstudio\crudbooster\controllers\CBController {
+	class AdminTestimonialsController extends \crocodicstudio\crudbooster\controllers\CBController {
 
-	public function cbInit() {
+	    public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
-		$this->title_field = "name";
-		$this->limit = "20";
-		$this->orderby = "id,desc";
-		$this->global_privilege = false;
-		$this->button_table_action = true;
-		$this->button_bulk_action = true;
-		$this->button_action_style = "button_icon";
-		$this->button_add = true;
-		$this->button_edit = true;
-		$this->button_delete = true;
-		$this->button_detail = true;
-		$this->button_show = true;
-		$this->button_filter = true;
-		$this->button_import = true;
-		$this->button_export = true;
-		$this->table = "candidate";
+			$this->title_field = "name";
+			$this->limit = "20";
+			$this->orderby = "id,desc";
+			$this->global_privilege = false;
+			$this->button_table_action = true;
+			$this->button_bulk_action = true;
+			$this->button_action_style = "button_icon";
+			$this->button_add = true;
+			$this->button_edit = true;
+			$this->button_delete = true;
+			$this->button_detail = true;
+			$this->button_show = true;
+			$this->button_filter = true;
+			$this->button_import = false;
+			$this->button_export = false;
+			$this->table = "testimonials";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
-		$this->col = [];
-		$this->col[] = ["label"=>"Nama","name"=>"name"];
-		$this->col[] = ["label"=>"Photo","name"=>"photo","image"=>true];
-		$this->col[] = ["label"=>"Kelas","name"=>"class_id","join"=>"class,name"];
-		if (CRUDBooster::myId() == 1) {
-			$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
-		}
+			$this->col = [];
+			$this->col[] = ["label"=>"Nama","name"=>"name"];
+			$this->col[] = ["label"=>"Asal Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
+			$this->col[] = ["label"=>"Testimoni","name"=>"content"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
-		$this->form = [];
-		$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-		$this->form[] = ['label'=>'Photo','name'=>'photo','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
-		if (CRUDBooster::myId() == 1) {
-			$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
-			$this->form[] = ['label'=>'Kelas','name'=>'class_id','type'=>'select','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'class,name','parent_select'=>'cms_users_id'];
-		}else{
-			$this->form[] = ['label'=>'Kelas','name'=>'class_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'class,name','datatable_where'=>'cms_users_id='.CRUDBooster::myId()];
-		}
+			$this->form = [];
+			$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required','width'=>'col-sm-9','datatable'=>'cms_users,name'];
+			$this->form[] = ['label'=>'Asal Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
+			$this->form[] = ['label'=>'Testimoni','name'=>'content','type'=>'textarea','validation'=>'required|string|min:5|max:5000','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
-			//$this->form[] = ['label'=>'Name','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-			//$this->form[] = ['label'=>'Photo','name'=>'photo','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
-			//$this->form[] = ['label'=>'Class Id','name'=>'class_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'class,name'];
-			//$this->form[] = ['label'=>'Cms Users Id','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name'];
+			//$this->form[] = ["label"=>"Cms Users Id","name"=>"cms_users_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"cms_users,name"];
+			//$this->form[] = ["label"=>"Content","name"=>"content","type"=>"textarea","required"=>TRUE,"validation"=>"required|string|min:5|max:5000"];
 			# OLD END FORM
 
 			/* 
@@ -99,7 +89,7 @@ class AdminCandidatesController extends \crocodicstudio\crudbooster\controllers\
 	        */
 	        $this->button_selected = array();
 
-	        
+	                
 	        /* 
 	        | ---------------------------------------------------------------------- 
 	        | Add alert message to this module at overheader
@@ -109,7 +99,7 @@ class AdminCandidatesController extends \crocodicstudio\crudbooster\controllers\
 	        | 
 	        */
 	        $this->alert        = array();
-	        
+	                
 
 	        
 	        /* 
@@ -230,7 +220,7 @@ class AdminCandidatesController extends \crocodicstudio\crudbooster\controllers\
 	    */
 	    public function actionButtonSelected($id_selected,$button_name) {
 	        //Your code here
-	    	
+	            
 	    }
 
 
@@ -243,9 +233,7 @@ class AdminCandidatesController extends \crocodicstudio\crudbooster\controllers\
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	    	if (CRUDBooster::myId() != 1) {
-	    		$query->where('class.cms_users_id',CRUDBooster::myId());
-	    	}
+	            
 	    }
 
 	    /*
@@ -267,9 +255,7 @@ class AdminCandidatesController extends \crocodicstudio\crudbooster\controllers\
 	    */
 	    public function hook_before_add(&$postdata) {        
 	        //Your code here
-	    	if (CRUDBooster::myId() != 1) {
-	    		$postdata['cms_users_id'] = CRUDBooster::myId();
-	    	}
+
 	    }
 
 	    /* 
