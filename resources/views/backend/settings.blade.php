@@ -6,7 +6,13 @@
 	</div> 
 
 	<div class="panel-body" style="padding:20px 0px 0px 0px">
+		@if(Session::has('message-success'))
+		<div class="alert alert-success" role="alert" style="margin: 10px 20px">
+			{{ Session::get('message-success')}}
+		</div>
+		@endif
 		<form class='form-horizontal' method='post' id="form" enctype="multipart/form-data" action='{{ CRUDBooster::mainPath("data") }}'>
+			{{ csrf_field() }}
 			<div class="box-body">
 				<div class='form-group header-group-0'>
 					<label class='control-label col-sm-2'>Path to Login <span class='text-danger' title='This field is required'>*</span></label>
@@ -14,7 +20,7 @@
 						<input type='text' title="Nama Sekolah" required class='form-control' name="path" id="path" value='{{ $detail->path }}'/>
 						<p class='help-block'>
 							@if($detail->path)
-							<a href="{{ url($detail->path.'login') }}">Klik Disini Untuk Melihat Tampilan Login</a>
+							<a href="{{ url($detail->path.'/login') }}">Klik Disini Untuk Melihat Tampilan Login</a>
 							@endif
 						</p>
 					</div>
@@ -25,7 +31,7 @@
 						@if($background->photo)
 						<p><a data-lightbox='roadtrip' href='{{ url($background->photo) }}'><img style='max-width:160px' title="Image For Background Login" src='{{ url($background->photo) }}'/></a></p>
 						@endif
-						<input type='file' title="Background Login" required class='form-control' name="background-login" id="background-login" value=''/>
+						<input type='file' title="Background Login" required class='form-control' name="photo" id="photo" value=''/>
 						<p class='help-block'>File types support : JPG, JPEG, PNG, GIF, BMP. HD Resolution. Kosongkan Jika Anda Tidak Ingin Merubah Apapun.</p>
 					</div>
 				</div>

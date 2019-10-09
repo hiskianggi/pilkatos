@@ -110,7 +110,7 @@
           </a>
           @endif
 
-          @if(Request::segment(2)=='student' || Request::segment(2)=='teachers' || Request::segment(2)=='employee')
+          @if(Request::segment(2)=='student' || Request::segment(2)=='teachers' || Request::segment(2)=='employee' && CRUDBooster::getCurrentMethod() == 'getIndex')
           @if(CRUDBooster::myPrivilegeId() == 1)
           <button class="btn btn-sm btn-warning btn-fill" data-toggle="modal" data-target="#printCard"><i class="fa fa-download"></i> Print Card</button>
 

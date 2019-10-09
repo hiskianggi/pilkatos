@@ -35,8 +35,8 @@ class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBCo
 		$this->col[] = ["label"=>"Email","name"=>"email"];
 		$this->col[] = ["label"=>"Privileges","name"=>"id_cms_privileges","join"=>"cms_privileges,name"];
 		$this->col[] = ["label"=>"Path","name"=>"path","callback"=>function($row){
-	    	return '<a href="'.url($row->path.'/login').'" class="btn btn-warning btn-xs btn-document dropdown-toggle"><span class="fa fa-user"></span> Login</a>';
-	    }];
+			return '<a href="'.url($row->path.'/login').'" class="btn btn-warning btn-xs btn-document dropdown-toggle"><span class="fa fa-user"></span> Login</a>';
+		}];
 		$this->col[] = ["label"=>"Status","name"=>"status","callback"=>function($row){
 			if ($row->status == 'Non Active') {
 				$btn = 'btn-danger';
@@ -82,9 +82,9 @@ class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBCo
 				$this->form[] = ['label'=>'Logo','name'=>'photo','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
 				$this->form[] = ['label'=>'Email','name'=>'email','type'=>'email','validation'=>'required|min:1|max:255|email|unique:cms_users','width'=>'col-sm-10','placeholder'=>'Please enter a valid email address'];
 				$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:3|max:32','width'=>'col-sm-10','help'=>'Minimum 5 characters. Please leave empty if you did not change the password.'];
-				$this->form[] = ['label'=>'Cms Privileges','name'=>'id_cms_privileges','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_privileges,name','datatable_where'=>'id != 1'];
+				$this->form[] = ['label'=>'Privileges','name'=>'id_cms_privileges','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_privileges,name','datatable_where'=>'id != 1'];
 				$this->form[] = ['label'=>'Path Login','name'=>'path','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-				$this->form[] = ['label'=>'Status','name'=>'status','type'=>'select','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'Active;Deactive'];
+				$this->form[] = ['label'=>'Status','name'=>'status','type'=>'select','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'Active;Non Active'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -316,7 +316,9 @@ class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    */
 	    public function hook_after_add($id) {        
 	        //Your code here
-
+	    	$data['photo'] = NULL;
+	    	$data['cms_users_id'] = $id;
+	    	DB::table('login_background')->insert($data);
 	    }
 
 	    /* 
@@ -341,7 +343,15 @@ class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    */
 	    public function hook_after_edit($id) {
 	        //Your code here 
+	    	// $check = DB::table('login_background')->where('cms_users_id', $id)->first();
+	    	// if ($check) {
 
+	    	// }else{
+	    	// 	$data['photo'] = NULL;
+	    	// 	$data['cms_users_id'] = $id;
+	    	// 	DB::table('login_background')->insert($data);
+	    	// }
+	    	
 	    }
 
 	    /* 
