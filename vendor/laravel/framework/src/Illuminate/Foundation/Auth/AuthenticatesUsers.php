@@ -17,9 +17,19 @@ trait AuthenticatesUsers
      */
     public function showLoginForm($path)
     {   
-        $check = DB::table('cms_users')->where('path', $path)->first();
+        $check = DB::table('cms_users')
+        ->where([
+            'path' => $path,
+            'status' => 'Active'
+        ])
+        ->first();
+
         $data['cms_users_id'] = $check->id;
-        return view('auth.login', $data);
+        if ($check) {
+            return view('auth.login', $data);
+        }else{
+            return redirect('https://pilkatos.tech');
+        }
     }
 
     /**
@@ -157,11 +167,12 @@ trait AuthenticatesUsers
      */
     public function logout(Request $request)
     {
+        $path = DB::table('cms_users')->where('id', Auth::user()->cms_users_id)->first()->path;
         $this->guard()->logout();
 
         $request->session()->invalidate();
 
-        return redirect('/');
+        return redirect($path.'/login');
     }
 
     /**
