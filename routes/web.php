@@ -11,7 +11,7 @@
 |
 */
 Route::group(['middleware'=>'auth'], function(){
-	Route::get('/', 'HomeController@index');
+	Route::get('/', 'FrontController@getIndex');
 });
 
 Route::get('/{path}/login', 'Auth\LoginController@showLoginForm');

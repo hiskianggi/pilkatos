@@ -115,7 +115,7 @@ trait AuthenticatesUsers
         $this->clearLoginAttempts($request);
 
         return $this->authenticated($request, $this->guard()->user())
-                ?: redirect()->intended($this->redirectPath());
+        ?: redirect()->intended($this->redirectPath());
     }
 
     /**
@@ -145,8 +145,8 @@ trait AuthenticatesUsers
         }
 
         return redirect()->back()
-            ->withInput($request->only($this->username(), 'remember'))
-            ->withErrors($errors);
+        ->withInput($request->only($this->username(), 'remember'))
+        ->withErrors($errors);
     }
 
     /**
@@ -172,7 +172,12 @@ trait AuthenticatesUsers
 
         $request->session()->invalidate();
 
-        return redirect($path.'/login');
+        if($path){
+            return redirect($path.'/login');
+        }else{
+            return redirect('https://pilkatos.tech');
+        }
+        
     }
 
     /**
