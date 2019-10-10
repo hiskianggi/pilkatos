@@ -151,6 +151,22 @@
           </a>
           @endif
           @endif
+          @if(Request::segment(2)=='golput' && CRUDBooster::getCurrentMethod() == 'getIndex')
+          <a href="{{ CRUDBooster::mainpath() }}?filter=students" title='Filter Berdasarkan Siswa' class="btn btn-sm btn-primary">
+            <i class="fa fa-user"></i> Siswa
+          </a>
+          <a href="{{ CRUDBooster::mainpath() }}?filter=teachers" title='Filter Berdasarkan Guru' class="btn btn-sm btn-success">
+            <i class="fa fa-user-plus"></i> Guru
+          </a>
+          <a href="{{ CRUDBooster::mainpath() }}?filter=employees" title='Filter Berdasarkan Karyawan' class="btn btn-sm btn-warning">
+            <i class="fa fa-users"></i> Karyawan
+          </a>
+          @if(g('filter'))
+            <a href="{{ CRUDBooster::mainpath() }}" title='Reset Filter' class="btn btn-sm btn-danger">
+            <i class="fa fa-list"></i> Reset Filter
+          </a>
+          @endif
+          @endif
 
           <!--ADD ACTIon-->
           @if(count($index_button))                          

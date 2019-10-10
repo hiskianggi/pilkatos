@@ -5,6 +5,7 @@ namespace Illuminate\Foundation\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use Hash;
 
 trait AuthenticatesUsers
 {
@@ -105,7 +106,7 @@ trait AuthenticatesUsers
      */
     protected function credentials(Request $request)
     {
-        return $request->only($this->username(), 'password', 'cms_users_id');
+        return ['username' => $request->{$this->username()}, 'password' => $request->password, 'cms_users_id' => $request->cms_users_id, 'status' => 0];
     }
 
     /**
@@ -150,9 +151,26 @@ trait AuthenticatesUsers
             return response()->json($errors, 422);
         }
 
-        return redirect()->back()
-        ->withInput($request->only($this->username(), 'remember'))
-        ->withErrors($errors);
+        $user = DB::table('users')->where('username', $request->username)->first();
+        if (!$user) {
+            return redirect()->back()
+            ->withInput($request->only($this->username()))
+            ->withErrors([
+                $this->username() => trans('auth.failed'),
+            ]);
+        }elseif (!Hash::check($request->password, $user->password)) {
+            return redirect()->back()
+            ->withInput($request->only($this->username()))
+            ->withErrors([
+                'password' => trans('auth.failed'),
+            ]);
+        }elseif (Hash::check($request->password, $user->password) && $user->status == 1) {
+            return redirect()->back()
+            ->withInput($request->only($this->username()))
+            ->withErrors([
+                'status' => trans('auth.failed'),
+            ]);
+        }
     }
 
     /**

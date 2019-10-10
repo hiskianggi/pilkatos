@@ -34,6 +34,29 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 		$this->col[] = ["label"=>"Kode / NIS","name"=>"username"];
 		$this->col[] = ["label"=>"Nama","name"=>"name"];
 		$this->col[] = ["label"=>"Kelas","name"=>"class_id","join"=>"class,name"];
+		$this->col[] = ["label"=>"Status","name"=>"status","callback"=>function($row){
+			if ($row->status == 0) {
+				$res = '<span class="btn btn-warning btn-xs btn-document dropdown-toggle"><span class="fa fa-user"></span> Belum Memilih</span>';
+			}else{
+				$res = '<div class="dropdown">
+			<button type="button" class="btn btn-primary btn-xs btn-document dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user"></span> Sudah Memilih <span class="fa fa-caret-down"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="javascript:void(0)" onclick="swal({
+					title: &quot;Reset Sekarang ?&quot;,
+					text: &quot;&quot;,
+					type: &quot;warning&quot;,
+					showCancelButton: true,
+					confirmButtonColor: &quot;#3C8DBC&quot;,
+					confirmButtonText: &quot;Ya!&quot;,
+					cancelButtonText: &quot;Tidak&quot;,
+					closeOnConfirm: false },
+					function(){  location.href=&quot;'.CRUDBooster::mainPath('reset/').$row->id.'&quot; });">Reset</a></li>
+					</ul>
+					</div>';
+			}
+			return $res;
+		}];
 		if (CRUDBooster::myId() == 1) {
 			$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
 		}
@@ -140,7 +163,8 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	        | @color = Default is none. You can use bootstrap success,info,warning,danger,primary.        
 	        | 
 	        */
-	        $this->table_row_color = array();     	          
+	        $this->table_row_color = array(); 
+	        $this->table_row_color[] = ['condition'=>"[status] == 1","color"=>"success"];    	          
 
 	        
 	        /*
@@ -251,9 +275,13 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	    public function hook_query_index(&$query) {
 	        //Your code here
 	    	if (CRUDBooster::myId() != 1) {
-	    		$query->where('users.cms_users_id',CRUDBooster::myId())->where('users.type',0);
+	    		$query
+	    		->where('users.cms_users_id',CRUDBooster::myId())
+	    		->where('users.type',0);
 	    	}else{
-	    		$query->where('users.type',0);
+	    		$query
+	    		->where('cms_users.status', 'Active')
+	    		->where('users.type',0);
 	    	}
 	    }
 
@@ -390,6 +418,13 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	    	->generate(json_encode($qr));
 
 	    	$this->cbView('backend.detail',$data);
+	    }
+
+	    public function getReset($id){
+	    	DB::table('users')->where('id', $id)->update(['status' => 0]);
+	    	DB::table('election_data')->where('users_id', $id)->delete();
+
+	    	return redirect(CRUDBooster::mainPath());
 	    }
 
 	}

@@ -1,45 +1,45 @@
 <?php namespace App\Http\Controllers;
 
-	use Session;
-	use Request;
-	use DB;
-	use CRUDBooster;
+use Session;
+use Request;
+use DB;
+use CRUDBooster;
 
-	class AdminClassController extends \crocodicstudio\crudbooster\controllers\CBController {
+class AdminClassController extends \crocodicstudio\crudbooster\controllers\CBController {
 
-	    public function cbInit() {
+	public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
-			$this->title_field = "name";
-			$this->limit = "20";
-			$this->orderby = "id,desc";
-			$this->global_privilege = false;
-			$this->button_table_action = true;
-			$this->button_bulk_action = true;
-			$this->button_action_style = "button_icon";
-			$this->button_add = true;
-			$this->button_edit = true;
-			$this->button_delete = true;
-			$this->button_detail = true;
-			$this->button_show = true;
-			$this->button_filter = true;
-			$this->button_import = false;
-			$this->button_export = false;
-			$this->table = "class";
+		$this->title_field = "name";
+		$this->limit = "20";
+		$this->orderby = "id,desc";
+		$this->global_privilege = false;
+		$this->button_table_action = true;
+		$this->button_bulk_action = true;
+		$this->button_action_style = "button_icon";
+		$this->button_add = true;
+		$this->button_edit = true;
+		$this->button_delete = true;
+		$this->button_detail = true;
+		$this->button_show = true;
+		$this->button_filter = true;
+		$this->button_import = false;
+		$this->button_export = false;
+		$this->table = "class";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
-			$this->col = [];
-			$this->col[] = ["label"=>"Nama Kelas","name"=>"name"];
-			if (CRUDBooster::myId() == 1) {
+		$this->col = [];
+		$this->col[] = ["label"=>"Nama Kelas","name"=>"name"];
+		if (CRUDBooster::myId() == 1) {
 			$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
 		}
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
-			$this->form = [];
-			$this->form[] = ['label'=>'Nama Kelas','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-			if (CRUDBooster::myId() == 1) {
+		$this->form = [];
+		$this->form[] = ['label'=>'Nama Kelas','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
+		if (CRUDBooster::myId() == 1) {
 			$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
 		}
 			# END FORM DO NOT REMOVE THIS LINE
@@ -91,7 +91,7 @@
 	        */
 	        $this->button_selected = array();
 
-	                
+
 	        /* 
 	        | ---------------------------------------------------------------------- 
 	        | Add alert message to this module at overheader
@@ -101,7 +101,7 @@
 	        | 
 	        */
 	        $this->alert        = array();
-	                
+
 
 	        
 	        /* 
@@ -222,7 +222,7 @@
 	    */
 	    public function actionButtonSelected($id_selected,$button_name) {
 	        //Your code here
-	            
+
 	    }
 
 
@@ -235,9 +235,11 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	        if (CRUDBooster::myId() != 1) {
-	        	$query->where('class.cms_users_id',CRUDBooster::myId());
-	    }
+	    	if (CRUDBooster::myId() != 1) {
+	    		$query->where('class.cms_users_id',CRUDBooster::myId());
+	    	}else{
+	    		$query->where('cms_users.status','Active');
+	    	}
 	    }
 
 	    /*

@@ -1,49 +1,72 @@
 <?php namespace App\Http\Controllers;
 
-	use Session;
-	use Request;
-	use DB;
-	use CRUDBooster;
-	use QrCode;
+use Session;
+use Request;
+use DB;
+use CRUDBooster;
+use QrCode;
 
-	class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CBController {
+class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CBController {
 
-	    public function cbInit() {
+	public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
-			$this->title_field = "username";
-			$this->limit = "20";
-			$this->orderby = "id,desc";
-			$this->global_privilege = false;
-			$this->button_table_action = true;
-			$this->button_bulk_action = true;
-			$this->button_action_style = "button_icon";
-			$this->button_add = true;
-			$this->button_edit = true;
-			$this->button_delete = true;
-			$this->button_detail = true;
-			$this->button_show = true;
-			$this->button_filter = true;
-			$this->button_import = true;
-			$this->button_export = true;
-			$this->table = "users";
+		$this->title_field = "username";
+		$this->limit = "20";
+		$this->orderby = "id,desc";
+		$this->global_privilege = false;
+		$this->button_table_action = true;
+		$this->button_bulk_action = true;
+		$this->button_action_style = "button_icon";
+		$this->button_add = true;
+		$this->button_edit = true;
+		$this->button_delete = true;
+		$this->button_detail = true;
+		$this->button_show = true;
+		$this->button_filter = true;
+		$this->button_import = true;
+		$this->button_export = true;
+		$this->table = "users";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
-			$this->col = [];
-			$this->col[] = ["label"=>"Kode Guru","name"=>"username"];
-			$this->col[] = ["label"=>"Nama","name"=>"name"];
-			if (CRUDBooster::myId() == 1) {
+		$this->col = [];
+		$this->col[] = ["label"=>"Kode Guru","name"=>"username"];
+		$this->col[] = ["label"=>"Nama","name"=>"name"];
+		$this->col[] = ["label"=>"Status","name"=>"status","callback"=>function($row){
+			if ($row->status == 0) {
+				$res = '<span class="btn btn-warning btn-xs btn-document dropdown-toggle"><span class="fa fa-user"></span> Belum Memilih</span>';
+			}else{
+				$res = '<div class="dropdown">
+			<button type="button" class="btn btn-primary btn-xs btn-document dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user"></span> Sudah Memilih <span class="fa fa-caret-down"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="javascript:void(0)" onclick="swal({
+					title: &quot;Reset Sekarang ?&quot;,
+					text: &quot;&quot;,
+					type: &quot;warning&quot;,
+					showCancelButton: true,
+					confirmButtonColor: &quot;#3C8DBC&quot;,
+					confirmButtonText: &quot;Ya!&quot;,
+					cancelButtonText: &quot;Tidak&quot;,
+					closeOnConfirm: false },
+					function(){  location.href=&quot;'.CRUDBooster::mainPath('reset/').$row->id.'&quot; });">Reset</a></li>
+					</ul>
+					</div>';
+			}
+			return $res;
+		}];
+		if (CRUDBooster::myId() == 1) {
 			$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
 		}
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
-			$this->form = [];
-			$this->form[] = ['label'=>'Kode Guru','name'=>'username','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-			$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:3|max:32','width'=>'col-sm-10','help'=>'Minimum 5 characters. Please leave empty if you did not change the password.'];
-			if (CRUDBooster::myId() == 1) {
+		$this->form = [];
+		$this->form[] = ['label'=>'Kode Guru','name'=>'username','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+		$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
+		$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:3|max:32','width'=>'col-sm-10','help'=>'Minimum 5 characters. Please leave empty if you did not change the password.'];
+		if (CRUDBooster::myId() == 1) {
 			$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
 		}
 			# END FORM DO NOT REMOVE THIS LINE
@@ -99,7 +122,7 @@
 	        */
 	        $this->button_selected = array();
 
-	                
+	        
 	        /* 
 	        | ---------------------------------------------------------------------- 
 	        | Add alert message to this module at overheader
@@ -109,7 +132,7 @@
 	        | 
 	        */
 	        $this->alert        = array();
-	                
+	        
 
 	        
 	        /* 
@@ -133,7 +156,8 @@
 	        | @color = Default is none. You can use bootstrap success,info,warning,danger,primary.        
 	        | 
 	        */
-	        $this->table_row_color = array();     	          
+	        $this->table_row_color = array();
+	        $this->table_row_color[] = ['condition'=>"[status] == 1","color"=>"success"];       	          
 
 	        
 	        /*
@@ -230,7 +254,7 @@
 	    */
 	    public function actionButtonSelected($id_selected,$button_name) {
 	        //Your code here
-	            
+	    	
 	    }
 
 
@@ -243,11 +267,13 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	       if (CRUDBooster::myId() != 1) {
-	        	$query->where('users.cms_users_id',CRUDBooster::myId())->where('users.type',1);
-	    }else{
-	    	$query->where('users.type',1);
-	    }
+	    	if (CRUDBooster::myId() != 1) {
+	    		$query->where('users.cms_users_id',CRUDBooster::myId())->where('users.type',1);
+	    	}else{
+	    		$query
+	    		->where('cms_users.status', 'Active')
+	    		->where('users.type',1);
+	    	}
 	    }
 
 	    /*
@@ -385,6 +411,13 @@
 	    	->generate(json_encode($qr));
 
 	    	$this->cbView('backend.detail',$data);
+	    }
+
+	    public function getReset($id){
+	    	DB::table('users')->where('id', $id)->update(['status' => 0]);
+	    	DB::table('election_data')->where('users_id', $id)->delete();
+
+	    	return redirect(CRUDBooster::mainPath());
 	    }
 
 	}

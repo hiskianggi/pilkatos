@@ -30,8 +30,8 @@ class AdminGolputController extends \crocodicstudio\crudbooster\controllers\CBCo
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col = [];
-		$this->col[] = ["label"=>"Username","name"=>"username"];
-		$this->col[] = ["label"=>"Name","name"=>"name"];
+		$this->col[] = ["label"=>"Kode / NIS","name"=>"username"];
+		$this->col[] = ["label"=>"Nama","name"=>"name"];
 		if (!g('filter')) {
 			$this->col[] = ["label"=>"Type","name"=>"type","callback"=>function ($row){
 				if ($row->type == 0) {
@@ -39,9 +39,12 @@ class AdminGolputController extends \crocodicstudio\crudbooster\controllers\CBCo
 				}elseif ($row->type == 1) {
 					return '<span class="btn btn-xs btn-success">Guru</span>';
 				}elseif ($row->type == 2) {
-					return '<span class="btn btn-xs btn-danger">Karyawan</span>';
+					return '<span class="btn btn-xs btn-warning">Karyawan</span>';
 				}
 			}];
+		}
+		if (g('filter') == 'students') {
+			$this->col[] = ["label"=>"Kelas","name"=>"class_id","join"=>"class,name"];
 		}
 		if (CRUDBooster::myId() == 1) {
 			$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
@@ -257,7 +260,9 @@ class AdminGolputController extends \crocodicstudio\crudbooster\controllers\CBCo
 	        //Your code here
 	        if (CRUDBooster::myId() != 1) {
 	        	$query->where('users.cms_users_id', CRUDBooster::myId());
-	        }
+	        }else{
+	    		$query->where('cms_users.status','Active');
+	    	}
 
 	    	if (g('filter') == 'students') {
 	    		$query->where('type',0);

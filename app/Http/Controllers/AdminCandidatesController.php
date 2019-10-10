@@ -245,6 +245,8 @@ class AdminCandidatesController extends \crocodicstudio\crudbooster\controllers\
 	        //Your code here
 	    	if (CRUDBooster::myId() != 1) {
 	    		$query->where('class.cms_users_id',CRUDBooster::myId());
+	    	}else{
+	    		$query->where('cms_users.status','Active');
 	    	}
 	    }
 

@@ -139,11 +139,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 														}
 
 														.w3layouts-main {
-															@if($bg_login == NULL)
 															background-image: url('../images/bg-login.jpg');
-															@else
-															background-image: url({{ url($bg-login) }});
-															@endif
 															background-repeat: repeat-x;
 															animation: slideleft 20000s infinite linear;
 															-webkit-animation: slideleft 20000s infinite linear;
@@ -508,7 +504,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 													</style>
 													<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" media="all" />
 													<!-- //Custom Theme files -->
-
+													<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.js" integrity="sha256-7OUNnq6tbF4510dkZHCRccvQfRlV3lPpBTJEljINxao=" crossorigin="anonymous"></script>
+													<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.css" integrity="sha256-2bAj1LMT7CXUYUwuEnqqooPb1W0Sw0uKMsqNH0HwMa4=" crossorigin="anonymous" />
 													<!-- web font -->
 													<link href="//fonts.googleapis.com/css?family=Hind:300,400,500,600,700" rel="stylesheet">
 													<!-- //web font -->
@@ -519,6 +516,41 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 													<!-- main -->
 													@yield('content')
 													<!-- //main -->
+													<script
+													src="https://code.jquery.com/jquery-3.4.1.min.js"
+													integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+													crossorigin="anonymous"></script>
+													@if ($errors->has('username'))
+													<script type="text/javascript">
+														$(document).ready(function() {
+															Swal.fire(
+																'Pesan',
+																'Kode/NIS Yang Anda Masukkan Tidak Terdaftar!',
+																'info'
+																)
+														});
+													</script>
+													@elseif ($errors->has('password'))
+													<script type="text/javascript">
+														$(document).ready(function() {
+															Swal.fire(
+																'Pesan',
+																'Password Yang Anda Masukkan Salah!',
+																'info'
+																)
+														});
+													</script>
+													@elseif ($errors->has('status'))
+													<script type="text/javascript">
+														$(document).ready(function() {
+															Swal.fire(
+																'Pesan',
+																'Anda Sudah Memilih!',
+																'info'
+																)
+														});
+													</script>
+													@endif
 
 												</body>
 												</html>
