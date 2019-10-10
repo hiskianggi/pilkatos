@@ -35,7 +35,12 @@ class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBCo
 		$this->col[] = ["label"=>"Email","name"=>"email"];
 		$this->col[] = ["label"=>"Privileges","name"=>"id_cms_privileges","join"=>"cms_privileges,name"];
 		$this->col[] = ["label"=>"Path","name"=>"path","callback"=>function($row){
-			return '<a href="'.url($row->path.'/login').'" class="btn btn-warning btn-xs btn-document dropdown-toggle"><span class="fa fa-user"></span> Login</a>';
+			if ($row->status == 'Active') {
+				$res = '<a href="'.url($row->path.'/login').'" class="btn btn-primary btn-xs btn-document dropdown-toggle"><span class="fa fa-user"></span> Login</a>';
+			}else{
+				$res = '<button disabled class="btn btn-warning btn-xs btn-document dropdown-toggle"><span class="fa fa-user"></span> Non Active</a>';
+			}
+			return $res;
 		}];
 		$this->col[] = ["label"=>"Status","name"=>"status","callback"=>function($row){
 			if ($row->status == 'Non Active') {

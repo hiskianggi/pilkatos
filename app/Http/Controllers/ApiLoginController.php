@@ -30,7 +30,16 @@ class ApiLoginController extends \crocodicstudio\crudbooster\controllers\ApiCont
 				$data['id'] = $user->id;
 				$data['username'] = $user->username;
 				$data['name'] = $user->name;
-				$data['info'] = ''; 
+
+				if ($user->type == 0) {
+					$class = DB::table('class')->where('id', $user->class_id)->first()->name;
+					$data['info'] = $class; 
+				}elseif ($user->type == 1) {
+					$data['info'] = 'Guru'; 
+				}else{
+					$data['info'] = 'Karyawan'; 
+				}
+
 				$data['cms_users_id'] = $user->cms_users_id;
 
 				$response['api_status']        = 1;
