@@ -4,6 +4,7 @@
 	use Request;
 	use DB;
 	use CRUDBooster;
+	use QrCode;
 
 	class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CBController {
 
@@ -358,6 +359,32 @@
 	    	$data['logo'] = DB::table('cms_users')->where('id', g('cms_users_id'))->first()->photo;
 
 	    	return view('backend.export.voter_card', $data);
+	    }
+
+	    public function getDetail($id) {
+	    	if(!CRUDBooster::isRead() && $this->global_privilege==FALSE || $this->button_edit==FALSE) {    
+	    		CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
+	    	}
+
+	    	$data = [];
+	    	$data['page_title'] = 'Detail Guru';
+	    	$data['row'] = DB::table('users')
+	    	->select('users.username','users.name','users.password','users.cms_users_id','cms_users.name as school','users.type')
+	    	->join('cms_users','users.cms_users_id','=','cms_users.id')
+	    	->where('users.id',$id)
+	    	->where('type', 1)
+	    	->first();
+
+	    	$qr['username'] = $data['row']->username;
+	    	$qr['password'] = $data['row']->password;
+	    	$qr['cms_users_id'] = $data['row']->cms_users_id;
+
+	    	$data['image'] = QrCode::format('png')
+	    	->merge(url('images/logo.png'), 0.3, true)
+	    	->size(300)->errorCorrection('H')
+	    	->generate(json_encode($qr));
+
+	    	$this->cbView('backend.detail',$data);
 	    }
 
 	}
