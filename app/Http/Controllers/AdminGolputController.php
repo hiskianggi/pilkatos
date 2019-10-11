@@ -35,7 +35,7 @@ class AdminGolputController extends \crocodicstudio\crudbooster\controllers\CBCo
 		if (!g('filter')) {
 			$this->col[] = ["label"=>"Type","name"=>"type","callback"=>function ($row){
 				if ($row->type == 0) {
-					return '<span class="btn btn-xs btn-primary">Siswa</span>';
+					return '<span class="btn btn-xs btn-info">Siswa</span>';
 				}elseif ($row->type == 1) {
 					return '<span class="btn btn-xs btn-success">Guru</span>';
 				}elseif ($row->type == 2) {
@@ -146,9 +146,9 @@ class AdminGolputController extends \crocodicstudio\crudbooster\controllers\CBCo
 	        | @color = Default is none. You can use bootstrap success,info,warning,danger,primary.        
 	        | 
 	        */
-	        $this->table_row_color[] = ["condition"=>"[type] == '0'","color"=>"primary"];
+	        $this->table_row_color[] = ["condition"=>"[type] == '0'","color"=>"info"];
 	        $this->table_row_color[] = ["condition"=>"[type] == '1'","color"=>"success"];  
-	        $this->table_row_color[] = ["condition"=>"[type] == '2'","color"=>"danger"];    	          
+	        $this->table_row_color[] = ["condition"=>"[type] == '2'","color"=>"warning"];    	          
 
 	        
 	        /*

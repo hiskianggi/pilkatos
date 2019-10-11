@@ -152,7 +152,7 @@
           @endif
           @endif
           @if(Request::segment(2)=='golput' && CRUDBooster::getCurrentMethod() == 'getIndex')
-          <a href="{{ CRUDBooster::mainpath() }}?filter=students" title='Filter Berdasarkan Siswa' class="btn btn-sm btn-primary">
+          <a href="{{ CRUDBooster::mainpath() }}?filter=students" title='Filter Berdasarkan Siswa' class="btn btn-sm btn-info">
             <i class="fa fa-user"></i> Siswa
           </a>
           <a href="{{ CRUDBooster::mainpath() }}?filter=teachers" title='Filter Berdasarkan Guru' class="btn btn-sm btn-success">
