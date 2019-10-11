@@ -32,15 +32,38 @@ class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CB
 			# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col = [];
 		$this->col[] = ["label"=>"Kode Guru","name"=>"username"];
+		if (CRUDBooster::myPrivilegeId() == 1) {
+			$this->col[] = ["label"=>"Email","name"=>"email","callback"=>function($row){
+				if ($row->email == NULL) {
+					$res = '<span class="btn btn-danger btn-xs btn-document dropdown-toggle"><span class="fa fa-inbox"></span> NULL</span>';
+				}else{
+					$res = $row->email;
+				}
+
+				return $res;
+			}];
+		}else{
+			if (CB::checkSecurity() == 1) {
+				$this->col[] = ["label"=>"Email","name"=>"email","callback"=>function($row){
+					if ($row->email == NULL) {
+						$res = '<span class="btn btn-danger btn-xs btn-document dropdown-toggle"><span class="fa fa-inbox"></span> NULL</span>';
+					}else{
+						$res = $row->email;
+					}
+
+					return $res;
+				}];
+			}
+		}
 		$this->col[] = ["label"=>"Nama","name"=>"name"];
 		$this->col[] = ["label"=>"Status","name"=>"status","callback"=>function($row){
 			if ($row->status == 0) {
 				$res = '<span class="btn btn-warning btn-xs btn-document dropdown-toggle"><span class="fa fa-user"></span> Belum Memilih</span>';
 			}else{
 				$res = '<div class="dropdown">
-			<button type="button" class="btn btn-primary btn-xs btn-document dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user"></span> Sudah Memilih <span class="fa fa-caret-down"></span>
-			</button>
-			<ul class="dropdown-menu">
+				<button type="button" class="btn btn-primary btn-xs btn-document dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user"></span> Sudah Memilih <span class="fa fa-caret-down"></span>
+				</button>
+				<ul class="dropdown-menu">
 				<li><a href="javascript:void(0)" onclick="swal({
 					title: &quot;Reset Sekarang ?&quot;,
 					text: &quot;&quot;,
@@ -53,22 +76,29 @@ class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CB
 					function(){  location.href=&quot;'.CRUDBooster::mainPath('reset/').$row->id.'&quot; });">Reset</a></li>
 					</ul>
 					</div>';
+				}
+				return $res;
+			}];
+			if (CRUDBooster::myId() == 1) {
+				$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
 			}
-			return $res;
-		}];
-		if (CRUDBooster::myId() == 1) {
-			$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
-		}
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
-		$this->form = [];
-		$this->form[] = ['label'=>'Kode Guru','name'=>'username','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-		$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-		$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:3|max:32','width'=>'col-sm-10','help'=>'Minimum 5 characters. Please leave empty if you did not change the password.'];
-		if (CRUDBooster::myId() == 1) {
-			$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
-		}
+			$this->form = [];
+			$this->form[] = ['label'=>'Kode Guru','name'=>'username','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			if (CRUDBooster::myPrivilegeId() == 1) {
+				$this->form[] = ['label'=>'Email','name'=>'email','type'=>'email','validation'=>'min:8|max:70','width'=>'col-sm-10','help'=>'Please leave empty if you don"t want to fill in an email.'];
+			}else{
+				if (CB::checkSecurity() == 1) {
+					$this->form[] = ['label'=>'Email','name'=>'email','type'=>'email','validation'=>'required|min:8|max:70','width'=>'col-sm-10','placeholder'=>'Ex : username@mail.com'];
+				}
+			}
+			$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
+			$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:3|max:32','width'=>'col-sm-10','help'=>'Minimum 5 characters. Please leave empty if you did not change the password.'];
+			if (CRUDBooster::myId() == 1) {
+				$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
+			}
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -108,6 +138,9 @@ class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CB
 	        | 
 	        */
 	        $this->addaction = array();
+	        if (CRUDBooster::myPrivilegeId() == 1 || CRUDBooster::myPrivilegeId() != 1 && CB::checkSecurity() == 1) {
+	        	$this->addaction[] = ['label'=>'Kirim Email','url'=>CRUDBooster::mainpath('send-email/[id]'),'icon'=>'fa fa-inbox','color'=>'success','showIf'=>"[email] != NULL"];
+	        }
 
 
 	        /* 
@@ -395,7 +428,7 @@ class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CB
 	    	$data = [];
 	    	$data['page_title'] = 'Detail Guru';
 	    	$data['row'] = DB::table('users')
-	    	->select('users.username','users.name','users.password','users.cms_users_id','cms_users.name as school','users.type')
+	    	->select('users.email','users.username','users.name','users.password','users.cms_users_id','cms_users.name as school','users.type')
 	    	->join('cms_users','users.cms_users_id','=','cms_users.id')
 	    	->where('users.id',$id)
 	    	->where('type', 1)
@@ -418,6 +451,133 @@ class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CB
 	    	DB::table('election_data')->where('users_id', $id)->delete();
 
 	    	return redirect(CRUDBooster::mainPath());
+	    }
+
+	    public function getSendEmail($id){
+
+	    	$users = DB::table('users')
+	    	->select('users.email','users.name','cms_users.name as school','users.username','cms_users.path')
+	    	->join('cms_users','users.cms_users_id','=','cms_users.id')
+	    	->where('cms_users.with_email', 1)
+	    	->where('users.id', $id)
+	    	->first();
+
+	    	if (!$users) {
+	    		return redirect()->back()->with(['message_type'=>'warning','message'=>'Error Bro!']);
+	    	}else{
+	    		$token = str_random(64);
+
+	    		$check_token = DB::table('password_token')->where('email',$users->email)->first();
+	    		if ($check_token) {
+	    			DB::table('users')->where('email', $users->email)->update(['password' => NULL]);
+	    			DB::table('password_token')->where('email', $users->email)->update([
+	    				'token' => $token,
+	    				'created_at' => now()
+	    			]);
+	    		}else{
+	    			DB::table('password_token')->insert([
+	    				'email' => $users->email,
+	    				'token' => $token
+	    			]);
+	    		}
+
+	    		$data['name'] = $users->name;
+	    		$data['school'] = $users->school;
+	    		$data['token'] = $token;
+	    		$data['username'] = $users->username;
+	    		$data['path'] = $users->path;
+
+	    		CRUDBooster::sendEmail([
+	    			'to' 		=>$users->email,
+	    			'data' 		=> $data,
+	    			'template'  =>'password_token']);
+
+	    		return redirect()->back()->with(['message_type'=>'success','message'=>'Password Token Untuk '.$users->name.' Telah Dikirim!']);
+	    	}
+	    }
+
+	    public function getSendAllEmail(){
+
+	    	$users = DB::table('users')
+	    	->select('users.email','users.name','cms_users.name as school','users.username','cms_users.path')
+	    	->join('cms_users','users.cms_users_id','=','cms_users.id')
+	    	->where('cms_users.with_email', 1)
+	    	->where('users.cms_users_id', CRUDBooster::myId())
+	    	->where('users.email','!=',NULL)
+	    	->where('users.type',1)
+	    	->get();
+
+	    	foreach ($users as $row) {
+	    		$token = str_random(64);
+
+	    		$check_token = DB::table('password_token')->where('email',$row->email)->first();
+	    		if ($check_token) {
+	    			DB::table('users')->where('email', $row->email)->update(['password' => NULL]);
+	    			DB::table('password_token')->where('email', $row->email)->update([
+	    				'token' => $token,
+	    				'created_at' => now()
+	    			]);
+	    		}else{
+	    			DB::table('password_token')->insert([
+	    				'email' => $row->email,
+	    				'token' => $token
+	    			]);
+	    		}
+	    		
+	    		$data['name'] = $row->name;
+	    		$data['school'] = $row->school;
+	    		$data['token'] = $token;
+	    		$data['username'] = $row->username;
+	    		$data['path'] = $row->path;
+
+	    		CRUDBooster::sendEmail([
+	    			'to' 		=>$row->email,
+	    			'data' 		=> $data,
+	    			'template'  =>'password_token']);
+	    	}
+	    	
+	    	return redirect()->back()->with(['message_type'=>'success','message'=>'Semua Password Token Telah Dikirim!']);
+	    }
+
+	    public function postSendAllEmail(){
+
+	    	$users = DB::table('users')
+	    	->select('users.email','users.name','cms_users.name as school','users.username','cms_users.path')
+	    	->join('cms_users','users.cms_users_id','=','cms_users.id')
+	    	->where('cms_users.with_email', 1)
+	    	->where('users.cms_users_id', g('cms_users_id'))
+	    	->where('users.email','!=',NULL)
+	    	->where('users.type',1)
+	    	->get();
+
+	    	foreach ($users as $row) {
+	    		$token = str_random(64);
+	    		if ($check_token) {
+	    			DB::table('users')->where('email', $row->email)->update(['password' => NULL]);
+	    			DB::table('password_token')->where('email', $row->email)->update([
+	    				'token' => $token,
+	    				'created_at' => now()
+	    			]);
+	    		}else{
+	    			DB::table('password_token')->insert([
+	    				'email' => $row->email,
+	    				'token' => $token
+	    			]);
+	    		}
+
+	    		$data['name'] = $row->name;
+	    		$data['school'] = $row->school;
+	    		$data['token'] = $token;
+	    		$data['username'] = $row->username;
+	    		$data['path'] = $row->path;
+
+	    		CRUDBooster::sendEmail([
+	    			'to' 		=>$row->email,
+	    			'data' 		=> $data,
+	    			'template'  =>'password_token']);
+	    	}
+	    	
+	    	return redirect()->back()->with(['message_type'=>'success','message'=>'Semua Password Token Telah Dikirim!']);
 	    }
 
 	}

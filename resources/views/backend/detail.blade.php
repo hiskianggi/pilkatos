@@ -21,6 +21,12 @@
             </td>
             <td>{{ $row->username }}</td>
           </tr>
+          @if($row->email != NULL)
+          <tr>
+            <td>Email</td>
+            <td>{{ $row->email }}</td>
+          </tr>
+          @endif
           <tr>
             <td>Nama</td>
             <td>{{ $row->name }}</td>

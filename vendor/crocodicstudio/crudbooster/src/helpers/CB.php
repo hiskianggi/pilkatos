@@ -11,4 +11,9 @@ use Validator;
 
 class CB extends CRUDBooster  {
 	//This CB class is for alias of CRUDBooster class
+	public static function checkSecurity(){
+		$cms_users = DB::table('cms_users')->where('id', CRUDBooster::myId())->first();
+
+		return $cms_users->with_email;
+	}
 }

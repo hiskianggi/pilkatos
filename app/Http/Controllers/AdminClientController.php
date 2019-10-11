@@ -42,6 +42,15 @@ class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBCo
 			}
 			return $res;
 		}];
+		$this->col[] = ["label"=>"Security","name"=>"with_email","callback"=>function($row){
+			if ($row->with_email == 0) {
+				$btn = '<span class="btn btn-warning btn-xs btn-document dropdown-toggle"><span class="fa fa-inbox"></span> Password Automatic</span>';
+			}else{
+				$btn = '<span class="btn btn-primary btn-xs btn-document dropdown-toggle"><span class="fa fa-inbox"></span> Confirmation With Email</span>';
+			}
+
+			return $btn;
+		}];
 		$this->col[] = ["label"=>"Status","name"=>"status","callback"=>function($row){
 			if ($row->status == 'Non Active') {
 				$btn = 'btn-danger';
@@ -89,7 +98,8 @@ class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBCo
 				$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:3|max:32','width'=>'col-sm-10','help'=>'Minimum 5 characters. Please leave empty if you did not change the password.'];
 				$this->form[] = ['label'=>'Privileges','name'=>'id_cms_privileges','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_privileges,name','datatable_where'=>'id != 1'];
 				$this->form[] = ['label'=>'Path Login','name'=>'path','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-				$this->form[] = ['label'=>'Status','name'=>'status','type'=>'select','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'Active;Non Active'];
+				$this->form[] = ['label'=>'Security','name'=>'with_email','type'=>'radio','dataenum'=>'1|Confirmation With Email;0|Password Automatic'];
+				$this->form[] = ['label'=>'Status','name'=>'status','type'=>'radio','dataenum'=>'Active;Non Active'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM

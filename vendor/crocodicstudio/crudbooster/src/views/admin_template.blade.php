@@ -126,7 +126,7 @@
                   </div>
                   <div class="modal-body">
                     <?php
-                        $school = DB::table('cms_users')->where('id','!=',1)->get()
+                    $school = DB::table('cms_users')->where('id','!=',1)->get()
                     ?>
                     <select class="form-control" name="cms_users_id" id="cms_users_id" required="">
                       <option selected="" disabled="">== PILIH SEKOLAH ==</option>
@@ -145,10 +145,52 @@
 
             </div>
           </div>
+
+          <button class="btn btn-sm btn-danger btn-fill" data-toggle="modal" data-target="#sendEmailAll"><i class="fa fa-inbox"></i> Kirim Semua Email</button>
+
+          <div id="sendEmailAll" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <form autocomplete="off" method="post" action="{{ CRUDBooster::mainpath('send-all-email') }}" enctype="multipart/form-data">
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Pilih Sekolah</h4>
+                  </div>
+                  <div class="modal-body">
+                    <?php
+                    $with_email = DB::table('cms_users')
+                    ->where('id','!=',1)
+                    ->where('with_email',1)
+                    ->get()
+                    ?>
+                    <select class="form-control" name="cms_users_id" id="cms_users_id" required="">
+                      <option selected="" disabled="">== PILIH SEKOLAH ==</option>
+                      @foreach($with_email as $s)
+                      <option value="{{ $s->id }}">{{ $s->name }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Kirim</button>
+                  </div>
+
+                </form>
+              </div>
+
+            </div>
+          </div>
           @else
           <a href="{{ CRUDBooster::mainpath('printcard') }}" id='btn_import_data' title='Print Card' class="btn btn-sm btn-warning">
             <i class="fa fa-download"></i> Print Card
           </a>
+          @if(CB::checkSecurity() == 1)
+          <a href="{{ CRUDBooster::mainpath('send-all-email') }}" id='btn_all_email' title='Send All Email' class="btn btn-sm btn-danger">
+            <i class="fa fa-inbox"></i> Send All Email
+          </a>
+          @endif
           @endif
           @endif
           @if(Request::segment(2)=='golput' && CRUDBooster::getCurrentMethod() == 'getIndex')
@@ -162,7 +204,7 @@
             <i class="fa fa-users"></i> Karyawan
           </a>
           @if(g('filter'))
-            <a href="{{ CRUDBooster::mainpath() }}" title='Reset Filter' class="btn btn-sm btn-danger">
+          <a href="{{ CRUDBooster::mainpath() }}" title='Reset Filter' class="btn btn-sm btn-danger">
             <i class="fa fa-list"></i> Reset Filter
           </a>
           @endif
