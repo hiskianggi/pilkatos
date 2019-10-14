@@ -226,7 +226,7 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 	        */
 	        $this->pre_index_html = '<div class="box box-default">
 	        <div class="box-header">
-	        <h1 class="box-title">Total = '.number_format(CB::totalTurnOut('employees')).' Siswa</h1>
+	        <h1 class="box-title">Total = '.number_format(CB::totalTurnOut('employees')).' Karyawan</h1>
 	        </div>
 	        </div>';
 	        

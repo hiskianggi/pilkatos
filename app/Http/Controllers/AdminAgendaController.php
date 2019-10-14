@@ -4,14 +4,13 @@ use Session;
 use Request;
 use DB;
 use CRUDBooster;
-use CB;
 
-class AdminFinanceController extends \crocodicstudio\crudbooster\controllers\CBController {
+class AdminAgendaController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 	public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
-		$this->title_field = "id";
+		$this->title_field = "title";
 		$this->limit = "20";
 		$this->orderby = "id,desc";
 		$this->global_privilege = false;
@@ -26,48 +25,55 @@ class AdminFinanceController extends \crocodicstudio\crudbooster\controllers\CBC
 		$this->button_filter = true;
 		$this->button_import = false;
 		$this->button_export = false;
-		$this->table = "finance";
+		$this->table = "agenda";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col = [];
-		$this->col[] = ["label"=>"Type","name"=>"type","callback"=>function($row){
-			if ($row->type == 'IN') {
-				$res = '<a href="'.CRUDBooster::mainPath().'?type=in" class="btn btn-primary btn-xs btn-document" title="Filter Pemasukan"><span class="fa fa-plus"></span> IN</a>';
+		$this->col[] = ["label"=>"Tanggal","name"=>"date","callback"=>function($row){
+			return \Carbon\Carbon::parse($row->date)->format('d F Y');
+		}];
+		$this->col[] = ["label"=>"Jam Mulai","name"=>"time_start"];
+		$this->col[] = ["label"=>"Jam Selesai","name"=>"time_end"];
+		$this->col[] = ["label"=>"Judul","name"=>"title"];
+		$this->col[] = ["label"=>"Deskripsi","name"=>"description"];
+		$this->col[] = ["label"=>"Nama","name"=>"name"];
+		$this->col[] = ["label"=>"File","name"=>"file","callback"=>function($row){
+			if ($row->file == NULL) {
+				$result = '<button disabled class="btn btn-warning btn-xs btn-document"><span class="fa fa-download"></span> File Not Found</button>';
 			}else{
-				$res = '<a href="'.CRUDBooster::mainPath().'?type=out" class="btn btn-danger btn-xs btn-document" title="Filter Pengeluaran"><span class="fa fa-minus"></span> OUT</a>';
+				$result = '<a href="'.url($row->file).'" class="btn btn-primary btn-xs btn-document"><span class="fa fa-download"></span> Download</a>';
 			}
-
-			return $res;
+			return $result;
 		}];
-		$this->col[] = ["label"=>"Nominal","name"=>"price","callback"=>function ($row)
-		{	
-			if ($row->type == 'IN') {
-				return '+ Rp. '.number_format($row->price);
-			}else{
-				return '- Rp. '.number_format($row->price);
-			}
-		}];
-		$this->col[] = ["label"=>"Keterangan","name"=>"keterangan"];
-		$this->col[] = ["label"=>"Tanggal","name"=>"created_at","callback"=>function ($row)
-		{
-			return \Carbon\Carbon::parse($row->created_at)->format('d F Y H:i:s');
-		}];
-		
+		if (CRUDBooster::myId() == 1) {
+			$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
+		}
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 		$this->form = [];
-		$this->form[] = ['label'=>'Type','name'=>'type','type'=>'radio','validation'=>'required','width'=>'col-sm-10','dataenum'=>'IN;OUT'];
-		$this->form[] = ['label'=>'Nominal','name'=>'price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-		$this->form[] = ['label'=>'Keterangan','name'=>'keterangan','type'=>'textarea','validation'=>'required|string|min:0|max:255','width'=>'col-sm-10'];
-		
+		$this->form[] = ['label'=>'Date','name'=>'date','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
+		$this->form[] = ['label'=>'Time Start','name'=>'time_start','type'=>'time','validation'=>'required|date_format:H:i:s','width'=>'col-sm-10'];
+		$this->form[] = ['label'=>'Time End','name'=>'time_end','type'=>'time','validation'=>'required|date_format:H:i:s','width'=>'col-sm-10'];
+		$this->form[] = ['label'=>'Title','name'=>'title','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'Anda hanya dapat memasukkan huruf saja'];
+		$this->form[] = ['label'=>'Description','name'=>'description','type'=>'textarea','validation'=>'string','width'=>'col-sm-10','placeholder'=>'Description is not required'];
+		$this->form[] = ['label'=>'Name','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'Anda hanya dapat memasukkan huruf saja'];
+		$this->form[] = ['label'=>'File','name'=>'file','type'=>'upload','width'=>'col-sm-10'];
+		if (CRUDBooster::myId() == 1) {
+			$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
+		}
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
-			//$this->form[] = ["label"=>"Price","name"=>"price","type"=>"number","required"=>TRUE,"validation"=>"required|integer|min:0"];
-			//$this->form[] = ["label"=>"Cms Users Id","name"=>"cms_users_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"cms_users,name"];
+			//$this->form[] = ["label"=>"Date","name"=>"date","type"=>"date","required"=>TRUE,"validation"=>"required|date"];
+			//$this->form[] = ["label"=>"Time Start","name"=>"time_start","type"=>"time","required"=>TRUE,"validation"=>"required|date_format:H:i:s"];
+			//$this->form[] = ["label"=>"Time End","name"=>"time_end","type"=>"time","required"=>TRUE,"validation"=>"required|date_format:H:i:s"];
+			//$this->form[] = ["label"=>"Title","name"=>"title","type"=>"text","required"=>TRUE,"validation"=>"required|string|min:3|max:70","placeholder"=>"Anda hanya dapat memasukkan huruf saja"];
+			//$this->form[] = ["label"=>"Description","name"=>"description","type"=>"textarea","required"=>TRUE,"validation"=>"required|string|min:5|max:5000"];
+			//$this->form[] = ["label"=>"Name","name"=>"name","type"=>"text","required"=>TRUE,"validation"=>"required|string|min:3|max:70","placeholder"=>"Anda hanya dapat memasukkan huruf saja"];
+			//$this->form[] = ["label"=>"File","name"=>"file","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
 			# OLD END FORM
 
 			/* 
@@ -145,9 +151,7 @@ class AdminFinanceController extends \crocodicstudio\crudbooster\controllers\CBC
 	        | @color = Default is none. You can use bootstrap success,info,warning,danger,primary.        
 	        | 
 	        */
-	        $this->table_row_color = array();
-	        $this->table_row_color[] = ["condition"=>"[type] == 'IN'","color"=>"primary"];  
-	        $this->table_row_color[] = ["condition"=>"[type] == 'OUT'","color"=>"danger"];       
+	        $this->table_row_color = array();     	          
 
 	        
 	        /*
@@ -180,19 +184,7 @@ class AdminFinanceController extends \crocodicstudio\crudbooster\controllers\CBC
 	        | $this->pre_index_html = "<p>test</p>";
 	        |
 	        */
-	        if(g('type')){
-	        	$this->pre_index_html = '<div class="box box-default">
-	        	<div class="box-header">
-	        	<h1 class="box-title">Total '.strtoupper(g('type')).' = Rp'.number_format(CB::totalBalance(g('type'))).'.00</h1>
-	        	</div>
-	        	</div>';
-	        }else{
-	        	$this->pre_index_html = '<div class="box box-default">
-	        	<div class="box-header">
-	        	<h1 class="box-title">Total Saldo = Rp'.number_format(CB::totalBalance()).'.00</h1>
-	        	</div>
-	        	</div>';
-	        }
+	        $this->pre_index_html = null;
 	        
 	        
 	        
@@ -269,10 +261,8 @@ class AdminFinanceController extends \crocodicstudio\crudbooster\controllers\CBC
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	    	if(g('type') == 'in'){
-	    		$query->where('type','IN');
-	    	}elseif (g('type') == 'out') {
-	    		$query->where('type','OUT');
+	    	if (CRUDBooster::myId() != 1) {
+	    		$query->where('agenda.cms_users_id',CRUDBooster::myId());
 	    	}
 	    }
 
@@ -293,8 +283,11 @@ class AdminFinanceController extends \crocodicstudio\crudbooster\controllers\CBC
 	    | @arr
 	    |
 	    */
-	    public function hook_before_add(&$postdata) {
-
+	    public function hook_before_add(&$postdata) {        
+	        //Your code here
+	    	if (CRUDBooster::myId() != 1) {
+	    		$postdata['cms_users_id'] = CRUDBooster::myId();
+	    	}
 	    }
 
 	    /* 
@@ -318,8 +311,10 @@ class AdminFinanceController extends \crocodicstudio\crudbooster\controllers\CBC
 	    | 
 	    */
 	    public function hook_before_edit(&$postdata,$id) {        
-
-
+	        //Your code here
+	    	if (CRUDBooster::myId() != 1) {
+	    		$postdata['cms_users_id'] = CRUDBooster::myId();
+	    	}
 	    }
 
 	    /* 

@@ -29,7 +29,7 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 		$this->button_show = true;
 		$this->button_filter = true;
 		$this->button_import = false;
-		$this->button_export = true;
+		$this->button_export = false;
 		$this->table = "users";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
@@ -234,7 +234,7 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	        | $this->pre_index_html = "<p>test</p>";
 	        |
 	        */
-	        $this->pre_index_html = $this->pre_index_html = '<div class="box box-default">
+	        $this->pre_index_html = '<div class="box box-default">
 	        <div class="box-header">
 	        <h1 class="box-title">Total = '.number_format(CB::totalTurnOut('students')).' Siswa</h1>
 	        </div>

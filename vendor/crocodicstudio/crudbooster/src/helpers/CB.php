@@ -17,11 +17,18 @@ class CB extends CRUDBooster  {
 		return $cms_users->with_email;
 	}
 
-	public static function totalBalance(){
+	public static function totalBalance($type = NULL){
 		$in = DB::table('finance')->where('type','IN')->sum('price');
 		$out = DB::table('finance')->where('type','OUT')->sum('price');
 
-		$result = $in - $out;
+		if ($type == 'in') {
+			$result = $in;
+		}elseif ($type == 'out') {
+			$result = $out;
+		}else{
+			$result = $in - $out;
+		}
+
 		return $result;
 	}
 
