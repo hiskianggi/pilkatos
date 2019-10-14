@@ -14,7 +14,7 @@ class AdminDashboardController extends \crocodicstudio\crudbooster\controllers\C
 			'#dc3545',
 			'#6610f2',
 			'#ffc107');
-		if (CRUDBooster::myId() != 1) {
+		if (CRUDBooster::myPrivilegeId() != 1) {
 			$data['page_title'] = "Dashboard";
 			$kandidat = DB::table('candidate')->where('cms_users_id',CRUDBooster::myId())->get();
 			$data['j_kandidat'] = $kandidat->count();

@@ -80,7 +80,7 @@ class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CB
 				}
 				return $res;
 			}];
-			if (CRUDBooster::myId() == 1) {
+			if (CRUDBooster::myPrivilegeId() == 1) {
 				$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
 			}
 			# END COLUMNS DO NOT REMOVE THIS LINE
@@ -97,7 +97,7 @@ class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CB
 			}
 			$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
 			$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:3|max:32','width'=>'col-sm-10','help'=>'Minimum 5 characters. Please leave empty if you did not change the password.'];
-			if (CRUDBooster::myId() == 1) {
+			if (CRUDBooster::myPrivilegeId() == 1) {
 				$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
 			}
 			# END FORM DO NOT REMOVE THIS LINE
@@ -306,7 +306,7 @@ class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CB
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	    	if (CRUDBooster::myId() != 1) {
+	    	if (CRUDBooster::myPrivilegeId() != 1) {
 	    		$query->where('users.cms_users_id',CRUDBooster::myId())->where('users.type',1);
 	    	}else{
 	    		$query
@@ -337,7 +337,7 @@ class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CB
 	    	$postdata['type'] = 1;
 	    	$postdata['class_id'] = NULL;
 
-	    	if (CRUDBooster::myId() != 1) {
+	    	if (CRUDBooster::myPrivilegeId() != 1) {
 	    		$postdata['cms_users_id'] = CRUDBooster::myId();
 	    	}
 	    }

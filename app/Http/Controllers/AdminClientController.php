@@ -297,7 +297,7 @@ class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	    	$query->where('cms_users.id','!=',1);
+	    	$query->where('id_cms_privileges','!=',1);
 	    }
 
 	    /*

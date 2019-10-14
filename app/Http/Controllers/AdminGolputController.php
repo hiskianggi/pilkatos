@@ -47,7 +47,7 @@ class AdminGolputController extends \crocodicstudio\crudbooster\controllers\CBCo
 		if (g('filter') == 'students') {
 			$this->col[] = ["label"=>"Kelas","name"=>"class_id","join"=>"class,name"];
 		}
-		if (CRUDBooster::myId() == 1) {
+		if (CRUDBooster::myPrivilegeId() == 1) {
 			$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
 		}
 			# END COLUMNS DO NOT REMOVE THIS LINE
@@ -284,7 +284,7 @@ class AdminGolputController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	    	if (CRUDBooster::myId() != 1) {
+	    	if (CRUDBooster::myPrivilegeId() != 1) {
 	    		$query->where('users.cms_users_id', CRUDBooster::myId());
 	    	}else{
 	    		$query->where('cms_users.status','Active');
