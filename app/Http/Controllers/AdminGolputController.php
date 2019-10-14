@@ -4,6 +4,7 @@ use Session;
 use Request;
 use DB;
 use CRUDBooster;
+use CB;
 
 class AdminGolputController extends \crocodicstudio\crudbooster\controllers\CBController {
 
@@ -181,7 +182,32 @@ class AdminGolputController extends \crocodicstudio\crudbooster\controllers\CBCo
 	        | $this->pre_index_html = "<p>test</p>";
 	        |
 	        */
-	        $this->pre_index_html = null;
+	        if (g('filter') == 'students') {
+	        	$this->pre_index_html = '<div class="box box-default">
+	        	<div class="box-header">
+	        	<h1 class="box-title">Total Golput = '.number_format(CB::totalGolput(g('filter'))).' Siswa</h1>
+	        	</div>
+	        	</div>';
+	        }elseif (g('filter') == 'teachers') {
+	        	$this->pre_index_html = '<div class="box box-default">
+	        	<div class="box-header">
+	        	<h1 class="box-title">Total Golput = '.number_format(CB::totalGolput(g('filter'))).' Guru</h1>
+	        	</div>
+	        	</div>';
+	        }elseif (g('filter') == 'employees') {
+	        	$this->pre_index_html = '<div class="box box-default">
+	        	<div class="box-header">
+	        	<h1 class="box-title">Total Golput = '.number_format(CB::totalGolput(g('filter'))).' Karyawan</h1>
+	        	</div>
+	        	</div>';
+	        }else{
+	        	$this->pre_index_html = '<div class="box box-default">
+	        	<div class="box-header">
+	        	<h1 class="box-title">Total Golput = '.number_format(CB::totalGolput()).' Orang</h1>
+	        	</div>
+	        	</div>';
+	        }
+	        
 	        
 	        
 	        
@@ -258,9 +284,9 @@ class AdminGolputController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	        if (CRUDBooster::myId() != 1) {
-	        	$query->where('users.cms_users_id', CRUDBooster::myId());
-	        }else{
+	    	if (CRUDBooster::myId() != 1) {
+	    		$query->where('users.cms_users_id', CRUDBooster::myId());
+	    	}else{
 	    		$query->where('cms_users.status','Active');
 	    	}
 

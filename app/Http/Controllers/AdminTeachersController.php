@@ -5,6 +5,7 @@ use Request;
 use DB;
 use CRUDBooster;
 use QrCode;
+use CB;
 
 class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CBController {
 
@@ -224,6 +225,11 @@ class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CB
 	        |
 	        */
 	        $this->pre_index_html = null;
+	        $this->pre_index_html = '<div class="box box-default">
+	        <div class="box-header">
+	        <h1 class="box-title">Total = '.number_format(CB::totalTurnOut('teachers')).' Guru</h1>
+	        </div>
+	        </div>';
 	        
 	        
 	        

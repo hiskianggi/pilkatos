@@ -234,7 +234,11 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	        | $this->pre_index_html = "<p>test</p>";
 	        |
 	        */
-	        $this->pre_index_html = null;
+	        $this->pre_index_html = $this->pre_index_html = '<div class="box box-default">
+	        <div class="box-header">
+	        <h1 class="box-title">Total = '.number_format(CB::totalTurnOut('students')).' Siswa</h1>
+	        </div>
+	        </div>';
 	        
 	        
 	        

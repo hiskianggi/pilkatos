@@ -4,6 +4,7 @@ use Session;
 use Request;
 use DB;
 use CRUDBooster;
+use CB;
 
 class AdminFinanceController extends \crocodicstudio\crudbooster\controllers\CBController {
 
@@ -144,7 +145,9 @@ class AdminFinanceController extends \crocodicstudio\crudbooster\controllers\CBC
 	        | @color = Default is none. You can use bootstrap success,info,warning,danger,primary.        
 	        | 
 	        */
-	        $this->table_row_color = array();     	          
+	        $this->table_row_color = array();
+	        $this->table_row_color[] = ["condition"=>"[type] == 'IN'","color"=>"primary"];  
+	        $this->table_row_color[] = ["condition"=>"[type] == 'OUT'","color"=>"danger"];       
 
 	        
 	        /*
@@ -177,7 +180,11 @@ class AdminFinanceController extends \crocodicstudio\crudbooster\controllers\CBC
 	        | $this->pre_index_html = "<p>test</p>";
 	        |
 	        */
-	        $this->pre_index_html = null;
+	        $this->pre_index_html = '<div class="box box-default">
+	        <div class="box-header">
+	        <h1 class="box-title">Total Saldo = Rp'.number_format(CB::totalBalance()).'.00</h1>
+	        </div>
+	        </div>';
 	        
 	        
 	        
