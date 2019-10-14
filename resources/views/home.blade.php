@@ -1,5 +1,14 @@
 @extends('layouts.front')
-
+@section('script')
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#fab').click(function(){
+			var data = $('#fab').attr('val');
+			alert(data);
+		});
+	});
+</script>
+@endsection
 @section('content')
 <div class="row profile">
 	<div class="col-md-3 py-3">
@@ -16,7 +25,15 @@
 				</div>
 				<div class="profile-usertitle-job">
 					@if($user->type == 0)
-						Siswa
+						<?php
+							$class = DB::table('users')
+							->select('class.name')
+							->join('class','users.class_id','=','class.id')
+							->where('users.id', $user->id)
+							->first();
+
+							echo $class->name;
+						?>
 					@elseif($user->type == 1)
 						Guru
 					@else
@@ -27,7 +44,16 @@
 			<!-- END SIDEBAR USER TITLE -->
 			<!-- SIDEBAR BUTTONS -->
 			<div class="profile-userbuttons">
-				<a href="{{ url('logout') }}" class="btn btn-danger btn-sm mb-3"><i class="fa fa-arrow-left"></i> Keluar</a>
+				<a href="#" onclick="swal({
+				title: &quot;Kamu Belum Memilih Loh, Jangan Keluar Dulu. Yakin?&quot;,
+				text: &quot;&quot;,
+				type: &quot;warning&quot;,
+				showCancelButton: true,
+				confirmButtonColor: &quot;#3C8DBC&quot;,
+				confirmButtonText: &quot;Ya!&quot;,
+				cancelButtonText: &quot;Tidak&quot;,
+				closeOnConfirm: false },
+				function(){  location.href=&quot;{{ url('logout') }}&quot; });" class="btn btn-danger btn-sm mb-3"><i class="fa fa-arrow-left"></i> Keluar</a>
 			</div>
 			<!-- END SIDEBAR BUTTONS -->            
 		</div>
@@ -38,7 +64,7 @@
 			<div class="col-6 col-md-4 clearfix py-3">
 				<div class="card profile-card">
 					<figure>
-						<input id="fab" type="button" class="fab"><label for="fab" class="toggle"><i class="fa fa-telegram"></i></label>
+						<input id="fab" type="button" class="fab" val="{{ $row->id }}"><label for="fab" class="toggle"><i class="fa fa-telegram"></i></label>
 						<img src="{{ url($row->photo) }}" class="img-fluid img-profile" alt="Card image" style="max-width: 320px">
 					</figure>
 					<div class="card-block text-xs-center">

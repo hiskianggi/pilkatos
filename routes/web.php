@@ -18,3 +18,7 @@ Route::group(['middleware'=>'auth'], function(){
 Route::get('/{path}/login', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout');
+Route::get('/debug', function () {
+Artisan::call('config:cache');
+Artisan::call('key:generate');
+});

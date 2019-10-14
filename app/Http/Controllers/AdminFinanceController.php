@@ -30,21 +30,37 @@ class AdminFinanceController extends \crocodicstudio\crudbooster\controllers\CBC
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col = [];
-		$this->col[] = ["label"=>"Pemasukan","name"=>"price","callback"=>function ($row)
-        {
-        	return 'Rp. '.number_format($row->price);
-        }];
-		$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
-		$this->col[] = ["label"=>"Tanggal Pemasukan","name"=>"created_at","callback"=>function ($row)
-        {
-        	return \Carbon\Carbon::parse($row->created_at)->format('d F Y H:i:s');
-        }];
+		$this->col[] = ["label"=>"Type","name"=>"type","callback"=>function($row){
+			if ($row->type == 'IN') {
+				$res = '<a href="'.CRUDBooster::mainPath().'?type=in" class="btn btn-primary btn-xs btn-document" title="Filter Pemasukan"><span class="fa fa-plus"></span> IN</a>';
+			}else{
+				$res = '<a href="'.CRUDBooster::mainPath().'?type=out" class="btn btn-danger btn-xs btn-document" title="Filter Pengeluaran"><span class="fa fa-minus"></span> OUT</a>';
+			}
+
+			return $res;
+		}];
+		$this->col[] = ["label"=>"Nominal","name"=>"price","callback"=>function ($row)
+		{	
+			if ($row->type == 'IN') {
+				return '+ Rp. '.number_format($row->price);
+			}else{
+				return '- Rp. '.number_format($row->price);
+			}
+		}];
+		$this->col[] = ["label"=>"Keterangan","name"=>"keterangan"];
+		$this->col[] = ["label"=>"Tanggal","name"=>"created_at","callback"=>function ($row)
+		{
+			return \Carbon\Carbon::parse($row->created_at)->format('d F Y H:i:s');
+		}];
+		
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 		$this->form = [];
-		$this->form[] = ['label'=>'Pemasukan','name'=>'price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-		$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name'];
+		$this->form[] = ['label'=>'Type','name'=>'type','type'=>'radio','validation'=>'required','width'=>'col-sm-10','dataenum'=>'IN;OUT'];
+		$this->form[] = ['label'=>'Nominal','name'=>'price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+		$this->form[] = ['label'=>'Keterangan','name'=>'keterangan','type'=>'textarea','validation'=>'required|string|min:0|max:255','width'=>'col-sm-10'];
+		
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -238,7 +254,11 @@ class AdminFinanceController extends \crocodicstudio\crudbooster\controllers\CBC
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-
+	    	if(g('type') == 'in'){
+	    		$query->where('type','IN');
+	    	}elseif (g('type') == 'out') {
+	    		$query->where('type','OUT');
+	    	}
 	    }
 
 	    /*

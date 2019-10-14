@@ -111,6 +111,48 @@
           @endif
 
           @if(Request::segment(2)=='student' && CRUDBooster::getCurrentMethod() == 'getIndex' || Request::segment(2)=='teachers' && CRUDBooster::getCurrentMethod() == 'getIndex' || Request::segment(2)=='employee' && CRUDBooster::getCurrentMethod() == 'getIndex')
+          <?php
+          $school = DB::table('cms_users')
+          ->where('id','!=',1)
+          ->where('status','Active')
+          ->get()
+          ?>
+          <button data-toggle="modal" data-target="#importData" class="btn btn-primary btn-sm"><i class="fa fa-upload"></i>&nbsp; Import Data</button>
+          <div class="modal fade in" tabindex="-1" role="dialog" id="importData">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button class="close" type="button" data-dismiss="modal"><span aria-hidden="true">x</span></button>
+                  <h4 class="modal-title"><i class="fa fa-download"></i> &nbsp; Import Data {{ $page_title }} From Excel</h4>
+                </div>
+                <form action="{{ CRUDBooster::mainPath('import-data') }}" method="POST" enctype="multipart/form-data">
+                  {{ csrf_field() }}
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <label style="font-size: 14px;">Import File</label>
+                      <input type="file" name="importleads" class="form-control" required="">
+                      <p class='help-block' style="font-size: 14px;">Contoh Format Pengisian -> <a href="{{ asset('import/importleads.xls') }}">Download</a></p>
+                    </div>
+                    @if(CRUDBooster::myId() == 1)
+                    <div class="form-group">
+                      <label style="font-size: 14px;">Sekolah</label>
+                      <select class="form-control" name="cms_users_id" id="cms_users_id" required="">
+                        <option selected="" disabled="">== PILIH SEKOLAH ==</option>
+                        @foreach($school as $s)
+                        <option value="{{ $s->id }}">{{ $s->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @endif
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
           @if(CRUDBooster::myPrivilegeId() == 1)
           <button class="btn btn-sm btn-warning btn-fill" data-toggle="modal" data-target="#printCard"><i class="fa fa-download"></i> Print Card</button>
 
@@ -125,9 +167,6 @@
                     <h4 class="modal-title">Pilih Sekolah</h4>
                   </div>
                   <div class="modal-body">
-                    <?php
-                    $school = DB::table('cms_users')->where('id','!=',1)->get()
-                    ?>
                     <select class="form-control" name="cms_users_id" id="cms_users_id" required="">
                       <option selected="" disabled="">== PILIH SEKOLAH ==</option>
                       @foreach($school as $s)
@@ -205,6 +244,19 @@
           </a>
           @if(g('filter'))
           <a href="{{ CRUDBooster::mainpath() }}" title='Reset Filter' class="btn btn-sm btn-danger">
+            <i class="fa fa-list"></i> Reset Filter
+          </a>
+          @endif
+          @endif
+          @if(Request::segment(2)=='finance' && CRUDBooster::getCurrentMethod() == 'getIndex')
+          <a href="{{ CRUDBooster::mainpath() }}?type=in" title='Filter Pemasukan' class="btn btn-sm btn-primary">
+            <i class="fa fa-plus"></i> IN
+          </a>
+          <a href="{{ CRUDBooster::mainpath() }}?type=out" title='Filter Pengeluaran' class="btn btn-sm btn-danger">
+            <i class="fa fa-minus"></i> OUT
+          </a>
+          @if(g('type'))
+          <a href="{{ CRUDBooster::mainpath() }}" title='Reset Filter' class="btn btn-sm btn-warning">
             <i class="fa fa-list"></i> Reset Filter
           </a>
           @endif

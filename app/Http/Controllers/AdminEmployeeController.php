@@ -6,6 +6,7 @@ use DB;
 use CRUDBooster;
 use QrCode;
 
+
 class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 	public function cbInit() {
@@ -24,8 +25,8 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 		$this->button_detail = true;
 		$this->button_show = true;
 		$this->button_filter = true;
-		$this->button_import = true;
-		$this->button_export = true;
+		$this->button_import = false;
+		$this->button_export = false;
 		$this->table = "users";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
@@ -469,7 +470,6 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 
 	    		$check_token = DB::table('password_token')->where('email',$users->email)->first();
 	    		if ($check_token) {
-	    			DB::table('users')->where('email', $users->email)->update(['password' => NULL]);
 	    			DB::table('password_token')->where('email', $users->email)->update([
 	    				'token' => $token,
 	    				'created_at' => now()
@@ -512,7 +512,6 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 
 	    		$check_token = DB::table('password_token')->where('email',$row->email)->first();
 	    		if ($check_token) {
-	    			DB::table('users')->where('email', $row->email)->update(['password' => NULL]);
 	    			DB::table('password_token')->where('email', $row->email)->update([
 	    				'token' => $token,
 	    				'created_at' => now()
@@ -553,7 +552,6 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 	    	foreach ($users as $row) {
 	    		$token = str_random(64);
 	    		if ($check_token) {
-	    			DB::table('users')->where('email', $row->email)->update(['password' => NULL]);
 	    			DB::table('password_token')->where('email', $row->email)->update([
 	    				'token' => $token,
 	    				'created_at' => now()

@@ -6,6 +6,9 @@ use DB;
 use CRUDBooster;
 use CB;
 use QrCode;
+use PDF;
+use Excel;
+use File;
 
 class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBController {
 
@@ -25,7 +28,7 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 		$this->button_detail = true;
 		$this->button_show = true;
 		$this->button_filter = true;
-		$this->button_import = true;
+		$this->button_import = false;
 		$this->button_export = true;
 		$this->table = "users";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
@@ -471,13 +474,12 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	    	->first();
 
 	    	if (!$users) {
-	    		return redirect()->back()->with(['message_type'=>'warning','message'=>'Error Bro!']);
+	    		return redirect()->back()->with(['message_type'=>'warning','message'=>'Error!']);
 	    	}else{
 	    		$token = str_random(64);
 
 	    		$check_token = DB::table('password_token')->where('email',$users->email)->first();
 	    		if ($check_token) {
-	    			DB::table('users')->where('email', $users->email)->update(['password' => NULL]);
 	    			DB::table('password_token')->where('email', $users->email)->update([
 	    				'token' => $token,
 	    				'created_at' => now()
@@ -520,7 +522,6 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 
 	    		$check_token = DB::table('password_token')->where('email',$row->email)->first();
 	    		if ($check_token) {
-	    			DB::table('users')->where('email', $row->email)->update(['password' => NULL]);
 	    			DB::table('password_token')->where('email', $row->email)->update([
 	    				'token' => $token,
 	    				'created_at' => now()
@@ -561,7 +562,6 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	    	foreach ($users as $row) {
 	    		$token = str_random(64);
 	    		if ($check_token) {
-	    			DB::table('users')->where('email', $row->email)->update(['password' => NULL]);
 	    			DB::table('password_token')->where('email', $row->email)->update([
 	    				'token' => $token,
 	    				'created_at' => now()
