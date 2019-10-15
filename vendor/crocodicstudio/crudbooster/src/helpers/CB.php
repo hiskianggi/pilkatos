@@ -75,4 +75,51 @@ class CB extends CRUDBooster  {
 
 		return $result;
 	}
+
+	public static function countVoters($type){
+		if (!CRUDBooster::isSuperadmin()) {
+			$data['cms_users_id'] = CRUDBooster::myId();
+		}
+
+		$data['type'] = $type;
+
+		$result = DB::table('users')->where($data)->count();
+		return $result;
+	}
+
+	public static function progressElection($type){
+		$data['users.cms_users_id']	= CRUDBooster::myId();
+		$data['users.type']			= $type;
+
+		$all = DB::table('users')->where($data)->count();
+		$election = DB::table('election_data')
+		->select('users.type','users.cms_users_id')
+		->join('users','election_data.users_id','=','users.id')
+		->where($data)
+		->count();
+
+		if ($election == 0) {
+			$result = 0;
+		}else{
+			$result = $election / $all * 100;
+		}
+		
+		return round($result, 0);
+
+
+	}
+
+	public static function statisticDb($type){
+		if ($type==0) {
+			$result = DB::table('cms_users')->where('id_cms_privileges','!=',1)->count();
+		}elseif ($type==1) {
+			$result = DB::table('users')->count();
+		}elseif ($type==2) {
+			$result = DB::table('candidate')->count();
+		}else{
+			$result = DB::table('election_data')->count();
+		}
+
+		return number_format($result);
+	}
 }

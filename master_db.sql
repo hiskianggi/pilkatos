@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2019 at 08:56 PM
+-- Generation Time: Oct 15, 2019 at 12:08 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -47,7 +47,8 @@ CREATE TABLE `agenda` (
 --
 
 INSERT INTO `agenda` (`id`, `date`, `time_start`, `time_end`, `title`, `description`, `name`, `file`, `cms_users_id`, `created_at`, `updated_at`) VALUES
-(1, '2019-10-14', '10:30:15', '12:30:15', 'Testhrhr', 'hbdhbhrfbfrhfhr', 'jhfbfhbfhfbvf', NULL, 3, '2019-10-14 10:35:52', '2019-10-14 03:45:02');
+(1, '2019-10-14', '10:30:15', '12:30:15', 'Testhrhr', 'hbdhbhrfbfrhfhr', 'jhfbfhbfhfbvf', NULL, 3, '2019-10-14 10:35:52', '2019-10-14 03:45:02'),
+(2, '2019-10-15', '06:15:30', '12:15:30', 'Cek 123', 'Cuma Deskripsi', 'Hiskia Anggi Puji Pratama', 'uploads/2019-10/download.jpg', 1, '2019-10-15 06:16:20', '2019-10-15 06:22:53');
 
 -- --------------------------------------------------------
 
@@ -430,7 +431,31 @@ INSERT INTO `cms_logs` (`id`, `ipaddress`, `useragent`, `url`, `description`, `i
 (191, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/menu_management/add-save', 'Tambah data baru Laporan pada Menu Management', 1, '2019-10-14 10:38:13', NULL),
 (192, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/agenda/edit-save/1', 'Memperbaharui data Testhrhr pada Agenda', 1, '2019-10-14 10:41:22', NULL),
 (193, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/agenda/delete-image', 'Menghapus gambar Testhrhr pada Agenda', 1, '2019-10-14 10:45:02', NULL),
-(194, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/menu_management/edit-save/33', 'Memperbaharui data Agenda pada Menu Management', 1, '2019-10-14 10:45:29', NULL);
+(194, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/menu_management/edit-save/33', 'Memperbaharui data Agenda pada Menu Management', 1, '2019-10-14 10:45:29', NULL),
+(195, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/login', 'get@hiskia.dev login dengan IP Address ::1', 1, '2019-10-15 03:24:55', NULL),
+(196, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/logout', 'get@hiskia.dev keluar', 1, '2019-10-15 03:30:17', NULL),
+(197, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/login', 'hiskianggi@gmail.com login dengan IP Address ::1', 3, '2019-10-15 03:30:25', NULL),
+(198, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/agenda', 'Mencoba melihat data :name pada Agenda', 3, '2019-10-15 03:30:45', NULL),
+(199, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/agenda', 'Mencoba melihat data :name pada Agenda', 3, '2019-10-15 03:34:02', NULL),
+(200, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/agenda', 'Mencoba melihat data :name pada Agenda', 3, '2019-10-15 03:34:07', NULL),
+(201, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/agenda', 'Mencoba melihat data :name pada Agenda', 3, '2019-10-15 03:34:26', NULL),
+(202, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/agenda', 'Mencoba melihat data :name pada Agenda', 3, '2019-10-15 03:34:30', NULL),
+(203, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/logout', 'hiskianggi@gmail.com keluar', 3, '2019-10-15 04:28:53', NULL),
+(204, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/login', 'admin@smkwikrama1jepara.sch.id login dengan IP Address ::1', 2, '2019-10-15 04:29:17', NULL),
+(205, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/agenda', 'Mencoba melihat data :name pada Agenda', 2, '2019-10-15 04:37:06', NULL),
+(206, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/logout', 'admin@smkwikrama1jepara.sch.id keluar', 2, '2019-10-15 04:37:16', NULL),
+(207, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/login', 'get@hiskia.dev login dengan IP Address ::1', 1, '2019-10-15 04:37:25', NULL),
+(208, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/logout', 'get@hiskia.dev keluar', 1, '2019-10-15 04:38:56', NULL),
+(209, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/login', 'admin@smkwikrama1jepara.sch.id login dengan IP Address ::1', 2, '2019-10-15 04:39:16', NULL),
+(210, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/logout', 'admin@smkwikrama1jepara.sch.id keluar', 2, '2019-10-15 04:45:57', NULL),
+(211, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/login', 'get@hiskia.dev login dengan IP Address ::1', 1, '2019-10-15 04:46:07', NULL),
+(212, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/menu_management/delete/39', 'Menghapus data Testimoni pada Menu Management', 1, '2019-10-15 04:46:26', NULL),
+(213, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/menu_management/delete/38', 'Menghapus data Pengaturan pada Menu Management', 1, '2019-10-15 04:46:33', NULL),
+(214, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/menu_management/delete/37', 'Menghapus data Laporan pada Menu Management', 1, '2019-10-15 04:46:39', NULL),
+(215, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/menu_management/delete/34', 'Menghapus data Agenda pada Menu Management', 1, '2019-10-15 04:46:51', NULL),
+(216, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/agenda/add-save', 'Tambah data baru Cek 123 pada Agenda', 1, '2019-10-15 06:16:20', NULL),
+(217, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/agenda/edit-save/2', 'Memperbaharui data Cek 123 pada Agenda', 1, '2019-10-15 06:22:53', NULL),
+(218, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36', 'http://localhost/pilkatos/public/admin/login', 'get@hiskia.dev login dengan IP Address ::1', 1, '2019-10-15 17:02:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -466,28 +491,28 @@ INSERT INTO `cms_menus` (`id`, `name`, `type`, `path`, `color`, `icon`, `parent_
 (5, 'Kelas', 'Route', 'AdminClassControllerGetIndex', 'normal', 'fa fa-css3', 0, 1, 0, 1, 5, '2019-09-22 05:21:21', '2019-10-09 06:35:38'),
 (6, 'Kandidat', 'Route', 'AdminCandidatesControllerGetIndex', 'normal', 'fa fa-user-secret', 0, 1, 0, 1, 6, '2019-09-22 05:22:11', '2019-10-09 06:35:59'),
 (8, 'Data Pemilih', 'Route', 'AdminElectionDataControllerGetIndex', 'normal', 'fa fa-list-alt', 0, 1, 0, 1, 4, '2019-09-22 05:26:17', '2019-10-09 06:34:25'),
-(10, 'Data Pemilih', 'URL', 'javascript:void(0)', 'normal', 'fa fa-home', 0, 1, 0, 2, 3, '2019-09-22 12:18:37', '2019-10-09 07:08:43'),
+(10, 'Data Pemilih', 'URL', 'javascript:void(0)', 'normal', 'fa fa-home', 0, 1, 0, 2, 4, '2019-09-22 12:18:37', '2019-10-09 07:08:43'),
 (11, 'Guru', 'Route', 'AdminTeachersControllerGetIndex', 'normal', 'fa fa-user-plus', 10, 1, 0, 2, 2, '2019-09-22 12:18:37', NULL),
-(12, 'Kandidat', 'Route', 'AdminCandidatesControllerGetIndex', 'normal', 'fa fa-user-plus', 0, 1, 0, 2, 5, '2019-09-22 12:18:37', '2019-10-09 07:09:34'),
+(12, 'Kandidat', 'Route', 'AdminCandidatesControllerGetIndex', 'normal', 'fa fa-user-plus', 0, 1, 0, 2, 6, '2019-09-22 12:18:37', '2019-10-09 07:09:34'),
 (13, 'Karyawan', 'Route', 'AdminEmployeeControllerGetIndex', 'normal', 'fa fa-users', 10, 1, 0, 2, 3, '2019-09-22 12:18:37', NULL),
-(14, 'Kelas', 'Route', 'AdminClassControllerGetIndex', 'normal', 'fa fa-css3', 0, 1, 0, 2, 4, '2019-09-22 12:18:37', '2019-10-09 07:09:16'),
+(14, 'Kelas', 'Route', 'AdminClassControllerGetIndex', 'normal', 'fa fa-css3', 0, 1, 0, 2, 5, '2019-09-22 12:18:37', '2019-10-09 07:09:16'),
 (15, 'Siswa', 'Route', 'AdminStudentControllerGetIndex', 'normal', 'fa fa-user', 10, 1, 0, 2, 1, '2019-09-22 12:18:37', '2019-10-09 07:08:59'),
 (16, 'Pengaturan', 'Route', 'AdminPengaturanControllerGetIndex', 'normal', 'fa fa-gears', 0, 0, 0, 1, 7, '2019-09-22 13:39:13', '2019-10-09 07:10:22'),
 (17, 'Dashboard', 'Module', 'dashboard', 'normal', 'fa fa-envelope-o', 0, 1, 1, 1, 1, '2019-09-24 00:49:20', NULL),
 (20, 'Dashboard', 'Route', 'AdminDashboardControllerGetIndex', 'normal', 'fa fa-glass', 0, 1, 1, 2, 1, '2019-09-24 01:58:21', '2019-09-24 01:59:34'),
-(21, 'Pengaturan', 'Module', 'pengaturan', 'normal', 'fa fa-gears', 0, 1, 0, 2, 7, '2019-09-24 02:34:47', '2019-10-10 01:52:28'),
+(21, 'Pengaturan', 'Module', 'pengaturan', 'normal', 'fa fa-gears', 0, 1, 0, 2, 8, '2019-09-24 02:34:47', '2019-10-10 01:52:28'),
 (22, 'Keuangan', 'Route', 'AdminFinanceControllerGetIndex', NULL, 'fa fa-money', 0, 1, 0, 1, 8, '2019-09-24 02:36:21', NULL),
 (23, 'Golput', 'Route', 'AdminGolputControllerGetIndex', 'normal', 'fa fa-angellist', 0, 1, 0, 1, 7, '2019-09-24 07:31:18', '2019-10-09 06:36:15'),
-(25, 'Golput', 'Route', 'AdminGolputControllerGetIndex', 'normal', 'fa fa-angellist', 0, 1, 0, 2, 6, '2019-10-09 07:11:20', '2019-10-09 07:12:24'),
+(25, 'Golput', 'Route', 'AdminGolputControllerGetIndex', 'normal', 'fa fa-angellist', 0, 1, 0, 2, 7, '2019-10-09 07:11:20', '2019-10-09 07:12:24'),
 (26, 'Data Pemilihan', 'Module', NULL, 'normal', 'fa fa-css3', 0, 0, 0, 1, 4, '2019-10-09 07:13:56', '2019-10-09 07:24:33'),
 (27, 'Data Pemilihan', 'Route', 'AdminElectionDataControllerGetIndex', 'normal', 'fa fa-home', 0, 0, 0, 2, 7, '2019-10-10 01:55:09', '2019-10-10 04:59:41'),
 (29, 'Testimoni', 'Route', 'AdminTestimonialsControllerGetIndex', NULL, 'fa fa-columns', 0, 1, 0, 1, 10, '2019-10-10 04:04:01', NULL),
 (30, 'Testimoni', 'Route', 'AdminTestimoniControllerGetIndex', 'normal', 'fa fa-home', 0, 0, 0, 1, 10, '2019-10-10 04:49:27', '2019-10-10 04:59:16'),
-(31, 'Testimoni', 'Module', 'testimoni', 'normal', 'fa fa-columns', 0, 1, 0, 2, 9, '2019-10-10 05:00:30', NULL),
+(31, 'Testimoni', 'Module', 'testimoni', 'normal', 'fa fa-columns', 0, 1, 0, 2, 10, '2019-10-10 05:00:30', NULL),
 (32, 'Laporan', 'Route', 'AdminReportControllerGetIndex', NULL, 'fa fa-book', 0, 1, 0, 1, 9, '2019-10-11 07:37:36', NULL),
 (33, 'Agenda', 'Route', 'AdminAgendaControllerGetIndex', 'normal', 'fa fa-calendar-times-o', 0, 1, 0, 1, 2, '2019-10-14 10:09:35', '2019-10-14 10:45:29'),
-(34, 'Agenda', 'Module', 'agenda', 'normal', 'fa fa-times', 0, 1, 0, 2, 2, '2019-10-14 10:37:38', NULL),
-(35, 'Laporan', 'Module', 'report', 'normal', 'fa fa-book', 0, 1, 0, 2, 8, '2019-10-14 10:38:13', NULL);
+(35, 'Laporan', 'Module', 'report', 'normal', 'fa fa-book', 0, 1, 0, 2, 9, '2019-10-14 10:38:13', NULL),
+(36, 'Agenda', 'Route', 'AdminAgendaControllerGetIndex', 'normal', 'fa fa-calendar-times-o', 0, 1, 0, 2, 2, '2019-10-15 04:38:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -641,7 +666,10 @@ INSERT INTO `cms_privileges_roles` (`id`, `is_visible`, `is_create`, `is_read`, 
 (36, 1, 1, 1, 1, 1, 1, 24, NULL, NULL),
 (37, 1, 1, 1, 1, 1, 1, 25, NULL, NULL),
 (38, 1, 1, 1, 1, 1, 1, 26, NULL, NULL),
-(39, 1, 1, 1, 1, 1, 1, 27, NULL, NULL);
+(39, 1, 1, 1, 1, 1, 1, 27, NULL, NULL),
+(40, 1, 1, 1, 1, 1, 2, 27, NULL, NULL),
+(41, 1, 1, 1, 1, 1, 2, 26, NULL, NULL),
+(42, 1, 1, 1, 1, 1, 2, 25, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -761,6 +789,16 @@ CREATE TABLE `election_data` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `election_data`
+--
+
+INSERT INTO `election_data` (`id`, `users_id`, `candidate_id`, `cms_users_id`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, 2, '2019-10-14 21:33:36', NULL),
+(2, 3, 3, 2, '2019-10-14 21:34:11', NULL),
+(3, 4, 1, 2, '2019-10-14 21:35:24', NULL),
+(4, 5, 2, 2, '2019-10-14 21:36:24', NULL);
 
 -- --------------------------------------------------------
 
@@ -1109,13 +1147,13 @@ ALTER TABLE `cms_email_templates`
 -- AUTO_INCREMENT for table `cms_logs`
 --
 ALTER TABLE `cms_logs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
 
 --
 -- AUTO_INCREMENT for table `cms_menus`
 --
 ALTER TABLE `cms_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `cms_moduls`
@@ -1139,7 +1177,7 @@ ALTER TABLE `cms_privileges`
 -- AUTO_INCREMENT for table `cms_privileges_roles`
 --
 ALTER TABLE `cms_privileges_roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `cms_settings`
@@ -1169,7 +1207,7 @@ ALTER TABLE `cms_users`
 -- AUTO_INCREMENT for table `election_data`
 --
 ALTER TABLE `election_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `finance`

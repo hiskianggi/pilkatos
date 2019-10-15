@@ -67,59 +67,137 @@
 </div>
 <!-- /.row -->
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-8">
     <div class="box box-info">
       <div class="box-header with-border">
         <canvas id="bar-chart"></canvas>
       </div>
     </div>
   </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
-<script>
-  new Chart(document.getElementById("bar-chart"), {
-    type: 'bar',
-    data: {
-      datasets: [
-      @foreach($kandidat as $k)
-      {
-       label: '{{$k->name}}',
-       data: [{{$k->total}}],
-       backgroundColor: ['{{$k->color}}']
-     },
-     @endforeach
+  <div class="col-md-4">
+    <div class="box box-widget widget-user">
+      <!-- Add the bg color to the header using any of the bg-* classes -->
+      <div class="widget-user-header bg-aqua-active">
+        <h3 class="widget-user-username">{{ CRUDBooster::myName() }}</h3>
+        <h5 class="widget-user-desc">Jumlah Pemilih</h5>
+      </div>
+      <div class="widget-user-image">
+        <img class="img-circle" src="http://localhost/pilkatos/public/uploads/2019-10/download.jpg" alt="User Avatar">
+      </div>
+      <div class="box-footer">
+        <div class="row">
+          <div class="col-sm-4 border-right">
+            <div class="description-block">
+              <h5 class="description-header">{{ CB::countVoters(0) }}</h5>
+              <span class="description-text">Siswa</span>
+            </div>
+            <!-- /.description-block -->
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-4 border-right">
+            <div class="description-block">
+              <h5 class="description-header">{{ CB::countVoters(1) }}</h5>
+              <span class="description-text">Guru</span>
+            </div>
+            <!-- /.description-block -->
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-4">
+            <div class="description-block">
+              <h5 class="description-header">{{ CB::countVoters(2) }}</h5>
+              <span class="description-text">Karyawan</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Progress</h3>
+      </div>
+      <div class="box-body no-padding">
+        <table class="table table-striped">
+          <tr>
+            <th>Title</th>
+            <th>Progress</th>
+            <th style="width: 40px">(%)</th>
+          </tr>
+          <tr>
+            <td>Siswa</td>
+            <td>
+              <div class="progress progress-xs">
+                <div class="progress-bar progress-bar-info{{(CB::progressElection(0) == 100) ? '' : ' active'}}" style="width: {{ CB::progressElection(0) }}%"></div>
+              </div>
+            </td>
+            <td><span class="badge bg-red">{{ CB::progressElection(0) }}%</span></td>
+          </tr>
+          <tr>
+            <td>Guru</td>
+            <td>
+              <div class="progress progress-xs">
+                <div class="progress-bar progress-bar-primary{{(CB::progressElection(1) == 100) ? '' : ' active'}}" style="width: {{ CB::progressElection(1) }}%"></div>
+              </div>
+            </td>
+            <td><span class="badge bg-yellow">{{ CB::progressElection(1) }}%</span></td>
+          </tr>
+          <tr>
+            <td>Karyawan</td>
+            <td>
+              <div class="progress progress-xs progress-striped{{(CB::progressElection(2) == 100) ? '' : ' active'}}">
+                <div class="progress-bar progress-bar-danger" style="width: {{ CB::progressElection(2) }}%"></div>
+              </div>
+            </td>
+            <td><span class="badge bg-light-blue">{{ CB::progressElection(2) }}%</span></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+  <script>
+    new Chart(document.getElementById("bar-chart"), {
+      type: 'bar',
+      data: {
+        datasets: [
+        @foreach($kandidat as $k)
+        {
+         label: '{{$k->name}}',
+         data: [{{$k->total}}],
+         backgroundColor: ['{{$k->color}}']
+       },
+       @endforeach
 
-     ]
-   },
-   options: {
-    tooltips: {
-      callbacks: {
-       title: function() {}
-     }
-   },
-   scales: {
-        xAxes: [{
-            barPercentage: 0.4
-        }],
-        yAxes: [{
-             ticks: {
-                 beginAtZero: true,
-                 userCallback: function(label, index, labels) {
+       ]
+     },
+     options: {
+      tooltips: {
+        callbacks: {
+         title: function() {}
+       }
+     },
+     scales: {
+      xAxes: [{
+        barPercentage: 0.4
+      }],
+      yAxes: [{
+       ticks: {
+         beginAtZero: true,
+         userCallback: function(label, index, labels) {
                      // when the floored value is the same as the value we have a whole number
                      if (Math.floor(label) === label) {
-                         return label;
+                       return label;
                      }
 
-                 },
-             }
-         }]
-    },
-   title: {
-    display: true,
-    text: 'Statistik Hasil Pemilihan Ketua OSIS Periode 2019/2020'
-  },
+                   },
+                 }
+               }]
+             },
+             title: {
+              display: true,
+              text: 'Statistik Hasil Pemilihan Ketua OSIS Periode 2019/2020'
+            },
 
-}
-});
-</script>
-@endsection
+          }
+        });
+      </script>
+      @endsection

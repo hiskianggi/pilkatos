@@ -592,4 +592,40 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	    	return redirect()->back()->with(['message_type'=>'success','message'=>'Semua Password Token Telah Dikirim!']);
 	    }
 
+	    public function importData(){
+	    	$extension = File::extension(Request::file('importdata')->getClientOriginalName());
+	    	if($extension == "xlsx" || $extension == "xls" || $extension == "csv"){
+	    		$path = Request::file('importleads')->getRealPath();
+	    		$data = Excel::load($path, function($reader) {
+	    		})->get();
+	    		foreach($data as $d){
+	    			$save['email']     		= $d->email;
+	    			$save['username']    	= $d->username;
+	    			$save['name']         	= $d->name;
+	    			$save['password']    	= $d->password;
+	    			$save['type']          	= 0;
+	    			$save['class_id']       = $d->class_id;
+	    			$save['status'] 		= 0;
+	    			if (g('cms_users_id')) {
+	    				$save['cms_users_id']     = g('cms_users_id');
+	    			}else{
+	    				$save['cms_users_id']     = CRUDBooster::myId();
+	    			}
+
+	    			$email = DB::table('users')->where('email',$d->email)->first();
+	    			if(!$email){
+	    				DB::table('leads')->insert($save);
+	    			}
+	    		}
+
+	    		if(!empty($data) && $data->count()){
+	    			return redirect()->back()->with(['message_type'=>'success','message'=>'Berhasil mengimport data!']);
+	    		}else{
+	    			return redirect()->back()->with(['message_type'=>'error','message'=>'Tidak berhasil mengimport data!']);
+	    		}
+	    	}else {
+	    		return redirect()->back()->with(['message_type'=>'error','message'=>'File is a '.$extension.' file.!! Please upload a valid xls/csv file..!!']);
+	    	}
+	    }
+
 	}

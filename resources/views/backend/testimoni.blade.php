@@ -38,9 +38,9 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2"></label>
 					<div class="col-sm-10">
-						<button type="submit" name="submit" class="btn btn-success"><i class='fa fa-chevron-circle-left'></i> {{ ($data ? "Edit" : "Simpan") }}</button>
+						<button type="submit" name="submit" class="btn btn-success"><i class="fa fa-pencil-square-o"></i> {{ ($data ? "Edit" : "Simpan") }}</button>
 						@if($data)
-						<a href='{{ CRUDBooster::mainPath("del") }}' class='btn btn-danger'><i class='fa fa-chevron-circle-left'></i> Hapus Testimoni</a>
+						<a href='{{ CRUDBooster::mainPath("del") }}' class='btn btn-danger'><i class="fa fa-trash"></i> Hapus Testimoni</a>
 						@endif
 						<a href='http://localhost/pilkatos/public/admin/' class='btn btn-default'><i class='fa fa-chevron-circle-left'></i> Kembali ke Dashboard</a>
 					</div>

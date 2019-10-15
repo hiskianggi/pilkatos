@@ -4,6 +4,7 @@ use Session;
 use Request;
 use DB;
 use CRUDBooster;
+use CB;
 
 class AdminDashboardController extends \crocodicstudio\crudbooster\controllers\CBController {
 
@@ -21,7 +22,6 @@ class AdminDashboardController extends \crocodicstudio\crudbooster\controllers\C
 			$data['pemilih'] = DB::table('users')->where('cms_users_id',CRUDBooster::myId())->get()->count();
 			$data['suara_masuk'] = DB::table('election_data')->where('cms_users_id',CRUDBooster::myId())->get()->count();
 			$data['golput'] = $data['pemilih'] - $data['suara_masuk'];
-
 			foreach ($kandidat as $key => $k) {
 				$k->color = $color[$key];
 				$k->total = DB::table('election_data')
@@ -34,6 +34,16 @@ class AdminDashboardController extends \crocodicstudio\crudbooster\controllers\C
 			return view('backend.dashboard-client',$data);
 		}else{
 			$data['page_title'] = "Admin Dashboard";
+			$data['agenda'] = DB::table('agenda')
+			->where('cms_users_id',CRUDBooster::myId())
+			->whereDate('date', date('Y-m-d'))
+			->orderBy('time_start','asc')
+			->get();
+			$data['new_users'] = DB::table('cms_users')
+			->where('id_cms_privileges','!=','1')
+			->orderBy('created_at','desc')
+			->limit(5)
+			->get();
 			return view('backend.dashboard-server',$data);
 		}
 		

@@ -46,9 +46,6 @@ class AdminAgendaController extends \crocodicstudio\crudbooster\controllers\CBCo
 			}
 			return $result;
 		}];
-		if (CRUDBooster::myId() == 1) {
-			$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
-		}
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
@@ -59,10 +56,7 @@ class AdminAgendaController extends \crocodicstudio\crudbooster\controllers\CBCo
 		$this->form[] = ['label'=>'Title','name'=>'title','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'Anda hanya dapat memasukkan huruf saja'];
 		$this->form[] = ['label'=>'Description','name'=>'description','type'=>'textarea','validation'=>'string','width'=>'col-sm-10','placeholder'=>'Description is not required'];
 		$this->form[] = ['label'=>'Name','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'Anda hanya dapat memasukkan huruf saja'];
-		$this->form[] = ['label'=>'File','name'=>'file','type'=>'upload','width'=>'col-sm-10'];
-		if (CRUDBooster::myPrivilegeId() == 1) {
-			$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
-		}
+		$this->form[] = ['label'=>'File','name'=>'file','type'=>'upload','upload_encrypt'=>false];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -261,9 +255,7 @@ class AdminAgendaController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	    	if (CRUDBooster::myPrivilegeId() != 1) {
-	    		$query->where('agenda.cms_users_id',CRUDBooster::myId());
-	    	}
+	    	$query->where('agenda.cms_users_id',CRUDBooster::myId());
 	    }
 
 	    /*
@@ -285,9 +277,7 @@ class AdminAgendaController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    */
 	    public function hook_before_add(&$postdata) {        
 	        //Your code here
-	    	if (CRUDBooster::myPrivilegeId() != 1) {
-	    		$postdata['cms_users_id'] = CRUDBooster::myId();
-	    	}
+	    	$postdata['cms_users_id'] = CRUDBooster::myId();
 	    }
 
 	    /* 
@@ -312,9 +302,7 @@ class AdminAgendaController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    */
 	    public function hook_before_edit(&$postdata,$id) {        
 	        //Your code here
-	    	if (CRUDBooster::myPrivilegeId() != 1) {
-	    		$postdata['cms_users_id'] = CRUDBooster::myId();
-	    	}
+	    	$postdata['cms_users_id'] = CRUDBooster::myId();
 	    }
 
 	    /* 
