@@ -156,7 +156,11 @@
 						</div>
 						<div class="product-info">
 							<a href="javascript:void(0)" class="product-title">{{ $n->name }}
-								<span class="label label-warning pull-right">-</span>
+								@if($n->status == 'Active')
+								<span class="label label-warning pull-right">{{ $n->status }}</span>
+								@else
+								<span class="label label-primary pull-right">{{ $n->status }}</span>
+								@endif
 							</a>
 							<span class="product-description">
 								Bergabung Pada {{ \Carbon\Carbon::parse($n->created_at)

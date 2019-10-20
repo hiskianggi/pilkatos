@@ -82,7 +82,7 @@
         <h5 class="widget-user-desc">Jumlah Pemilih</h5>
       </div>
       <div class="widget-user-image">
-        <img class="img-circle" src="http://localhost/pilkatos/public/uploads/2019-10/download.jpg" alt="User Avatar">
+        <img class="img-circle" src="{{ CRUDBooster::myPhoto() }}" alt="User Avatar">
       </div>
       <div class="box-footer">
         <div class="row">
