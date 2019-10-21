@@ -44,6 +44,17 @@ class AdminDashboardController extends \crocodicstudio\crudbooster\controllers\C
 			->orderBy('created_at','desc')
 			->limit(5)
 			->get();
+			$data['map'] = DB::table('cms_users')
+			->where('id_cms_privileges','!=','1')
+			->get();
+			$data['first_lat'] = DB::table('cms_users')
+			->where('id_cms_privileges','!=','1')
+			->orderBy('created_at','desc')
+			->first()->lat;
+			$data['first_long'] = DB::table('cms_users')
+			->where('id_cms_privileges','!=','1')
+			->orderBy('created_at','desc')
+			->first()->lng;
 			return view('backend.dashboard-server',$data);
 		}
 		
