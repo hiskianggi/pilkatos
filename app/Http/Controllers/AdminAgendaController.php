@@ -33,8 +33,12 @@ class AdminAgendaController extends \crocodicstudio\crudbooster\controllers\CBCo
 		$this->col[] = ["label"=>"Tanggal","name"=>"date","callback"=>function($row){
 			return \Carbon\Carbon::parse($row->date)->format('d F Y');
 		}];
-		$this->col[] = ["label"=>"Jam Mulai","name"=>"time_start"];
-		$this->col[] = ["label"=>"Jam Selesai","name"=>"time_end"];
+		$this->col[] = ["label"=>"Jam Mulai","name"=>"time_start","callback"=>function($row){
+			return \Carbon\Carbon::parse($row->time_start)->format('H:i').' WIB';
+		}];
+		$this->col[] = ["label"=>"Jam Selesai","name"=>"time_end","callback"=>function($row){
+			return \Carbon\Carbon::parse($row->time_end)->format('H:i').' WIB';
+		}];
 		$this->col[] = ["label"=>"Judul","name"=>"title"];
 		$this->col[] = ["label"=>"Deskripsi","name"=>"description"];
 		$this->col[] = ["label"=>"Nama","name"=>"name"];
@@ -167,7 +171,11 @@ class AdminAgendaController extends \crocodicstudio\crudbooster\controllers\CBCo
 	        | $this->script_js = "function() { ... }";
 	        |
 	        */
-	        $this->script_js = NULL;
+	        $this->script_js = "
+	        $(document).ready(function(){
+	        	$('body').addClass('sidebar-mini sidebar-collapse');
+	        });
+	        ";
 
 
             /*

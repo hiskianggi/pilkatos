@@ -30,8 +30,8 @@ class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBCo
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col = [];
-		$this->col[] = ["label"=>"Nama Sekolah","name"=>"name"];
 		$this->col[] = ["label"=>"Logo","name"=>"photo","image"=>true];
+		$this->col[] = ["label"=>"Nama Sekolah","name"=>"name"];
 		$this->col[] = ["label"=>"Email","name"=>"email"];
 		$this->col[] = ["label"=>"Privileges","name"=>"id_cms_privileges","join"=>"cms_privileges,name"];
 		$this->col[] = ["label"=>"Path","name"=>"path","callback"=>function($row){
@@ -99,7 +99,6 @@ class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBCo
 				$this->form[] = ['label'=>'Privileges','name'=>'id_cms_privileges','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_privileges,name','datatable_where'=>'id != 1'];
 				$this->form[] = ['label'=>'Path Login','name'=>'path','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
 				$this->form[] = ['label'=>'Security','name'=>'with_email','type'=>'radio','dataenum'=>'1|Confirmation With Email;0|Password Automatic'];
-				$this->form[] = ['label'=>'Address','name'=>'address','type'=>'googlemaps','latitude'=>'lat','longitude'=>'lng'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -319,7 +318,7 @@ class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    */
 	    public function hook_before_add(&$postdata) {        
 	        //Your code here
-
+	    	$postdata['status'] = 'Active';
 	    }
 
 	    /* 

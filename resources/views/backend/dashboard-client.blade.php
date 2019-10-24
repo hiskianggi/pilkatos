@@ -1,5 +1,19 @@
 @extends("crudbooster::admin_template")
 @section('content')
+<div class="row">
+  <div class="col-md-6">
+    <div class="callout callout-info callout-dismissible">
+      <h4><i class="fa fa-pencil"></i> Note:</h4>
+      <strong>Selamat Datang {{ CRUDBooster::myName() }}!</strong>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="callout callout-warning callout-dismissible">
+      <h4><i class="fa fa-info"></i> Info:</h4>
+      <marquee><strong>Saat Ini Sistem Pilkatos.Tech Masih Dalam Versi BETA, Jika Ada Masalah/Bug Bisa Hubungi Kami Melalui Live Chat Dibawah. Terimakasih!</strong></marquee>
+    </div>
+  </div>
+</div>
 <!-- Small boxes (Stat box) -->
 <div class="row">
   <div class="col-md-12">
@@ -152,6 +166,14 @@
         </table>
       </div>
     </div>
+    <!-- <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Progress</h3>
+      </div>
+      <div class="box-body no-padding">
+        <iframe src="https://tawk.to/chat/5daebaa578ab74187a5adbe7/default" style="border: 0px;width: 100%;height: 300px;" scrolling="no"></iframe>
+      </div>
+    </div> -->
   </div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
   <script>

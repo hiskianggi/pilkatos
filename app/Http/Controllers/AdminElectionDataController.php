@@ -1,55 +1,62 @@
 <?php namespace App\Http\Controllers;
 
-	use Session;
-	use Request;
-	use DB;
-	use CRUDBooster;
+use Session;
+use Request;
+use DB;
+use CRUDBooster;
 
-	class AdminElectionDataController extends \crocodicstudio\crudbooster\controllers\CBController {
+class AdminElectionDataController extends \crocodicstudio\crudbooster\controllers\CBController {
 
-	    public function cbInit() {
+	public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
-			$this->title_field = "id";
-			$this->limit = "20";
-			$this->orderby = "id,desc";
-			$this->global_privilege = false;
-			$this->button_table_action = true;
-			$this->button_bulk_action = true;
-			$this->button_action_style = "button_icon";
-			$this->button_add = false;
-			$this->button_edit = false;
-			$this->button_delete = false;
-			$this->button_detail = true;
-			$this->button_show = true;
-			$this->button_filter = true;
-			$this->button_import = false;
-			$this->button_export = false;
-			$this->table = "election_data";
+		$this->title_field = "id";
+		$this->limit = "20";
+		$this->orderby = "id,desc";
+		$this->global_privilege = false;
+		$this->button_table_action = true;
+		$this->button_bulk_action = true;
+		$this->button_action_style = "button_icon";
+		$this->button_add = false;
+		$this->button_edit = false;
+		$this->button_delete = false;
+		$this->button_detail = true;
+		$this->button_show = true;
+		$this->button_filter = true;
+		$this->button_import = false;
+		$this->button_export = false;
+		$this->table = "election_data";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
-			$this->col = [];
-			$this->col[] = ["label"=>"From","name"=>"cms_users_id","join"=>"cms_users,name"];
-			$this->col[] = ["label"=>"Username","name"=>"users_id","join"=>"users,username"];
-			$this->col[] = ["label"=>"Name","name"=>"cms_users_id","join"=>"users,name"];
-			$this->col[] = ["label"=>"Type","name"=>"users_id","join"=>"users,type","callback"=>function ($row){
-				if ($row->type == 0) {
-					return '<span class="btn btn-xs btn-primary">Siswa</span>';
-				}elseif ($row->type == 1) {
-					return '<span class="btn btn-xs btn-success">Guru</span>';
-				}elseif ($row->type == 2) {
-					return '<span class="btn btn-xs btn-danger">Karyawan</span>';
-				}
-			}];
-			$this->col[] = ["label"=>"Election","name"=>"candidate_id","join"=>"candidate,name"];
+		$this->col = [];
+		$this->col[] = ["label"=>"From","name"=>"cms_users_id","join"=>"cms_users,name"];
+		$this->col[] = ["label"=>"Username","name"=>"users_id","join"=>"users,username"];
+		$this->col[] = ["label"=>"Name","name"=>"cms_users_id","join"=>"users,name"];
+		$this->col[] = ["label"=>"Type","name"=>"users_id","join"=>"users,type","callback"=>function ($row){
+			if ($row->users_type == 0) {
+				return '<span class="btn btn-xs btn-primary">Siswa</span>';
+			}elseif ($row->users_type == 1) {
+				return '<span class="btn btn-xs btn-success">Guru</span>';
+			}elseif ($row->users_type == 2) {
+				return '<span class="btn btn-xs btn-danger">Karyawan</span>';
+			}
+		}];
+		$this->col[] = ["label"=>"Class","name"=>"users_id","join"=>"class,name","callback"=>function ($row){
+			if ($row->users_type == 0) {
+				return $row->class_name;
+			}else{
+				return '-';
+			}
+		}];
+		$this->col[] = ["label"=>"Election","name"=>"candidate_id","join"=>"candidate,name"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
-			$this->form = [];
-			$this->form[] = ['label'=>'Kode / NIS','name'=>'users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'users,username'];
-			$this->form[] = ['label'=>'Nama Pemilih','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name'];
-			$this->form[] = ['label'=>'Yang Dipilih','name'=>'candidate_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'candidate,name'];
+		$this->form = [];
+		$this->form[] = ['label'=>'Kode / NIS','name'=>'users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'users,username'];
+		$this->form[] = ['label'=>'Nama Pemilih','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name'];
+		$this->form[] = ['label'=>'Yang Dipilih','name'=>'candidate_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'candidate,name'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -100,7 +107,7 @@
 	        */
 	        $this->button_selected = array();
 
-	                
+
 	        /* 
 	        | ---------------------------------------------------------------------- 
 	        | Add alert message to this module at overheader
@@ -110,7 +117,7 @@
 	        | 
 	        */
 	        $this->alert        = array();
-	                
+
 
 	        
 	        /* 
@@ -231,7 +238,7 @@
 	    */
 	    public function actionButtonSelected($id_selected,$button_name) {
 	        //Your code here
-	            
+
 	    }
 
 
@@ -244,7 +251,7 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	            
+
 	    }
 
 	    /*

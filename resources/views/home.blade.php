@@ -1,80 +1,73 @@
 @extends('layouts.front')
-@section('script')
+@section('scripts')
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#fab').click(function(){
-			var data = $('#fab').attr('val');
-			alert(data);
+
+	});
+
+	$(document).on("click", "#candidate", function () {
+		var _token = '{{ csrf_token() }}';
+		var users_id = {{ Auth::user()->id }};
+		var candidate_id = $(this).attr('data-id');
+		var candidate_name = $(this).attr('data-name');
+		var cms_users_id = {{ Auth::user()->cms_users_id }};
+
+		swal({
+			title: "Yakin Ingin Memilih",
+			text: candidate_name+" ?",
+			type: "info",
+			showCancelButton: true,
+			closeOnConfirm: false,
+			showLoaderOnConfirm: true
+		}, function () {
+			setTimeout(function () {
+				$.ajax({
+					type : "POST",
+					url  : "{{ url('electy') }}",
+					dataType : "JSON",
+					data : {_token:_token,
+						users_id:users_id,
+						candidate_id:candidate_id,
+						cms_users_id:cms_users_id
+					},
+					success: function(data){
+						swal("Selamat!", "Anda Telah Memilih ^_^", "success");
+						location.href="{{ url('logout') }}";
+					},
+					error: function(data) { 
+						console.log(data);
+					}
+				});
+			}, 2000);
 		});
 	});
 </script>
 @endsection
 @section('content')
-<div class="row profile">
-	<div class="col-md-3 py-3">
-		<div class="profile-sidebar">
-			<div class="profile-userpic">
-				<center>
-					<img src="https://pngimage.net/wp-content/uploads/2018/06/user-png-images-4.png" class="img-responsive" alt="">
-				</center>
-			</div>
-			<!-- SIDEBAR USER TITLE -->
-			<div class="profile-usertitle">
-				<div class="profile-usertitle-name">
-					{{ $user->name }}
+<section class="p-md-3 mx-md-5 text-center text-lg-left">
+	<h2 class="text-center mx-auto font-weight-bold mb-4 pb-2">Kandidat Ketua OSIS Periode {{ $this_year }}/{{ $next_year }}</h2>
+	<div class="row d-flex justify-content-center align-items-center">
+		@foreach($candidate as $row)
+		<div class="col-lg-4 mb-4">
+			<div class="p-4">
+				<div class="avatar w-100 white d-flex justify-content-center align-items-center">
+					<img
+					src="{{ url($row->photo) }}"
+					class="img-fluid hoverable rounded-circle z-depth-1"
+					id="candidate"
+					data-id="{{ $row->id }}"
+					data-name="{{ $row->name }}"
+					/>
 				</div>
-				<div class="profile-usertitle-job">
-					@if($user->type == 0)
-						<?php
-							$class = DB::table('users')
-							->select('class.name')
-							->join('class','users.class_id','=','class.id')
-							->where('users.id', $user->id)
-							->first();
-
-							echo $class->name;
-						?>
-					@elseif($user->type == 1)
-						Guru
-					@else
-						Karyawan
-					@endif
+				<div class="text-center mt-3">
+					<h3 class="font-weight-bold pt-2">{{ $row->name }}</h3>
+					<p class="font-weight-bold h5">
+						{{ $row->class }}
+					</p>
 				</div>
 			</div>
-			<!-- END SIDEBAR USER TITLE -->
-			<!-- SIDEBAR BUTTONS -->
-			<div class="profile-userbuttons">
-				<a href="#" onclick="swal({
-				title: &quot;Kamu Belum Memilih Loh, Jangan Keluar Dulu. Yakin?&quot;,
-				text: &quot;&quot;,
-				type: &quot;warning&quot;,
-				showCancelButton: true,
-				confirmButtonColor: &quot;#3C8DBC&quot;,
-				confirmButtonText: &quot;Ya!&quot;,
-				cancelButtonText: &quot;Tidak&quot;,
-				closeOnConfirm: false },
-				function(){  location.href=&quot;{{ url('logout') }}&quot; });" class="btn btn-danger btn-sm mb-3"><i class="fa fa-arrow-left"></i> Keluar</a>
-			</div>
-			<!-- END SIDEBAR BUTTONS -->            
 		</div>
+		@endforeach
 	</div>
-	<div class="col-md-9">
-		<div class="row flex-items-center">
-			@foreach($candidate as $row)
-			<div class="col-6 col-md-4 clearfix py-3">
-				<div class="card profile-card">
-					<figure>
-						<input id="fab" type="button" class="fab" val="{{ $row->id }}"><label for="fab" class="toggle"><i class="fa fa-telegram"></i></label>
-						<img src="{{ url($row->photo) }}" class="img-fluid img-profile" alt="Card image" style="max-width: 320px">
-					</figure>
-					<div class="card-block text-xs-center">
-						<p class="h4 card-title font-weight-bold ml-3">{{ $row->name }}</p>
-						<p class="h6 card-subtitle text-muted ml-3">{{ $row->class }}</p><br>
-					</div>
-				</div>
-			</div>
-			@endforeach
-		</div>
-	</div>
-</div>
+</section>
 @endsection

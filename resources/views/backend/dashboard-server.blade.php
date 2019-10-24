@@ -1,8 +1,18 @@
 @extends("crudbooster::admin_template")
 @section('content')
-<div class="callout callout-info">
-	<h4><i class="fa fa-info"></i> Note:</h4>
-	Selamat Datang {{ CRUDBooster::myName() }}! 
+<div class="row">
+	<div class="col-md-6">
+		<div class="callout callout-info callout-dismissible">
+			<h4><i class="fa fa-pencil"></i> Salam:</h4>
+			<strong>Selamat Datang {{ CRUDBooster::myName() }}!</strong>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="callout callout-warning callout-dismissible">
+			<h4><i class="fa fa-info"></i> Info:</h4>
+			<marquee><strong>{{ CRUDBooster::getSetting('info') }}</strong></marquee>
+		</div>
+	</div>
 </div>
 <div class="row">
 	<div class="col-md-3 col-sm-6 col-xs-12">
@@ -102,6 +112,7 @@
 							</tr>
 						</thead>
 						<tbody>
+							@if($agenda->count() != 0)
 							@foreach($agenda as $key => $a)
 							<tr>
 								<td>{{ $key + 1 }}</td>
@@ -121,6 +132,13 @@
 								</td>
 							</tr>
 							@endforeach
+							@else
+							<tr class='warning'>
+								<td colspan='6' align="center">
+									<i class='fa fa-search'></i> Tidak ada data tersedia
+								</td>
+							</tr>
+							@endif
 						</tbody>
 					</table>
 				</div>
@@ -179,138 +197,5 @@
 		</div>
 		<!-- /.box -->
 	</div>
-</div>
-<div class="row">
-	<div class="col-md-12">
-		<div class="box box-default row_two">
-			<div class="box-header ui-sortable-handle">
-				<div class="row">
-					<div class="col-md-9">
-						<div class="box-header ui-sortable-handle" >
-							<p class="box-title"><i class="fa fa-map-pin"></i> | Daftar Posisi Sekolah</p>
-						</div>
-					</div>
-					<div class="col-md-3 search">
-						<div class="box-tools pull-right">
-							<div class="input-group">
-								<input type="text" class="form-control" id="input_sales" onkeyup="return FilteringTrackingSales()" placeholder="Nama Sekolah" aria-describedby="basic-addon1">
-								<span class="input-group-addon" id="basic-addon1"><i class="fa fa-users"></i></span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="box-body">
-					<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-					<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBXAlmy8YjaQWWJvGU77Hh-_R_wEPkkn7Y">
-					</script>
-					<div class="row">
-						<div class="col-md-8">
-							<div id="map"/></div>
-						</div>
-						<div class="col-md-4 sales_tracking">  
-							<table class="table table-striped" id="result_sales_tracking" style="max-height: 400px !important;display: block;overflow-y: scroll">
-								<thead>
-									<tr>
-										<th>No</th>
-										<th>Name</th>
-										<th>Status</th>
-										<th>Detail</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach($map as $data)
-									<tr>
-										<td>{{ $map+1 }}</td>
-										<td>{{ $data->name }}</td>
-										@if($data->status=='Active')
-										<td><span style="color:green">Active</span></td>
-										@else
-										<td><span style="color:red">Non Active</span></td>
-										@endif
-										<td><a href="javascript:google.maps.event.trigger(gmarkers['{{ $data->id }}'],'click');" class="btn btn-xs btn-primary"><i class="fa fa-eye" title="Cari posisi sales"></i></a></td>
-									</tr>
-									@endforeach
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<script type="text/javascript">
-						var locations = [
-						@foreach($map as $item)
-						[
-						"{{$item->id}}",
-						"<?php
-						if($item->status=='Active'){
-							$isi = 'Koordinator';
-							$marker = '{!!asset("images/ic-marker-green.png")!!}';
-						}else{
-							$isi = 'Kanvaser';
-							$marker = '{!!asset("images/ic-marker.png")!!}';
-						}
-
-						?>
-						<div style='width:30%;height:90px;float:left;background-color:white;margin-top:-20px;z-index:10;position:relative'><img style='width:50px;height:50px;border-radius:100%;margin-right:8px;margin-top:20px;margin-right:60px' src='{{asset('/')}}{{$item->photo}}'></div><div style='width:70%;float:left;margin-bottom:16px'><span style='font-size:14px;font-weight:bold;color:#54667e'>{{$item->name}}</span><br><span>{{$isi}}</span><br><span>( {{date('d-m-Y H:i:s', strtotime($item->updated_at)) }} )</span></div>",
-						"{{$item->ltd}}",
-						"{{$item->lng}}",
-						"{{$marker}}"
-						],
-						@endforeach
-						];
-
-						gmarkers = [];
-						for(var a = 0; a < locations.length; a++){
-							var image = {
-                url: locations[a][4], // url
-                scaledSize: new google.maps.Size(20, 30), // scaled size
-            };
-        }
-
-        var map = new google.maps.Map(document.getElementById('map'),{
-        	zoom: 12,
-        	center: new google.maps.LatLng({{$first_lat}}, {{$first_long}}),
-        	mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-
-        var infowindow = new google.maps.InfoWindow({
-        	maxWidth: 280
-        });
-
-        function createMarker(latlng, html,icon) {
-        	var marker = new google.maps.Marker({
-        		position: latlng,
-        		map: map,
-        		icon: icon,
-        	});
-
-        	google.maps.event.addListener(marker, 'click', function(){
-        		infowindow.setContent(html);
-        		infowindow.open(map, marker);
-        		map.setCenter(getPosition()); 
-        		map.setZoom(10);
-        	});
-
-        	marker.addListener('mouseover', function(){
-        		infowindow.setContent(html);
-        		infowindow.open(map, marker);
-
-        	});
-
-              // assuming you also want to hide the infowindow when user mouses-out
-              marker.addListener('mouseout', function(){
-              	infowindow.close();
-              });
-
-              return marker;
-          }
-
-          for (var i = 0; i < locations.length; i++){
-          	gmarkers[locations[i][0]] =
-          	createMarker(new google.maps.LatLng(locations[i][2], locations[i][3]), locations[i][0] + "<br>" + locations[i][1], locations[i][4]);
-          }
-      </script>
-  </div>
-</div>
-</div>
-</div>
 </div>
 @endsection
