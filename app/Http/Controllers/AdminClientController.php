@@ -151,6 +151,8 @@ class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBCo
 	        | 
 	        */
 	        $this->button_selected = array();
+	        $this->button_selected[] = ['label'=>'Set Active','icon'=>'fa fa-unlock','name'=>'active'];
+	        $this->button_selected[] = ['label'=>'Set Non Active','icon'=>'fa fa-lock','name'=>'non_active'];
 
 
 	        /* 
@@ -283,7 +285,11 @@ class AdminClientController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    */
 	    public function actionButtonSelected($id_selected,$button_name) {
 	        //Your code here
-
+	    	if($button_name == 'active') {
+	    		DB::table('cms_users')->whereIn('id',$id_selected)->update(['status'=>'Active']);
+	    	}elseif($button_name == 'non_active') {
+	    		DB::table('cms_users')->whereIn('id',$id_selected)->update(['status'=>'Non Active']);
+	    	}
 	    }
 
 

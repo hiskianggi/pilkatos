@@ -7,6 +7,7 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 use CRUDBooster;
+use Hash;
 
 class FrontController extends Controller
 {
@@ -39,5 +40,43 @@ class FrontController extends Controller
         }
         
         return response()->json($save);
+    }
+
+    public function getForgot($token){
+        $data_token = DB::table('password_token')->where('token',$token)->first();
+        $data['page_title'] = "Set New Password";
+        $data['token'] = $token;
+        if ($data_token) {
+            $data['user'] = DB::table('users')->where('email', $data_token->email)->first();
+        }else{
+            $data['user'] = [];
+        }
+
+        return view('auth.forgot', $data);
+    }
+
+    public function postForgot(Request $request){
+        $password = $request->password;
+        $password_confirmation = $request->password_confirmation;
+
+        if ($password == $password_confirmation) {
+            $token = DB::table('password_token')->where('token',$request->token)->first();
+            if ($token) {
+                $save['password'] = Hash::make($password_confirmation);
+                DB::table('users')->where('email', $token->email)->update($save);
+                DB::table('password_token')->where('email', $token->email)->delete();
+
+                $data['status'] = 'success';
+                $data['message'] = 'Password Berhasil Dibuat!';
+            }else{
+                $data['status'] = 'error';
+                $data['message'] = 'Token is Invalid!';
+            }
+        }else{
+            $data['status'] = 'error';
+            $data['message'] = 'Password Confirmation is Not Same!';
+        }
+
+        return response()->json($data);
     }
 }

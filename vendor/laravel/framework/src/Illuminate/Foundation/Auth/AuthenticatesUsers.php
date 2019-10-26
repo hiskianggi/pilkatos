@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use Hash;
+use Session;
 
 trait AuthenticatesUsers
 {
@@ -31,6 +32,7 @@ trait AuthenticatesUsers
 
         $data['cms_users_id'] = $check->id;
         $data['bg_login'] = $bg_login->photo;
+        $data['row'] = $check;
 
         if ($check) {
             return view('auth.login', $data);
@@ -197,6 +199,7 @@ trait AuthenticatesUsers
         $request->session()->invalidate();
 
         if($path){
+            Session::flash('logout-message','Terimakasih Telah Berpartisipasi!');
             return redirect($path.'/login');
         }else{
             return redirect('https://pilkatos.tech');

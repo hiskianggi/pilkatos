@@ -142,8 +142,7 @@ class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CB
 	        if (CRUDBooster::myPrivilegeId() == 1 || CRUDBooster::myPrivilegeId() != 1 && CB::checkSecurity() == 1) {
 	        	$this->addaction[] = ['label'=>'Kirim Email','url'=>CRUDBooster::mainpath('send-email/[id]'),'icon'=>'fa fa-inbox','color'=>'success','showIf'=>"[email] != NULL"];
 	        }
-
-
+	        
 	        /* 
 	        | ---------------------------------------------------------------------- 
 	        | Add More Button Selected
@@ -155,6 +154,7 @@ class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CB
 	        | 
 	        */
 	        $this->button_selected = array();
+	        $this->button_selected[] = ['label'=>'Reset Pilihan','icon'=>'fa fa-repeat','name'=>'reset_election'];
 
 	        
 	        /* 
@@ -293,7 +293,10 @@ class AdminTeachersController extends \crocodicstudio\crudbooster\controllers\CB
 	    */
 	    public function actionButtonSelected($id_selected,$button_name) {
 	        //Your code here
-	    	
+	    	if($button_name == 'reset_election') {
+	    		DB::table('users')->whereIn('id',$id_selected)->update(['status'=>0]);
+	    		DB::table('election_data')->whereIn('users_id',$id_selected)->delete();
+	    	}
 	    }
 
 

@@ -36,7 +36,7 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 			# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col = [];
 		$this->col[] = ["label"=>"Kode / NIS","name"=>"username"];
-		if (CRUDBooster::myPrivilegeId() == 1) {
+		if (CRUDBooster::isSuperadmin()) {
 			$this->col[] = ["label"=>"Email","name"=>"email","callback"=>function($row){
 				if ($row->email == NULL) {
 					$res = '<span class="btn btn-danger btn-xs btn-document dropdown-toggle"><span class="fa fa-inbox"></span> NULL</span>';
@@ -84,7 +84,7 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 				}
 				return $res;
 			}];
-			if (CRUDBooster::myPrivilegeId() == 1) {
+			if (CRUDBooster::isSuperadmin()) {
 				$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
 			}
 
@@ -93,7 +93,7 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
 			$this->form[] = ['label'=>'Kode / NIS','name'=>'username','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			if (CRUDBooster::myPrivilegeId() == 1) {
+			if (CRUDBooster::isSuperadmin()) {
 				$this->form[] = ['label'=>'Email','name'=>'email','type'=>'email','validation'=>'min:8|max:70','width'=>'col-sm-10','help'=>'Please leave empty if you don"t want to fill in an email.'];
 			}else{
 				if (CB::checkSecurity() == 1) {
@@ -102,8 +102,8 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 			}
 			$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
 			$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:8|max:32','width'=>'col-sm-10','help'=>'Minimum 8 characters. Please leave empty if you did not change the password.'];
-			if (CRUDBooster::myPrivilegeId() == 1) {
-				$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
+			if (CRUDBooster::isSuperadmin()) {
+				$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1','datatable_ajax'=>false];
 				$this->form[] = ['label'=>'Kelas','name'=>'class_id','type'=>'select','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'class,name','parent_select'=>'cms_users_id'];
 			}else{
 				$this->form[] = ['label'=>'Kelas','name'=>'class_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'class,name','datatable_where'=>'cms_users_id='.CRUDBooster::myId()];
@@ -149,7 +149,7 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	        | 
 	        */
 	        $this->addaction = array();
-	        if (CRUDBooster::myPrivilegeId() == 1 || CRUDBooster::myPrivilegeId() != 1 && CB::checkSecurity() == 1) {
+	        if (CRUDBooster::isSuperadmin() || CRUDBooster::isSuperadmin() != 1 && CB::checkSecurity() == 1) {
 	        	$this->addaction[] = ['label'=>'Kirim Email','url'=>CRUDBooster::mainpath('send-email/[id]'),'icon'=>'fa fa-inbox','color'=>'success','showIf'=>"[email] != NULL"];
 	        }
 
@@ -165,6 +165,7 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	        | 
 	        */
 	        $this->button_selected = array();
+	        $this->button_selected[] = ['label'=>'Reset Pilihan','icon'=>'fa fa-repeat','name'=>'reset_election'];
 
 
 	        /* 
@@ -302,7 +303,10 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	    */
 	    public function actionButtonSelected($id_selected,$button_name) {
 	        //Your code here
-
+	    	if($button_name == 'reset_election') {
+	    		DB::table('users')->whereIn('id',$id_selected)->update(['status'=>0]);
+	    		DB::table('election_data')->whereIn('users_id',$id_selected)->delete();
+	    	}
 	    }
 
 
@@ -315,7 +319,7 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	    	if (CRUDBooster::myPrivilegeId() != 1) {
+	    	if (CRUDBooster::isSuperadmin() != 1) {
 	    		$query
 	    		->where('users.cms_users_id',CRUDBooster::myId())
 	    		->where('users.type',0);
@@ -346,7 +350,7 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	    public function hook_before_add(&$postdata) {        
 	        //Your code here
 	    	$postdata['type'] = 0;
-	    	if (CRUDBooster::myPrivilegeId() != 1) {
+	    	if (CRUDBooster::isSuperadmin() != 1) {
 	    		$postdata['cms_users_id'] = CRUDBooster::myId();
 	    	}
 	    }

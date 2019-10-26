@@ -156,6 +156,7 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 	        | 
 	        */
 	        $this->button_selected = array();
+	        $this->button_selected[] = ['label'=>'Reset Pilihan','icon'=>'fa fa-repeat','name'=>'reset_election'];
 
 	        
 	        /* 
@@ -292,7 +293,10 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 	    */
 	    public function actionButtonSelected($id_selected,$button_name) {
 	        //Your code here
-	    	
+	    	if($button_name == 'reset_election') {
+	    		DB::table('users')->whereIn('id',$id_selected)->update(['status'=>0]);
+	    		DB::table('election_data')->whereIn('users_id',$id_selected)->delete();
+	    	}
 	    }
 
 

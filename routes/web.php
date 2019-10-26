@@ -15,6 +15,8 @@ Route::group(['middleware'=>'auth'], function(){
 	Route::post('/electy', 'FrontController@postData');
 });
 
+Route::get('{token}/set-password','FrontController@getForgot');
+Route::post('set-password','FrontController@postForgot');
 Route::get('/{path}/login', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout');

@@ -44,11 +44,15 @@
 </script>
 @endsection
 @section('content')
-<section class="p-md-3 mx-md-5 text-center text-lg-left">
+<section class="p-md-3 mx-md-3 text-center text-lg-left">
 	<h2 class="text-center mx-auto font-weight-bold mb-4 pb-2">Kandidat Ketua OSIS Periode {{ $this_year }}/{{ $next_year }}</h2>
 	<div class="row d-flex justify-content-center align-items-center">
 		@foreach($candidate as $row)
+		@if($candidate->count() == 4)
+		<div class="col-lg-3 mb-4">
+		@else
 		<div class="col-lg-4 mb-4">
+		@endif
 			<div class="p-4">
 				<div class="avatar w-100 white d-flex justify-content-center align-items-center">
 					<img

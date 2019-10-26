@@ -8,7 +8,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ config('app.name', 'Laravel') }}</title>
+	<title> Login | Pilkatos.Tech </title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -64,493 +64,502 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 		.txt-rt {
 			text-align: right;
-			}/* text align right */
-			.txt-lt {
-				text-align: left;
-				}/* text align left */
-				.txt-center {
-					text-align: center;
-					}/* text align center */
-					.float-rt {
-						float: right;
-						}/* float right */
-						.float-lt {
-							float: left;
-							}/* float left */
-							.clear {
-								clear: both;
-								}/* clear float */
-								.pos-relative {
-									position: relative;
-									}/* Position Relative */
-									.pos-absolute {
-										position: absolute;
-										}/* Position Absolute */
-										.vertical-base {
-											vertical-align: baseline;
-											}/* vertical align baseline */
-											.vertical-top {
-												vertical-align: top;
-												}/* vertical align top */
-												nav.vertical ul li {
-													display: block;
-													}/* vertical menu */
-													nav.horizontal ul li {
-														display: inline-block;
-														}/* horizontal menu */
-														img {
-															max-width: 100%;
-														}
-														/*-- end reset --*/
-														body {
-															font-family: 'Hind', sans-serif;
-														} 
-														/*-- main --*/ 
+		}
+		.txt-lt {
+			text-align: left;
+		}
+		.txt-center {
+			text-align: center;
+		}
+		.float-rt {
+			float: right;
+		}
+		.float-lt {
+			float: left;
+		}
+		.clear {
+			clear: both;
+		}
+		.pos-relative {
+			position: relative;
+		}
+		.pos-absolute {
+			position: absolute;
+		}
+		.vertical-base {
+			vertical-align: baseline;
+		}
+		.vertical-top {
+			vertical-align: top;
+		}
+		nav.vertical ul li {
+			display: block;
+		}
+		nav.horizontal ul li {
+			display: inline-block;
+		}
+		img {
+			max-width: 100%;
+		}
 
-														h1 {
-															font-size: 45px;
-															color: #fff;
-															font-weight: 300;
-															text-transform: uppercase;
-															letter-spacing: 4px;
-															text-align: center;
-															padding: 1em 0 0.4em 0;
-														}
-														/*-- slide --*/
+		body {
+			font-family: 'Hind', sans-serif;
+		} 
 
-														@keyframes slideleft {
-															from {
-																background-position: 0%;
-															}
+		h1 {
+			font-size: 45px;
+			color: #fff;
+			font-weight: 300;
+			text-transform: uppercase;
+			letter-spacing: 4px;
+			text-align: center;
+			padding: 1em 0 0.4em 0;
+		}
 
-															to {
-																background-position: 90000%;
-															}
-														}
+		@keyframes slideleft {
+			from {
+				background-position: 0%;
+			}
 
-														@-webkit-keyframes slideleft {
-															from {
-																background-position: 0%;
-															}
+			to {
+				background-position: 90000%;
+			}
+		}
 
-															to {
-																background-position: 90000%;
-															}
-														}
+		@-webkit-keyframes slideleft {
+			from {
+				background-position: 0%;
+			}
 
-														.w3layouts-main {
-															background-image: url('../images/bg-login.jpg');
-															background-repeat: repeat-x;
-															animation: slideleft 20000s infinite linear;
-															-webkit-animation: slideleft 20000s infinite linear;
-															background-size: cover;
-															-webkit-background-size: cover;
-															-moz-background-size: cover;
-															background-attachment: fixed;
-															position: relative;
-															min-height: 100vh;
-														}
+			to {
+				background-position: 90000%;
+			}
+		}
 
-														.bg-layer {
-															background: rgba(0, 0, 0, 0.7);
-															min-height: 100vh;
-														}
-														/*-- //slide --*/
+		.w3layouts-main {
+			background-image: url('{{ ($bg_login != NULL ? asset($bg_login) : asset('images/bg-login.jpg')) }}');
+			background-repeat: repeat-x;
+			animation: slideleft 20000s infinite linear;
+			-webkit-animation: slideleft 20000s infinite linear;
+			background-size: cover;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			background-attachment: fixed;
+			position: relative;
+			min-height: 100vh;
+		}
 
-														/*--header start here--*/
-														.w3ls-header {
-															padding: 0em 0 0;
-														}
+		.bg-layer {
+			background: rgba(0, 0, 0, 0.7);
+			min-height: 100vh;
+		}
+		/*-- //slide --*/
 
-														.icon1 {
-															margin: 0 0 1em;
-															padding: .8em 1em;
-															background: rgba(255, 255, 255, 0.94);
-														}
+		/*--header start here--*/
+		.w3ls-header {
+			padding: 0em 0 0;
+		}
 
-														.icon1 span.fa {
-															color: #222;
-															width: 22px;
-														}
+		.icon1 {
+			margin: 0 0 1em;
+			padding: .8em 1em;
+			background: rgba(255, 255, 255, 0.94);
+		}
 
-														.main-icon {
-															text-align: center;
-														}
+		.icon1 span.fa {
+			color: #222;
+			width: 22px;
+		}
 
-														.main-icon span.fa {
-															font-size: 50px;
-															color: #fff;
-															margin-bottom: 1em;
-														}
+		.main-icon {
+			text-align: center;
+		}
 
-														.wthree li {
-															display: inline-block;
-														}
+		.main-icon span.fa {
+			font-size: 50px;
+			color: #fff;
+			margin-bottom: 1em;
+		}
 
-														a {
-															color: #585858;
-															margin: 0em;
-														}
+		.wthree li {
+			display: inline-block;
+		}
 
-														.bottom {
-															margin: 1em 0 0;
-														}
+		a {
+			color: #585858;
+			margin: 0em;
+		}
 
-														.header-main {
-															max-width: 310px;
-															margin: 0 auto;
-															position: relative;
-															z-index: 999;
-															padding: 3em 2em;
-															background: rgba(255, 255, 255, 0.04);
-															-webkit-box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
-															-moz-box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
-															box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
-														}
+		.bottom {
+			margin: 1em 0 0;
+		}
 
-														.sign-up {
-															margin: 2em 0;
-														}
+		.header-main {
+			max-width: 310px;
+			margin: 0 auto;
+			position: relative;
+			z-index: 999;
+			padding: 3em 2em;
+			background: rgba(255, 255, 255, 0.04);
+			-webkit-box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
+			-moz-box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
+			box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
+		}
 
-														.header-left {
-															background: #fff;
-															padding: 0px;
-														}
+		.sign-up {
+			margin: 2em 0;
+		}
 
-														.sign-up h2 {
-															font-size: 22px;
-															color: #fff;
-															text-align: center;
-															background: #fbbc05;
-															width: 40px;
-															height: 40px;
-															line-height: 1.9em;
-															border-radius: 50%;
-															margin: 0 auto;
-														}
+		.header-left {
+			background: #fff;
+			padding: 0px;
+		}
 
-														::-webkit-input-placeholder {
-															color: #333!important;
-														}
+		.sign-up h2 {
+			font-size: 22px;
+			color: #fff;
+			text-align: center;
+			background: #fbbc05;
+			width: 40px;
+			height: 40px;
+			line-height: 1.9em;
+			border-radius: 50%;
+			margin: 0 auto;
+		}
 
-														.header-left-bottom input[type="text"] {
-															outline: none;
-															font-size: 15px;
-															color: #222;
-															border: none;
-															width: 90%;
-															display: inline-block;
-															background: transparent;
-															letter-spacing: 1px;
-														}
+		::-webkit-input-placeholder {
+			color: #333!important;
+		}
 
-														.header-left-bottom input[type="password"] {
-															outline: none;
-															font-size: 15px;
-															color: #222;
-															border: none;
-															width: 90%;
-															display: inline-block;
-															background: transparent;
-															letter-spacing: 1px;
-														}
+		.header-left-bottom input[type="text"] {
+			outline: none;
+			font-size: 15px;
+			color: #222;
+			border: none;
+			width: 90%;
+			display: inline-block;
+			background: transparent;
+			letter-spacing: 1px;
+		}
 
-														.header-left-bottom button.btn {
-															background: #007cc0;
-															color: #fff;
-															font-size: 15px;
-															text-transform: uppercase;
-															padding: .8em 2em;
-															letter-spacing: 1px;
-															transition: 0.5s all;
-															-webkit-transition: 0.5s all;
-															-moz-transition: 0.5s all;
-															-o-transition: 0.5s all;
-															display: inline-block;
-															cursor: pointer;
-															outline: none;
-															border: none;
-															width: 100%;
-														}
+		.header-left-bottom input[type="password"] {
+			outline: none;
+			font-size: 15px;
+			color: #222;
+			border: none;
+			width: 90%;
+			display: inline-block;
+			background: transparent;
+			letter-spacing: 1px;
+		}
 
-														/*-- agileits --*/
-														.header-left-bottom p {
-															font-size: 17px;
-															color: #000;
-															display: inline-block;
-															width: 50%;
-															margin: 20px 0 0;
-															letter-spacing: 1px;
-															float: left;
-														}
+		.header-left-bottom button.btn {
+			background: #007cc0;
+			color: #fff;
+			font-size: 15px;
+			text-transform: uppercase;
+			padding: .8em 2em;
+			letter-spacing: 1px;
+			transition: 0.5s all;
+			-webkit-transition: 0.5s all;
+			-moz-transition: 0.5s all;
+			-o-transition: 0.5s all;
+			display: inline-block;
+			cursor: pointer;
+			outline: none;
+			border: none;
+			width: 100%;
+		}
 
-														.header-left-bottom p.right {
-															text-align: right;
-														}
+		/*-- agileits --*/
+		.header-left-bottom p {
+			font-size: 17px;
+			color: #000;
+			display: inline-block;
+			width: 50%;
+			margin: 20px 0 0;
+			letter-spacing: 1px;
+			float: left;
+		}
 
-														.header-left-bottom p a {
-															font-size: 11px;
-															color: #e2e2e2;
-															text-transform: uppercase;
-														}
+		.header-left-bottom p.right {
+			text-align: right;
+		}
 
-														.social {
-															margin: 2em 0 0;
-														}
+		.header-left-bottom p a {
+			font-size: 11px;
+			color: #e2e2e2;
+			text-transform: uppercase;
+		}
 
-														.heading h5 {
-															color: #c5c5c5;
-															color: #000000;
-															margin-top: 8px;
-															font-size: 20px;
-														}
+		.social {
+			margin: 2em 0 0;
+		}
 
-														.social span.fa {
-															color: #fff;
-															font-size: 12px;
-															line-height: 35px;
-															margin: 0 5px;
-															transition: 0.5s all;
-														}
+		.heading h5 {
+			color: #c5c5c5;
+			color: #000000;
+			margin-top: 8px;
+			font-size: 20px;
+		}
 
-														.social ul li {
-															display: inline-block;
-															margin: 0 5px;
-															font-size: 15px;
-															color: #fff;
-															letter-spacing: 1px;
-															text-transform: capitalize;
-														}
+		.social span.fa {
+			color: #fff;
+			font-size: 12px;
+			line-height: 35px;
+			margin: 0 5px;
+			transition: 0.5s all;
+		}
 
-														.social a.facebook {
-															background: #3b5998;
-														}
+		.social ul li {
+			display: inline-block;
+			margin: 0 5px;
+			font-size: 15px;
+			color: #fff;
+			letter-spacing: 1px;
+			text-transform: capitalize;
+		}
 
-														.social a.twitter {
-															background: #1da1f2;
-														}
+		.social a.facebook {
+			background: #3b5998;
+		}
 
-														.social a.linkedin {
-															background: #00a0dc;
-														}
+		.social a.twitter {
+			background: #1da1f2;
+		}
 
-														.social a.google {
-															background: #dd4b39;
-														}
+		.social a.linkedin {
+			background: #00a0dc;
+		}
 
-														.social ul li a {
-															background: rgba(255, 255, 255, 0.22);
-															width: 35px;
-															height: 35px;
-															line-height: 35px;
-															display: block;
-															text-align: center;
-															border-radius: 50%;
-															-webkit-border-radius: 50%;
-															-moz-border-radius: 50%;
-															-ms-border-radius: 50%;
-															-o-border-radius: 50%;
-														}
+		.social a.google {
+			background: #dd4b39;
+		}
 
-														.login-check {
-															position: relative;
-														}
+		.social ul li a {
+			background: rgba(255, 255, 255, 0.22);
+			width: 35px;
+			height: 35px;
+			line-height: 35px;
+			display: block;
+			text-align: center;
+			border-radius: 50%;
+			-webkit-border-radius: 50%;
+			-moz-border-radius: 50%;
+			-ms-border-radius: 50%;
+			-o-border-radius: 50%;
+		}
 
-														.checkbox i {
-															position: absolute;
-															top: 0px;
-															left: 0%;
-															text-align: center;
-															display: block;
-															width: 19px;
-															height: 17px;
-															outline: none;
-															background: #fff;
-															border-radius: 0px;
-															-webkit-border-radius: 0px;
-															-moz-border-radius: 0px;
-															-o-border-radius: 0px;
-															cursor: pointer;
-														}
+		.login-check {
+			position: relative;
+		}
 
-														.checkbox input:checked + i:after {
-															opacity: 1;
-														}
+		.checkbox i {
+			position: absolute;
+			top: 0px;
+			left: 0%;
+			text-align: center;
+			display: block;
+			width: 19px;
+			height: 17px;
+			outline: none;
+			background: #fff;
+			border-radius: 0px;
+			-webkit-border-radius: 0px;
+			-moz-border-radius: 0px;
+			-o-border-radius: 0px;
+			cursor: pointer;
+		}
 
-														.checkbox input + i:after {
-															position: absolute;
-															opacity: 0;
-															transition: opacity 0.1s;
-															-o-transition: opacity 0.1s;
-															-ms-transition: opacity 0.1s;
-															-moz-transition: opacity 0.1s;
-															-webkit-transition: opacity 0.1s;
-														}
+		.checkbox input:checked + i:after {
+			opacity: 1;
+		}
 
-														.checkbox input + i:after {
-															content: url(../images/tick.png);
-															top: -1px;
-															left: 2px;
-															width: 15px;
-															height: 15px;
-														}
+		.checkbox input + i:after {
+			position: absolute;
+			opacity: 0;
+			transition: opacity 0.1s;
+			-o-transition: opacity 0.1s;
+			-ms-transition: opacity 0.1s;
+			-moz-transition: opacity 0.1s;
+			-webkit-transition: opacity 0.1s;
+		}
 
-														.checkbox {
-															position: relative;
-															display: block;
-															padding-left: 30px;
-															text-transform: capitalize;
-															letter-spacing: 1px;
-															font-size: 14px;
-															color: #fff;
-														}
+		.checkbox input + i:after {
+			content: url(../images/tick.png);
+			top: -1px;
+			left: 2px;
+			width: 15px;
+			height: 15px;
+		}
 
-														input[type="checkbox" i] {
-															display: none;
-														}
-														/*-- w3layouts --*/
-														/*-- header end here --*/
-														h2 {
-															font-size: 26em;
-															color: #fff;
-															line-height: 1.3em;
-															letter-spacing: 10px;
-														}
+		.checkbox {
+			position: relative;
+			display: block;
+			padding-left: 30px;
+			text-transform: capitalize;
+			letter-spacing: 1px;
+			font-size: 14px;
+			color: #fff;
+		}
 
-														h3 {
-															font-size: 2em;
-															color: #fff;
-														}
+		input[type="checkbox" i] {
+			display: none;
+		}
+		/*-- w3layouts --*/
+		/*-- header end here --*/
+		h2 {
+			font-size: 26em;
+			color: #fff;
+			line-height: 1.3em;
+			letter-spacing: 10px;
+		}
 
-														h3 a {
-															font-size: 17px;
-															padding-left: 12px;
-															color: #04c9f9;
-															text-decoration: underline;
-														}
-														/*-- copyright --*/
-														.copyright {
-															padding: 2em 0;
-															text-align: center;
-														}
+		h3 {
+			font-size: 2em;
+			color: #fff;
+		}
 
-														.copyright p {
-															font-size: 15px;
-															letter-spacing: 1px;
-															color: #ccc;
-															line-height: 1.8em;
-														}
+		h3 a {
+			font-size: 17px;
+			padding-left: 12px;
+			color: #04c9f9;
+			text-decoration: underline;
+		}
+		/*-- copyright --*/
+		.copyright {
+			padding: 2em 0;
+			text-align: center;
+		}
 
-														.copyright p a {
-															color: #fff;
-															-webkit-transition: 0.5s all;
-															-moz-transition: 0.5s all;
-															-o-transition: 0.5s all;
-															-ms-transition: 0.5s all;
-															transition: 0.5s all;
-														}
-														/*-- //copyright --*/
-														/*-- //main --*/
+		.copyright p {
+			font-size: 15px;
+			letter-spacing: 1px;
+			color: #ccc;
+			line-height: 1.8em;
+		}
 
-														/*-- responsive-design --*/ 
+		.copyright p a {
+			color: #fff;
+			-webkit-transition: 0.5s all;
+			-moz-transition: 0.5s all;
+			-o-transition: 0.5s all;
+			-ms-transition: 0.5s all;
+			transition: 0.5s all;
+		}
+		/*-- //copyright --*/
+		/*-- //main --*/
 
-														@media(max-width:667px) {
+		/*-- responsive-design --*/ 
 
-															h1 {
-																font-size: 40px;
-																letter-spacing: 3px;
-															}
-														}
+		@media(max-width:667px) {
 
-														@media(max-width:415px) {
+			h1 {
+				font-size: 40px;
+				letter-spacing: 3px;
+			}
+		}
 
-															h1 {
-																font-size: 35px;
-																letter-spacing: 3px;
-															}
+		@media(max-width:415px) {
 
-															.social {
-																margin: 1em 0 0;
-															}
+			h1 {
+				font-size: 35px;
+				letter-spacing: 3px;
+			}
 
-															.copyright {
-																padding: 2em 1em;
-															}
-														}
+			.social {
+				margin: 1em 0 0;
+			}
 
-														@media(max-width:384px) {
-															.main-icon span.fa {
-																margin-bottom: .6em;
-															}
+			.copyright {
+				padding: 2em 1em;
+			}
+		}
 
-															.header-main {
-																max-width: 310px;
-																margin: 0 1em;
-															}
+		@media(max-width:384px) {
+			.main-icon span.fa {
+				margin-bottom: .6em;
+			}
 
-															.header-left-bottom input[type="text"],.header-left-bottom input[type="password"] {
-																width: 88%;
-															}
+			.header-main {
+				max-width: 310px;
+				margin: 0 1em;
+			}
 
-															.social ul li {
-																margin: 0 2px;
-															}
+			.header-left-bottom input[type="text"],.header-left-bottom input[type="password"] {
+				width: 88%;
+			}
 
-															h1 {
-																font-size: 30px;
-															}
-														} 
-														/*-- //responsive-design --*/
-													</style>
-													<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" media="all" />
-													<!-- //Custom Theme files -->
-													<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.js" integrity="sha256-7OUNnq6tbF4510dkZHCRccvQfRlV3lPpBTJEljINxao=" crossorigin="anonymous"></script>
-													<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.css" integrity="sha256-2bAj1LMT7CXUYUwuEnqqooPb1W0Sw0uKMsqNH0HwMa4=" crossorigin="anonymous" />
-													<!-- web font -->
-													<link href="//fonts.googleapis.com/css?family=Hind:300,400,500,600,700" rel="stylesheet">
-													<!-- //web font -->
+			.social ul li {
+				margin: 0 2px;
+			}
 
-												</head>
-												<body>
+			h1 {
+				font-size: 30px;
+			}
+		} 
+		/*-- //responsive-design --*/
+	</style>
+	<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" media="all" />
+	<!-- //Custom Theme files -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.js" integrity="sha256-7OUNnq6tbF4510dkZHCRccvQfRlV3lPpBTJEljINxao=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.css" integrity="sha256-2bAj1LMT7CXUYUwuEnqqooPb1W0Sw0uKMsqNH0HwMa4=" crossorigin="anonymous" />
+	<!-- web font -->
+	<link href="//fonts.googleapis.com/css?family=Hind:300,400,500,600,700" rel="stylesheet">
+	<!-- //web font -->
 
-													<!-- main -->
-													@yield('content')
-													<!-- //main -->
-													<script
-													src="https://code.jquery.com/jquery-3.4.1.min.js"
-													integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-													crossorigin="anonymous"></script>
-													@if ($errors->has('username'))
-													<script type="text/javascript">
-														$(document).ready(function() {
-															Swal.fire(
-																'Pesan',
-																'Kode/NIS Yang Anda Masukkan Tidak Terdaftar!',
-																'info'
-																)
-														});
-													</script>
-													@elseif ($errors->has('password'))
-													<script type="text/javascript">
-														$(document).ready(function() {
-															Swal.fire(
-																'Pesan',
-																'Password Yang Anda Masukkan Salah!',
-																'info'
-																)
-														});
-													</script>
-													@elseif ($errors->has('status'))
-													<script type="text/javascript">
-														$(document).ready(function() {
-															Swal.fire(
-																'Pesan',
-																'Anda Sudah Memilih!',
-																'info'
-																)
-														});
-													</script>
-													@endif
+</head>
+<body>
 
-												</body>
-												</html>
+	<!-- main -->
+	@yield('content')
+	<!-- //main -->
+	<script
+	src="https://code.jquery.com/jquery-3.4.1.min.js"
+	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	crossorigin="anonymous"></script>
+	@if ($errors->has('username'))
+	<script type="text/javascript">
+		$(document).ready(function() {
+			Swal.fire(
+				'Pesan',
+				'Kode/NIS Yang Anda Masukkan Tidak Terdaftar!',
+				'info'
+				)
+		});
+	</script>
+	@elseif ($errors->has('password'))
+	<script type="text/javascript">
+		$(document).ready(function() {
+			Swal.fire(
+				'Pesan',
+				'Password Yang Anda Masukkan Salah!',
+				'info'
+				)
+		});
+	</script>
+	@elseif ($errors->has('status'))
+	<script type="text/javascript">
+		$(document).ready(function() {
+			Swal.fire(
+				'Pesan',
+				'Anda Sudah Memilih!',
+				'info'
+				)
+		});
+	</script>
+	@endif
+	@if(Session::has('logout-message'))
+	<script type="text/javascript">
+		$("document").ready(function(){
+			Swal.fire(
+				'Pesan',
+				'{{ Session::get('logout-message') }}',
+				'info'
+				);
+		});
+	</script>
+	@endif
+
+</body>
+</html>
