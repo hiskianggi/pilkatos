@@ -30,8 +30,9 @@ class AdminClassController extends \crocodicstudio\crudbooster\controllers\CBCon
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col = [];
+		$this->col[] = ["label"=>"#ID","name"=>"id"];
 		$this->col[] = ["label"=>"Nama Kelas","name"=>"name"];
-		if (CRUDBooster::myPrivilegeId() == 1) {
+		if (CRUDBooster::isSuperadmin()) {
 			$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
 		}
 			# END COLUMNS DO NOT REMOVE THIS LINE
@@ -39,7 +40,7 @@ class AdminClassController extends \crocodicstudio\crudbooster\controllers\CBCon
 			# START FORM DO NOT REMOVE THIS LINE
 		$this->form = [];
 		$this->form[] = ['label'=>'Nama Kelas','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-		if (CRUDBooster::myPrivilegeId() == 1) {
+		if (CRUDBooster::isSuperadmin()) {
 			$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
 		}
 			# END FORM DO NOT REMOVE THIS LINE
@@ -235,7 +236,7 @@ class AdminClassController extends \crocodicstudio\crudbooster\controllers\CBCon
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	    	if (CRUDBooster::myPrivilegeId() != 1) {
+	    	if (CRUDBooster::isSuperadmin() != 1) {
 	    		$query->where('class.cms_users_id',CRUDBooster::myId());
 	    	}else{
 	    		$query->where('cms_users.status','Active');
@@ -261,7 +262,7 @@ class AdminClassController extends \crocodicstudio\crudbooster\controllers\CBCon
 	    */
 	    public function hook_before_add(&$postdata) {        
 	        //Your code here
-	    	if (CRUDBooster::myPrivilegeId() != 1) {
+	    	if (CRUDBooster::isSuperadmin() != 1) {
 	    		$postdata['cms_users_id'] = CRUDBooster::myId();
 	    	}
 	    }

@@ -33,7 +33,7 @@ class AdminCandidatesController extends \crocodicstudio\crudbooster\controllers\
 		$this->col[] = ["label"=>"Nama","name"=>"name"];
 		$this->col[] = ["label"=>"Photo","name"=>"photo","image"=>true];
 		$this->col[] = ["label"=>"Kelas","name"=>"class_id","join"=>"class,name"];
-		if (CRUDBooster::myId() == 1) {
+		if (CRUDBooster::isSuperadmin()) {
 			$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
 		}
 			# END COLUMNS DO NOT REMOVE THIS LINE
@@ -42,7 +42,7 @@ class AdminCandidatesController extends \crocodicstudio\crudbooster\controllers\
 		$this->form = [];
 		$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
 		$this->form[] = ['label'=>'Photo','name'=>'photo','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
-		if (CRUDBooster::myPrivilegeId() == 1) {
+		if (CRUDBooster::isSuperadmin()) {
 			$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
 			$this->form[] = ['label'=>'Kelas','name'=>'class_id','type'=>'select','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'class,name','parent_select'=>'cms_users_id'];
 		}else{

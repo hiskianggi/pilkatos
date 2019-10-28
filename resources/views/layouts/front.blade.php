@@ -18,6 +18,7 @@
   <!-- Your custom styles (optional) -->
   <link href="{{ asset('mdb/css/style.css') }}" rel="stylesheet">
   <link href="{{ asset('mdb/stylesheet.css') }}" rel="stylesheet">
+  <link rel="shortcut icon" href="{{ CRUDBooster::getSetting('favicon')?asset(CRUDBooster::getSetting('favicon')):asset('vendor/crudbooster/assets/logo_crudbooster.png') }}">
   <style>
     section {
       margin-top: 1rem !important;

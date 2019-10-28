@@ -6,6 +6,7 @@ use DB;
 use CRUDBooster;
 use QrCode;
 use CB;
+use Carbon\Carbon;
 
 
 class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CBController {
@@ -34,7 +35,7 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 			# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col = [];
 		$this->col[] = ["label"=>"Kode Karyawan","name"=>"username"];
-		if (CRUDBooster::myPrivilegeId() == 1) {
+		if (CRUDBooster::isSuperadmin()) {
 			$this->col[] = ["label"=>"Email","name"=>"email","callback"=>function($row){
 				if ($row->email == NULL) {
 					$res = '<span class="btn btn-danger btn-xs btn-document dropdown-toggle"><span class="fa fa-inbox"></span> NULL</span>';
@@ -81,7 +82,7 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 				}
 				return $res;
 			}];
-			if (CRUDBooster::myPrivilegeId() == 1) {
+			if (CRUDBooster::isSuperadmin()) {
 				$this->col[] = ["label"=>"Sekolah","name"=>"cms_users_id","join"=>"cms_users,name"];
 			}
 			# END COLUMNS DO NOT REMOVE THIS LINE
@@ -89,7 +90,7 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
 			$this->form[] = ['label'=>'Kode Karyawan','name'=>'username','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			if (CRUDBooster::myPrivilegeId() == 1) {
+			if (CRUDBooster::isSuperadmin()) {
 				$this->form[] = ['label'=>'Email','name'=>'email','type'=>'email','validation'=>'min:8|max:70','width'=>'col-sm-10','help'=>'Please leave empty if you don"t want to fill in an email.'];
 			}else{
 				if (CB::checkSecurity() == 1) {
@@ -98,7 +99,7 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 			}
 			$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
 			$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:3|max:32','width'=>'col-sm-10','help'=>'Minimum 5 characters. Please leave empty if you did not change the password.'];
-			if (CRUDBooster::myPrivilegeId() == 1) {
+			if (CRUDBooster::isSuperadmin()) {
 				$this->form[] = ['label'=>'Sekolah','name'=>'cms_users_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id != 1'];
 			}
 			# END FORM DO NOT REMOVE THIS LINE
@@ -140,7 +141,7 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 	        | 
 	        */
 	        $this->addaction = array();
-	        if (CRUDBooster::myPrivilegeId() == 1 || CRUDBooster::myPrivilegeId() != 1 && CB::checkSecurity() == 1) {
+	        if (CRUDBooster::isSuperadmin() || CRUDBooster::isSuperadmin() != 1 && CB::checkSecurity() == 1) {
 	        	$this->addaction[] = ['label'=>'Kirim Email','url'=>CRUDBooster::mainpath('send-email/[id]'),'icon'=>'fa fa-inbox','color'=>'success','showIf'=>"[email] != NULL"];
 	        }
 
@@ -309,7 +310,7 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	    	if (CRUDBooster::myPrivilegeId() != 1) {
+	    	if (CRUDBooster::isSuperadmin() != 1) {
 	    		$query->where('users.cms_users_id',CRUDBooster::myId())->where('users.type',2);
 	    	}else{
 	    		$query
@@ -341,7 +342,7 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 	    	$postdata['type'] = 2;
 	    	$postdata['class_id'] = NULL;
 
-	    	if (CRUDBooster::myPrivilegeId() != 1) {
+	    	if (CRUDBooster::isSuperadmin() != 1) {
 	    		$postdata['cms_users_id'] = CRUDBooster::myId();
 	    	}
 	    }
@@ -589,6 +590,53 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 	    	}
 	    	
 	    	return redirect()->back()->with(['message_type'=>'success','message'=>'Semua Password Token Telah Dikirim!']);
+	    }
+
+	    public function postImportData(){
+	    	$extension = File::extension(Request::file('importdata')->getClientOriginalName());
+	    	if($extension == "xlsx" || $extension == "xls" || $extension == "csv"){
+	    		$path = Request::file('importdata')->getRealPath();
+	    		$data = Excel::load($path, function($reader) {
+	    		})->get();
+	    		foreach($data as $d){
+	    			if (!CRUDBooster::isSuperadmin()) {
+	    				if (CB::isWithEmail()) {
+	    					$save['email']     	= $d->email;
+	    				}
+	    			}
+	    			$save['username']    	= $d->username;
+	    			$save['name']         	= $d->name;
+	    			$save['password']    	= Hash::make(Carbon::parse($d->password)->format('Y-m-d'));
+	    			$save['type']          	= 2;
+	    			$save['class_id']       = NULL;
+	    			$save['status'] 		= 2;
+	    			if (g('cms_users_id')) {
+	    				$save['cms_users_id']     = g('cms_users_id');
+	    			}else{
+	    				$save['cms_users_id']     = CRUDBooster::myId();
+	    			}
+
+	    			$check = DB::table('users')->where(['username' => $d->username, 'cms_users_id' => $save['cms_users_id']])->first();
+	    			$failed = 0;
+	    			if (!$check) {
+	    				DB::table('users')->insert($save);
+	    			}else{
+	    				$failed += 1;
+	    			}
+	    		}
+
+	    		if(!empty($data) && $data->count()){
+	    			if ($failed != 0) {
+	    				return redirect()->back()->with(['message_type'=>'success','message'=>'Berhasil mengimport data! Total Data Yang Failed:'.$failed]);
+	    			}else{
+	    				return redirect()->back()->with(['message_type'=>'success','message'=>'Berhasil mengimport data!']);
+	    			}
+	    		}else{
+	    			return redirect()->back()->with(['message_type'=>'error','message'=>'Tidak berhasil mengimport data!']);
+	    		}
+	    	}else {
+	    		return redirect()->back()->with(['message_type'=>'error','message'=>'File is a '.$extension.' file.!! Please upload a valid xls/csv file..!!']);
+	    	}
 	    }
 
 	}

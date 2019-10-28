@@ -140,7 +140,7 @@ class AdminController extends CBController {
 
 		return redirect()->route('getLogin')->with('message', trans("crudbooster.message_forgot_password"));
 
-	}	
+	}
 
 	public function getLogout() {
 

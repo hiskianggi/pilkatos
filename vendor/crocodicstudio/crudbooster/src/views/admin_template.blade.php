@@ -130,8 +130,8 @@
                   <div class="modal-body">
                     <div class="form-group">
                       <label style="font-size: 14px;">Import File</label>
-                      <input type="file" name="importleads" class="form-control" required="">
-                      <p class='help-block' style="font-size: 14px;">Contoh Format Pengisian -> <a href="{{ asset('import/importleads.xls') }}">Download</a></p>
+                      <input type="file" name="importdata" class="form-control" required="">
+                      <p class='help-block' style="font-size: 14px;">Contoh Format Pengisian -> <a href="{{ asset('import/example.xlsx') }}">Download</a></p>
                     </div>
                     @if(CRUDBooster::myId() == 1)
                     <div class="form-group">

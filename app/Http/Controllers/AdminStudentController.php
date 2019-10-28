@@ -9,6 +9,8 @@ use QrCode;
 use PDF;
 use Excel;
 use File;
+use Hash;
+use Carbon\Carbon;
 
 class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBController {
 
@@ -599,17 +601,21 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	    	return redirect()->back()->with(['message_type'=>'success','message'=>'Semua Password Token Telah Dikirim!']);
 	    }
 
-	    public function importData(){
+	    public function postImportData(){
 	    	$extension = File::extension(Request::file('importdata')->getClientOriginalName());
 	    	if($extension == "xlsx" || $extension == "xls" || $extension == "csv"){
-	    		$path = Request::file('importleads')->getRealPath();
+	    		$path = Request::file('importdata')->getRealPath();
 	    		$data = Excel::load($path, function($reader) {
 	    		})->get();
 	    		foreach($data as $d){
-	    			$save['email']     		= $d->email;
+	    			if (!CRUDBooster::isSuperadmin()) {
+	    				if (CB::isWithEmail()) {
+	    					$save['email']     	= $d->email;
+	    				}
+	    			}
 	    			$save['username']    	= $d->username;
 	    			$save['name']         	= $d->name;
-	    			$save['password']    	= $d->password;
+	    			$save['password']    	= Hash::make(Carbon::parse($d->password)->format('Y-m-d'));
 	    			$save['type']          	= 0;
 	    			$save['class_id']       = $d->class_id;
 	    			$save['status'] 		= 0;
@@ -619,14 +625,21 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	    				$save['cms_users_id']     = CRUDBooster::myId();
 	    			}
 
-	    			$email = DB::table('users')->where('email',$d->email)->first();
-	    			if(!$email){
-	    				DB::table('leads')->insert($save);
+	    			$check = DB::table('users')->where(['username' => $d->username, 'cms_users_id' => $save['cms_users_id']])->first();
+	    			$failed = 0;
+	    			if (!$check) {
+	    				DB::table('users')->insert($save);
+	    			}else{
+	    				$failed += 1;
 	    			}
 	    		}
 
 	    		if(!empty($data) && $data->count()){
-	    			return redirect()->back()->with(['message_type'=>'success','message'=>'Berhasil mengimport data!']);
+	    			if ($failed != 0) {
+	    				return redirect()->back()->with(['message_type'=>'success','message'=>'Berhasil mengimport data! Total Data Yang Failed:'.$failed]);
+	    			}else{
+	    				return redirect()->back()->with(['message_type'=>'success','message'=>'Berhasil mengimport data!']);
+	    			}
 	    		}else{
 	    			return redirect()->back()->with(['message_type'=>'error','message'=>'Tidak berhasil mengimport data!']);
 	    		}

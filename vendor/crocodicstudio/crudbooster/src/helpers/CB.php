@@ -8,6 +8,7 @@ use Cache;
 use DB;
 use Route;
 use Validator;
+use CRUDBooster;
 
 class CB extends CRUDBooster  {
 	//This CB class is for alias of CRUDBooster class
@@ -121,5 +122,11 @@ class CB extends CRUDBooster  {
 		}
 
 		return number_format($result);
+	}
+
+	public static function isWithEmail(){
+		$db = DB::table('cms_users')->where('id', CRUDBooster::myId())->first();
+
+		return $db->with_email;
 	}
 }

@@ -32,7 +32,7 @@ class AdminElectionDataController extends \crocodicstudio\crudbooster\controller
 		$this->col = [];
 		$this->col[] = ["label"=>"From","name"=>"cms_users_id","join"=>"cms_users,name"];
 		$this->col[] = ["label"=>"Username","name"=>"users_id","join"=>"users,username"];
-		$this->col[] = ["label"=>"Name","name"=>"cms_users_id","join"=>"users,name"];
+		$this->col[] = ["label"=>"Name","name"=>"users_id","join"=>"users,name"];
 		$this->col[] = ["label"=>"Type","name"=>"users_id","join"=>"users,type","callback"=>function ($row){
 			if ($row->users_type == 0) {
 				return '<span class="btn btn-xs btn-primary">Siswa</span>';
