@@ -488,13 +488,14 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 
 	    		$check_token = DB::table('password_token')->where('email',$users->email)->first();
 	    		if ($check_token) {
-	    			DB::table('password_token')->where('email', $users->email)->update([
+	    			DB::table('password_token')->where(['email' => $users->email,'is_users' => 1])->update([
 	    				'token' => $token,
 	    				'created_at' => now()
 	    			]);
 	    		}else{
 	    			DB::table('password_token')->insert([
 	    				'email' => $users->email,
+	    				'is_users' => 1,
 	    				'token' => $token
 	    			]);
 	    		}
@@ -530,13 +531,14 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 
 	    		$check_token = DB::table('password_token')->where('email',$row->email)->first();
 	    		if ($check_token) {
-	    			DB::table('password_token')->where('email', $row->email)->update([
+	    			DB::table('password_token')->where(['email' => $users->email,'is_users' => 1])->update([
 	    				'token' => $token,
 	    				'created_at' => now()
 	    			]);
 	    		}else{
 	    			DB::table('password_token')->insert([
 	    				'email' => $row->email,
+	    				'is_users' => 1,
 	    				'token' => $token
 	    			]);
 	    		}
@@ -570,13 +572,14 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	    	foreach ($users as $row) {
 	    		$token = str_random(64);
 	    		if ($check_token) {
-	    			DB::table('password_token')->where('email', $row->email)->update([
+	    			DB::table('password_token')->where(['email' => $users->email,'is_users' => 1])->update([
 	    				'token' => $token,
 	    				'created_at' => now()
 	    			]);
 	    		}else{
 	    			DB::table('password_token')->insert([
 	    				'email' => $row->email,
+	    				'is_users' => 1,
 	    				'token' => $token
 	    			]);
 	    		}
