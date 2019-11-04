@@ -15,17 +15,6 @@
 			{{ csrf_field() }}
 			<div class="box-body">
 				<div class='form-group header-group-0'>
-					<label class='control-label col-sm-2'>Path to Login <span class='text-danger' title='This field is required'>*</span></label>
-					<div class="col-sm-10">
-						<input type='text' title="Nama Sekolah" required class='form-control' name="path" id="path" value='{{ $detail->path }}'/>
-						<p class='help-block'>
-							@if($detail->path)
-							<a href="{{ url($detail->path.'/login') }}">Klik Disini Untuk Melihat Tampilan Login</a>
-							@endif
-						</p>
-					</div>
-				</div>
-				<div class='form-group header-group-0'>
 					<label class='control-label col-sm-2'>Background Login <span class='text-danger' title='This field is required'>*</span></label>
 					<div class="col-sm-10">
 						@if($background->photo)

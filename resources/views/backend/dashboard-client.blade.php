@@ -53,7 +53,7 @@
             <div class="inner">
               <h3>{{$suara_masuk}}</h3>
 
-              <p>Suara Masuk</p>
+              <p>Hak Suara</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>

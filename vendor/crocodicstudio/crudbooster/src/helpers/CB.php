@@ -129,4 +129,25 @@ class CB extends CRUDBooster  {
 
 		return $db->with_email;
 	}
+
+	public static function statisticCandidate($id,$type){
+		if ($type == 'students') {
+			$type = 0;
+		}elseif ($type == 'teachers') {
+			$type = 1;
+		}else{
+			$type = 2;
+		}
+
+		$row = DB::table('candidate')
+		->join('election_data','election_data.candidate_id','candidate.id')
+		->join('users','election_data.users_id','=','users.id')
+		->where('candidate.id', $id)
+		->groupBy('candidate.id')
+		->where('users.type',$type)
+		->select(DB::raw('count("election_data.id") as count'))
+		->first();
+
+		return $row->count;
+	}
 }
