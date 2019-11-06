@@ -6,6 +6,10 @@ use DB;
 use CRUDBooster;
 use QrCode;
 use CB;
+use PDF;
+use Excel;
+use File;
+use Hash;
 use Carbon\Carbon;
 
 
@@ -16,7 +20,7 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
 		$this->title_field = "username";
 		$this->limit = "20";
-		$this->orderby = "name,asc";
+		$this->orderby = "username,asc";
 		$this->global_privilege = false;
 		$this->button_table_action = true;
 		$this->button_bulk_action = true;
@@ -605,11 +609,11 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 	    				}
 	    			}
 	    			$save['username']    	= $d->username;
-	    			$save['name']         	= $d->name;
-	    			$save['password']    	= Hash::make(Carbon::parse($d->password)->format('Y-m-d'));
+	    			$save['name']         	= ucwords(strtolower($d->name));
+	    			$save['password']    	= Hash::make($d->password);
 	    			$save['type']          	= 2;
 	    			$save['class_id']       = NULL;
-	    			$save['status'] 		= 2;
+	    			$save['status'] 		= 0;
 	    			if (g('cms_users_id')) {
 	    				$save['cms_users_id']     = g('cms_users_id');
 	    			}else{
@@ -618,10 +622,10 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 
 	    			$check = DB::table('users')->where(['username' => $d->username, 'cms_users_id' => $save['cms_users_id']])->first();
 	    			$failed = 0;
-	    			if (!$check) {
-	    				DB::table('users')->insert($save);
-	    			}else{
+	    			if ($d->username == null || $check != null) {
 	    				$failed += 1;
+	    			}else{
+	    				DB::table('users')->insert($save);
 	    			}
 	    		}
 

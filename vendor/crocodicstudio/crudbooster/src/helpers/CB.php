@@ -105,7 +105,7 @@ class CB extends CRUDBooster  {
 			$result = $election / $all * 100;
 		}
 		
-		return round($result, 0);
+		return round($result, 1);
 
 
 	}

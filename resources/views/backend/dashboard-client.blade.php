@@ -45,7 +45,7 @@
               <p>Kandidat</p>
             </div>
             <div class="icon">
-              <i class="ion ion-bag"></i>
+              <i class="ion ion-person"></i>
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@
               <p>Pemilih</p>
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              <i class="ion ion-ios-people"></i>
             </div>
           </div>
         </div>
@@ -73,7 +73,7 @@
               <p>Hak Suara</p>
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="ion ion-ios-barcode"></i>
             </div>
           </div>
         </div>
@@ -87,7 +87,7 @@
               <p>Golput</p>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+              <i class="ion ion-grid"></i>
             </div>
           </div>
         </div>

@@ -630,7 +630,7 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	    			$failed = 0;
 
 	    			if ($d->username == null || $check != null) {
-	    				//
+	    				$failed += 1;
 	    			}else{
 	    				DB::table('users')->insert($save);
 	    			}

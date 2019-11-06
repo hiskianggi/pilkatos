@@ -4,6 +4,7 @@ use Session;
 use Request;
 use DB;
 use CRUDBooster;
+use CB;
 
 class AdminElectionDataController extends \crocodicstudio\crudbooster\controllers\CBController {
 
@@ -43,11 +44,7 @@ class AdminElectionDataController extends \crocodicstudio\crudbooster\controller
 			}
 		}];
 		$this->col[] = ["label"=>"Class","name"=>"users_id","join"=>"class,name","callback"=>function ($row){
-			if ($row->users_type == 0) {
-				return $row->class_name;
-			}else{
-				return '-';
-			}
+			return CB::getClass($row->users_id);
 		}];
 		$this->col[] = ["label"=>"Election","name"=>"candidate_id","join"=>"candidate,name"];
 			# END COLUMNS DO NOT REMOVE THIS LINE

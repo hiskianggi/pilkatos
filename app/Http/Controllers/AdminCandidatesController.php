@@ -12,7 +12,7 @@ class AdminCandidatesController extends \crocodicstudio\crudbooster\controllers\
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
 		$this->title_field = "name";
 		$this->limit = "20";
-		$this->orderby = "id,desc";
+		$this->orderby = "id,asc";
 		$this->global_privilege = false;
 		$this->button_table_action = true;
 		$this->button_bulk_action = true;
@@ -30,6 +30,9 @@ class AdminCandidatesController extends \crocodicstudio\crudbooster\controllers\
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col = [];
+		$this->col[] = ["label"=>"No. Urut","name"=>"id","callback"=>function($row){
+			return '#'.$row->id;
+		}];
 		$this->col[] = ["label"=>"Nama","name"=>"name"];
 		$this->col[] = ["label"=>"Photo","name"=>"photo","image"=>true];
 		$this->col[] = ["label"=>"Kelas","name"=>"class_id","join"=>"class,name"];
