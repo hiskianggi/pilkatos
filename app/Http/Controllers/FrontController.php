@@ -8,6 +8,7 @@ use DB;
 use Carbon\Carbon;
 use CRUDBooster;
 use Hash;
+use CB;
 
 class FrontController extends Controller
 {
@@ -78,5 +79,18 @@ class FrontController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function getLogout(){
+        $path = DB::table('cms_users')->where('id', Auth::user()->cms_users_id)->first()->path;
+        Auth::guard();
+
+        $request->session()->invalidate();
+
+        if($path){
+            return redirect($path.'/login');
+        }else{
+            return redirect('https://pilkatos.tech');
+        }
     }
 }

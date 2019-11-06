@@ -41,6 +41,21 @@
 			}, 2000);
 		});
 	});
+
+	$(document).on("click", "#logout", function () {
+		swal({
+			title: "Anda Belum Memilih!",
+			text: "Yakin Ingin Logout?",
+			type: "info",
+			showCancelButton: true,
+			closeOnConfirm: false,
+			showLoaderOnConfirm: true
+		}, function () {
+			setTimeout(function () {
+				location.href="{{ url('logout') }}";
+			}, 2000);
+		});
+	});
 </script>
 @endsection
 @section('content')
@@ -106,6 +121,11 @@
 					<p class="h5 mb-2 mt-4">
 						Selamat Datang, {{ Auth::user()->name }}!
 					</p>
+					@if($user->class_id != NULL)
+					<p class="h6">
+						Kelas: {{ CB::getClass($user->id) }}
+					</p>
+					@endif
 					<p class="mb-0">Silahkan Memilih Salah Satu Kandidat Ketua OSIS Periode {{ $this_year }}/{{ $next_year }} Dibawah ^_^</p>
 					<p class="mt-5"><button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#tutorialPenggunaan"><i class="fas fa-magic mr-1"></i> Tutorial Penggunaan</button></p>
 					<div class="modal fade right" id="tutorialPenggunaan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

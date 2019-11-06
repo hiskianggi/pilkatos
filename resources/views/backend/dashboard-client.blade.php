@@ -1,5 +1,12 @@
 @extends("crudbooster::admin_template")
 @section('content')
+<style type="text/css">
+  .row-flex {
+    display: flex;
+    flex-wrap: wrap;
+  }
+</style>
+@if(CRUDBooster::isSuperadmin() == 0)
 <div class="row">
   <div class="col-md-6">
     <div class="callout callout-info callout-dismissible">
@@ -14,6 +21,16 @@
     </div>
   </div>
 </div>
+@else
+<div class="row">
+  <div class="col-md-12">
+    <div class="callout callout-info callout-dismissible">
+      <strong>ID: #{{ $user->id }}</strong><br>
+      <strong>Nama Sekolah: {{ $user->name }}</strong>
+    </div>
+  </div>
+</div>
+@endif
 <!-- Small boxes (Stat box) -->
 <div class="row">
   <div class="col-md-12">
@@ -80,19 +97,21 @@
   <!-- ./col -->
 </div>
 <!-- /.row -->
-<div class="row">
-  <div class="col-md-8">
-    <div class="box box-info">
+<div class="row row-flex">
+  <div class="col-xs-8">
+    <div class="box box-info" style="height: 100%">
       <div class="box-header with-border">
-        <canvas id="bar-chart"></canvas>
+      </div>
+      <div class="box-body mt-3">
+        <canvas id="bar-chart" style="height: auto;"></canvas>
       </div>
     </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-xs-4">
     <div class="box box-widget widget-user">
       <!-- Add the bg color to the header using any of the bg-* classes -->
       <div class="widget-user-header bg-aqua-active">
-        <h3 class="widget-user-username">{{ CRUDBooster::myName() }}</h3>
+        <h3 class="widget-user-username">{{ (CRUDBooster::isSuperadmin() ? $user->name : CRUDBooster::myName() ) }}</h3>
         <h5 class="widget-user-desc">Jumlah Pemilih</h5>
       </div>
       <div class="widget-user-image">
@@ -199,7 +218,7 @@
      },
      scales: {
       xAxes: [{
-        barPercentage: 0.4
+        barPercentage: 0.6
       }],
       yAxes: [{
        ticks: {

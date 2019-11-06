@@ -150,4 +150,14 @@ class CB extends CRUDBooster  {
 
 		return $row->count;
 	}
+
+	public static function getClass($id){
+		$user = DB::table('users')->where('id',$id)->first();
+		if ($user->class_id == NULL) {
+			return '-';
+		}else{
+			$class = DB::table('class')->where('id',$user->class_id)->first();
+			return $class->name;
+		}
+	}
 }

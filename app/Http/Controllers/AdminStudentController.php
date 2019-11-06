@@ -19,7 +19,7 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
 		$this->title_field = "username";
 		$this->limit = "20";
-		$this->orderby = "id,desc";
+		$this->orderby = "name,asc";
 		$this->global_privilege = false;
 		$this->button_table_action = true;
 		$this->button_bulk_action = true;
@@ -606,15 +606,16 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	    	if($extension == "xlsx" || $extension == "xls" || $extension == "csv"){
 	    		$path = Request::file('importdata')->getRealPath();
 	    		$data = Excel::load($path, function($reader) {
-	    		})->get();
-	    		foreach($data as $d){
+	    		})
+	    		->get();
+	    		foreach($data as $key => $d){
 	    			if (!CRUDBooster::isSuperadmin()) {
 	    				if (CB::isWithEmail()) {
 	    					$save['email']     	= $d->email;
 	    				}
 	    			}
 	    			$save['username']    	= $d->username;
-	    			$save['name']         	= $d->name;
+	    			$save['name']         	= ucwords(strtolower($d->name));
 	    			$save['password']    	= Hash::make(Carbon::parse($d->password)->format('Y-m-d'));
 	    			$save['type']          	= 0;
 	    			$save['class_id']       = $d->class_id;
@@ -627,10 +628,11 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 
 	    			$check = DB::table('users')->where(['username' => $d->username, 'cms_users_id' => $save['cms_users_id']])->first();
 	    			$failed = 0;
-	    			if (!$check) {
-	    				DB::table('users')->insert($save);
+
+	    			if ($d->username == null || $check != null) {
+	    				//
 	    			}else{
-	    				$failed += 1;
+	    				DB::table('users')->insert($save);
 	    			}
 	    		}
 
@@ -646,6 +648,18 @@ class AdminStudentController extends \crocodicstudio\crudbooster\controllers\CBC
 	    	}else {
 	    		return redirect()->back()->with(['message_type'=>'error','message'=>'File is a '.$extension.' file.!! Please upload a valid xls/csv file..!!']);
 	    	}
+	    }
+
+	    public function getUcwords(){
+	    	$row = DB::table('users')->get();
+
+	    	foreach ($row as $key => $val) {
+	    		DB::table('users')->where('id',$val->id)->update([
+	    			'name' => ucwords(strtolower($val->name))
+	    		]);
+	    	}
+
+	    	return 'done';
 	    }
 
 	}

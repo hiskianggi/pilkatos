@@ -109,14 +109,43 @@
             <i class="fa fa-download"></i> {{trans("crudbooster.button_import")}}
           </a>
           @endif
-
-          @if(Request::segment(2)=='student' && CRUDBooster::getCurrentMethod() == 'getIndex' || Request::segment(2)=='teachers' && CRUDBooster::getCurrentMethod() == 'getIndex' || Request::segment(2)=='employee' && CRUDBooster::getCurrentMethod() == 'getIndex')
           <?php
           $school = DB::table('cms_users')
           ->where('id','!=',1)
           ->where('status','Active')
           ->get()
           ?>
+          @if(Request::segment(2)=='statistic' && CRUDBooster::getCurrentMethod() == 'getIndex')
+          <button data-toggle="modal" data-target="#statisticSchool" class="btn btn-primary btn-sm"><i class="fa fa-upload"></i>&nbsp; Cek Statistik Sekolah</button>
+          <div class="modal fade in" tabindex="-1" role="dialog" id="statisticSchool">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button class="close" type="button" data-dismiss="modal"><span aria-hidden="true">x</span></button>
+                  <h4 class="modal-title"><i class="fa fa-download"></i> &nbsp; Cek Statistik Sekolah</h4>
+                </div>
+                <form action="{{ CRUDBooster::mainPath() }}" method="GET" enctype="multipart/form-data">
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <label style="font-size: 14px;">Sekolah</label>
+                      <select class="form-control select2" name="id" required="">
+                        <option selected="" disabled="">== PILIH SEKOLAH ==</option>
+                        @foreach($school as $s)
+                        <option value="{{ $s->id }}">{{ $s->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          @endif
+          @if(Request::segment(2)=='student' && CRUDBooster::getCurrentMethod() == 'getIndex' || Request::segment(2)=='teachers' && CRUDBooster::getCurrentMethod() == 'getIndex' || Request::segment(2)=='employee' && CRUDBooster::getCurrentMethod() == 'getIndex')
           <button data-toggle="modal" data-target="#importData" class="btn btn-primary btn-sm"><i class="fa fa-upload"></i>&nbsp; Import Data</button>
           <div class="modal fade in" tabindex="-1" role="dialog" id="importData">
             <div class="modal-dialog">

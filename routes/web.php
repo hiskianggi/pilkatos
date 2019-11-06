@@ -20,3 +20,4 @@ Route::post('set-password','FrontController@postForgot');
 Route::get('/{path}/login', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout');
+Route::get('log-out', 'FrontController@getLogout');

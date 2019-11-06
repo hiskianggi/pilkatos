@@ -16,7 +16,7 @@ class AdminEmployeeController extends \crocodicstudio\crudbooster\controllers\CB
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
 		$this->title_field = "username";
 		$this->limit = "20";
-		$this->orderby = "date,asc";
+		$this->orderby = "name,asc";
 		$this->global_privilege = false;
 		$this->button_table_action = true;
 		$this->button_bulk_action = true;

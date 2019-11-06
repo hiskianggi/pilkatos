@@ -1,5 +1,11 @@
 @extends("crudbooster::admin_template")
 @section('content')
+<style type="text/css">
+	.row-flex {
+		display: flex;
+		flex-wrap: wrap;
+	}
+</style>
 <div class="row">
 	<div class="col-md-12">
 		<div class="box box-info">
@@ -71,13 +77,13 @@
 
 							<div class="info-box-content">
 								<span class="info-box-text">Suara Pemenang</span>
-								<span class="info-box-number">{{ $winner_votes }}</span>
+								<span class="info-box-number">[0]</span>
 
 								<div class="progress">
-									<div class="progress-bar" style="width: {{ $winner_votes_persen }}%"></div>
+									<div class="progress-bar" style="width: 0%"></div>
 								</div>
 								<span class="progress-description">
-									{{ $winner_votes_persen }}% Dari Total Pemilih
+									[0]% Dari Total Pemilih
 								</span>
 							</div>
 							<!-- /.info-box-content -->
@@ -89,30 +95,30 @@
 		</div>
 	</div>
 </div>
-<div class="row">
-	<div class="col-md-4">
+<div class="row row-flex">
+	<div class="col-xs-4">
 		<div class="box box-widget widget-user-2">
 			<!-- Add the bg color to the header using any of the bg-* classes -->
 			<div class="widget-user-header bg-yellow">
 				<div class="widget-user-image">
-					<img class="img-circle" src="../dist/img/user7-128x128.jpg" alt="User Avatar">
+					<img class="img-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6YAZGBeKVKglAYLbtTTCPUOvdY_HCcmL0L1lJv1116G_8IaCE&s" alt="User Avatar">
 				</div>
 				<!-- /.widget-user-image -->
-				<h3 class="widget-user-username">Nadia Carmichael</h3>
+				<h3 class="widget-user-username">[ Maintenance ]</h3>
 				<h5 class="widget-user-desc">Pemenang Ketua OSIS Periode 2019/2020</h5>
 			</div>
 			<div class="box-footer no-padding">
 				<ul class="nav nav-stacked">
-					<li><a href="#">Siswa <span class="pull-right badge bg-blue">31</span></a></li>
-					<li><a href="#">Guru <span class="pull-right badge bg-aqua">5</span></a></li>
-					<li><a href="#">Karyawan <span class="pull-right badge bg-green">12</span></a></li>
-					<li><a href="#"><b>Jumlah</b> <span class="pull-right badge bg-red">12</span></a></li>
+					<li><a href="#">Siswa <span class="pull-right badge bg-blue">0</span></a></li>
+					<li><a href="#">Guru <span class="pull-right badge bg-aqua">0</span></a></li>
+					<li><a href="#">Karyawan <span class="pull-right badge bg-green">0</span></a></li>
+					<li><a href="#"><b>Jumlah</b> <span class="pull-right badge bg-red">0</span></a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-8">
-		<div class="box box-info">
+	<div class="col-xs-8">
+		<div class="box box-info" style="height: 100%">
 			<div class="box-header with-border">
 				<h3 class="box-title">Statistik Perolehan Suara</h3>
 
@@ -135,14 +141,16 @@
 							</tr>
 						</thead>
 						<tbody>
+							@foreach($statistic as $key => $s)
 							<tr>
-								<td>#1</td>
-								<td>Call of Duty IV</td>
-								<td>XII RPL</td>
+								<td>{{ $key+1 }}</td>
+								<td>{{ $s->name }}</td>
+								<td>{{ $s->class }}</td>
 								<td>
-									<b>29</b> Suara
+									<b>{{ $s->total_vote }}</b> Suara
 								</td>
 							</tr>
+							@endforeach
 						</tbody>
 					</table>
 				</div>

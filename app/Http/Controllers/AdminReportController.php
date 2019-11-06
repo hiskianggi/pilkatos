@@ -19,22 +19,15 @@
 			$data['golput'] = CB::totalGolput();
 			$data['golput_persen'] = round($data['golput'] / $data['total_voters'] * 100, 1);
 
-			$winner = DB::table('candidate')
-			->select('candidate.id',DB::raw("COUNT(election_data.id) as total_votes"))
-			->where('candidate.cms_users_id',CRUDBooster::myId())
-			->join('election_data','election_data.candidate_id','=','candidate.id')
-			->groupBy('candidate.id')
-			->orderBy('total_votes','desc')
-			->first();
-
-			$data['winner_votes'] = $winner->total_votes;
-			$data['winner_votes_persen'] = round($data['winner_votes'] / $data['total_voters'] * 100, 1);
-
-			$winner = DB::table('candidate')->where('id', $winner->id)->first();
-			$winner->students = CB::statisticCandidate($winner_id,'students');
-
-			dd($winner);
-
+			$data['statistic'] = DB::table('candidate')
+			->join('class','candidate.class_id','=','class.id')
+			->select('candidate.id','candidate.name','class.name as class','candidate.id as total_vote')
+			->orderBy('total_vote','desc')
+			->get();
+			foreach ($data['statistic'] as $key => $v) {
+				$total_vote = DB::table('election_data')->where('candidate_id',$v->id)->count();
+				$v->total_vote = $total_vote;
+			}
 
 			return view('backend.report', $data);
 		}
