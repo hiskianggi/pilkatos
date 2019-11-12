@@ -70,7 +70,7 @@
             <div class="inner">
               <h3>{{$suara_masuk}}</h3>
 
-              <p>Hak Suara</p>
+              <p>Suara Masuk</p>
             </div>
             <div class="icon">
               <i class="ion ion-ios-barcode"></i>
@@ -159,28 +159,28 @@
             <td>Siswa</td>
             <td>
               <div class="progress progress-xs">
-                <div class="progress-bar progress-bar-info{{(CB::progressElection(0) == 100) ? '' : ' active'}}" style="width: {{ CB::progressElection(0) }}%"></div>
+                <div class="progress-bar progress-bar-info{{(CB::progressElection(0) == 100) ? '' : ' active'}}" style="width: {{ CB::progressElection(0,$id) }}%"></div>
               </div>
             </td>
-            <td><span class="badge bg-red">{{ CB::progressElection(0) }}%</span></td>
+            <td><span class="badge bg-red">{{ CB::progressElection(0,$id) }}%</span></td>
           </tr>
           <tr>
             <td>Guru</td>
             <td>
               <div class="progress progress-xs">
-                <div class="progress-bar progress-bar-primary{{(CB::progressElection(1) == 100) ? '' : ' active'}}" style="width: {{ CB::progressElection(1) }}%"></div>
+                <div class="progress-bar progress-bar-primary{{(CB::progressElection(1,$id) == 100) ? '' : ' active'}}" style="width: {{ CB::progressElection(1,$id) }}%"></div>
               </div>
             </td>
-            <td><span class="badge bg-yellow">{{ CB::progressElection(1) }}%</span></td>
+            <td><span class="badge bg-yellow">{{ CB::progressElection(1,$id) }}%</span></td>
           </tr>
           <tr>
             <td>Karyawan</td>
             <td>
-              <div class="progress progress-xs progress-striped{{(CB::progressElection(2) == 100) ? '' : ' active'}}">
-                <div class="progress-bar progress-bar-danger" style="width: {{ CB::progressElection(2) }}%"></div>
+              <div class="progress progress-xs progress-striped{{(CB::progressElection(2,$id) == 100) ? '' : ' active'}}">
+                <div class="progress-bar progress-bar-danger" style="width: {{ CB::progressElection(2,$id) }}%"></div>
               </div>
             </td>
-            <td><span class="badge bg-light-blue">{{ CB::progressElection(2) }}%</span></td>
+            <td><span class="badge bg-light-blue">{{ CB::progressElection(2,$id) }}%</span></td>
           </tr>
         </table>
       </div>

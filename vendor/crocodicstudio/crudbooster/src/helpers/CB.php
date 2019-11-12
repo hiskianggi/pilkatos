@@ -88,8 +88,12 @@ class CB extends CRUDBooster  {
 		return $result;
 	}
 
-	public static function progressElection($type){
-		$data['users.cms_users_id']	= CRUDBooster::myId();
+	public static function progressElection($type,$id = null){
+		if ($id == null) {
+			$id = CRUDBooster::myId();
+		}
+		
+		$data['users.cms_users_id']	= $id;
 		$data['users.type']			= $type;
 
 		$all = DB::table('users')->where($data)->count();

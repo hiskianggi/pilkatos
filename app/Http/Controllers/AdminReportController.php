@@ -22,7 +22,6 @@
 			$data['statistic'] = DB::table('candidate')
 			->join('class','candidate.class_id','=','class.id')
 			->select('candidate.id','candidate.name','class.name as class','candidate.id as total_vote')
-			->orderBy('total_vote','desc')
 			->get();
 			foreach ($data['statistic'] as $key => $v) {
 				$total_vote = DB::table('election_data')->where('candidate_id',$v->id)->count();

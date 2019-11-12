@@ -4,6 +4,7 @@ use Session;
 use Request;
 use DB;
 use CRUDBooster;
+use CB;
 
 class AdminStatisticController extends \crocodicstudio\crudbooster\controllers\CBController {
 

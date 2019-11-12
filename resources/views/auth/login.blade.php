@@ -6,7 +6,7 @@
 		<h1>Login</h1>
 		<div class="header-main">
 			<div class="main-icon">
-				<span class="fa fa-eercast"></span>
+				<span class="fa fa-hand-pointer-o"></span>
 			</div>
 			<div class="header-left-bottom">
 				<form method="POST" action="{{ url('login') }}">

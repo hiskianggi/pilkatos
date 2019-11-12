@@ -10,6 +10,7 @@ class AdminElectionDataController extends \crocodicstudio\crudbooster\controller
 
 	public function cbInit() {
 
+		dd('This is Deep Pages.');
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
 		$this->title_field = "id";
 		$this->limit = "20";

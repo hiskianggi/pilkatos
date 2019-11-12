@@ -13,7 +13,7 @@ class AdminGolputController extends \crocodicstudio\crudbooster\controllers\CBCo
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
 		$this->title_field = "username";
 		$this->limit = "20";
-		$this->orderby = "id,desc";
+		$this->orderby = "name,asc";
 		$this->global_privilege = false;
 		$this->button_table_action = true;
 		$this->button_bulk_action = true;
@@ -285,9 +285,11 @@ class AdminGolputController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    public function hook_query_index(&$query) {
 	        //Your code here
 	    	if (CRUDBooster::isSuperadmin() != 1) {
-	    		$query->where('users.cms_users_id', CRUDBooster::myId());
+	    		$query->where('users.cms_users_id', CRUDBooster::myId())
+	    		->where('users.status','0');
 	    	}else{
-	    		$query->where('cms_users.status','Active');
+	    		$query
+	    		->where('users.status','0');
 	    	}
 
 	    	if (g('filter') == 'students') {
